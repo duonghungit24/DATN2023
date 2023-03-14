@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite"
+import moment from "moment"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
-  Text,
+  Text, VectorsIcon,
 } from "../components"
 import { isRTL } from "../i18n"
 import { colors, spacing } from "../theme"
@@ -16,24 +17,12 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 ) {
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+  console.log(moment().format())
 
   return (
     <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
-
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
-      </View>
+       <Text>hello</Text>
+       <VectorsIcon type="Feather" name="search" />
     </View>
   )
 })

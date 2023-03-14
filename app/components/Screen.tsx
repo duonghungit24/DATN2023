@@ -1,5 +1,4 @@
 import { useScrollToTop } from "@react-navigation/native"
-import { StatusBar, StatusBarProps } from "expo-status-bar"
 import React, { useRef, useState } from "react"
 import {
   KeyboardAvoidingView,
@@ -8,6 +7,8 @@ import {
   Platform,
   ScrollView,
   ScrollViewProps,
+  StatusBar,
+  StatusBarProps,
   StyleProp,
   View,
   ViewStyle,
@@ -201,7 +202,7 @@ export function Screen(props: ScreenProps) {
 
   return (
     <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
-      <StatusBar style={statusBarStyle} {...StatusBarProps} />
+      <StatusBar {...StatusBarProps} />
 
       <KeyboardAvoidingView
         behavior={isIos ? "padding" : undefined}

@@ -3,9 +3,11 @@ import moment from "moment"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
+  Button,
   Text, VectorsIcon,
 } from "../components"
 import { isRTL } from "../i18n"
+import { useStores } from "../models"
 import { colors, spacing } from "../theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 
@@ -16,13 +18,16 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
 ) {
 
+  const { languageStore} = useStores()
+  console.log(languageStore.language)
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
   console.log(moment().format())
 
   return (
     <View style={$container}>
-       <Text>hello</Text>
+       <Text tx="common.ok" />
        <VectorsIcon type="Feather" name="search" />
+       <Button onPress={() => languageStore.setLanguage("en") } style={$welcomeFace}/>
     </View>
   )
 })
@@ -44,7 +49,7 @@ const $bottomContainer: ViewStyle = {
   flexShrink: 1,
   flexGrow: 0,
   flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
+  backgroundColor: colors.neutral100,
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
   paddingHorizontal: spacing.large,

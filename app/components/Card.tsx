@@ -243,7 +243,7 @@ const $containerBase: ViewStyle = {
   borderRadius: spacing.medium,
   padding: spacing.extraSmall,
   borderWidth: 1,
-  shadowColor: colors.palette.neutral800,
+  shadowColor: colors.neutral800,
   shadowOffset: { width: 0, height: 12 },
   shadowOpacity: 0.08,
   shadowRadius: 12.81,
@@ -268,28 +268,28 @@ const $containerPresets = {
   default: [
     $containerBase,
     {
-      backgroundColor: colors.palette.neutral100,
-      borderColor: colors.palette.neutral300,
+      backgroundColor: colors.neutral100,
+      borderColor: colors.neutral300,
     },
   ] as StyleProp<ViewStyle>,
 
   reversed: [
     $containerBase,
-    { backgroundColor: colors.palette.neutral800, borderColor: colors.palette.neutral500 },
+    { backgroundColor: colors.neutral800, borderColor: colors.neutral500 },
   ] as StyleProp<ViewStyle>,
 }
 
 const $headingPresets: Record<Presets, TextStyle> = {
   default: {},
-  reversed: { color: colors.palette.neutral100 },
+  reversed: { color: colors.neutral100 },
 }
 
 const $contentPresets: Record<Presets, TextStyle> = {
   default: {},
-  reversed: { color: colors.palette.neutral100 },
+  reversed: { color: colors.neutral100 },
 }
 
 const $footerPresets: Record<Presets, TextStyle> = {
   default: {},
-  reversed: { color: colors.palette.neutral100 },
+  reversed: { color: colors.neutral100 },
 }

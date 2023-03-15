@@ -18,6 +18,7 @@ import Config from "../config"
 import {
   WelcomeScreen,
 } from "../screens"
+import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 
 /**
@@ -35,6 +36,7 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
  */
 export type AppStackParamList = {
   Welcome: undefined
+  bottomTab: undefined
   // 🔥 Your screens go here
 }
 
@@ -56,8 +58,10 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
+      initialRouteName="bottomTab"
     >
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

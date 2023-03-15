@@ -5,16 +5,17 @@ import { I18nManager } from "react-native"
 import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
+import vi from "./vi"
 
-i18n.fallbacks = true
+// i18n.fallbacks = true
 /**
  * we need always include "*-US" for some valid language codes because when you change the system language,
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
  * if you change to another language and then return to English language code is now "en-US".
  */
-i18n.translations = { ar, en, "en-US": en, ko }
+i18n.translations = { ar, en, "en-US": en, ko , vi}
 
-i18n.locale = "en"
+i18n.locale = "vi"
 
 // handle RTL languages
 export const isRTL = false

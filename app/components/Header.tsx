@@ -12,6 +12,7 @@ import { colors, spacing } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { TypeVectorsIcon, VectorsIcon } from "./Vectoricon"
 
 export interface HeaderProps {
   /**
@@ -57,7 +58,7 @@ export interface HeaderProps {
    * Icon that should appear on the left.
    * Can be used with `onLeftPress`.
    */
-  leftIcon?: IconTypes
+  leftIcon?: string
   /**
    * An optional tint color for the left icon
    */
@@ -123,17 +124,21 @@ export interface HeaderProps {
    * Override the default edges for the safe area.
    */
   safeAreaEdges?: ExtendedEdge[]
+  typeIconLeft?: TypeVectorsIcon
+  colorLeftIcon?: any
+  typeIconRight?: TypeVectorsIcon
 }
 
 interface HeaderActionProps {
   backgroundColor?: string
-  icon?: IconTypes
+  iconName?: string
   iconColor?: string
   text?: TextProps["text"]
   tx?: TextProps["tx"]
   txOptions?: TextProps["txOptions"]
   onPress?: TouchableOpacityProps["onPress"]
   ActionComponent?: ReactElement
+  typeIcon: TypeVectorsIcon
 }
 
 /**
@@ -168,6 +173,8 @@ export function Header(props: HeaderProps) {
     style: $styleOverride,
     titleStyle: $titleStyleOverride,
     containerStyle: $containerStyleOverride,
+    typeIconLeft,
+    typeIconRight,
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
@@ -180,7 +187,8 @@ export function Header(props: HeaderProps) {
         <HeaderAction
           tx={leftTx}
           text={leftText}
-          icon={leftIcon}
+          iconName={leftIcon}
+          typeIcon={typeIconLeft}
           iconColor={leftIconColor}
           onPress={onLeftPress}
           txOptions={leftTxOptions}
@@ -209,7 +217,8 @@ export function Header(props: HeaderProps) {
         <HeaderAction
           tx={rightTx}
           text={rightText}
-          icon={rightIcon}
+          iconName={rightIcon}
+          typeIcon={typeIconRight}
           iconColor={rightIconColor}
           onPress={onRightPress}
           txOptions={rightTxOptions}
@@ -222,7 +231,17 @@ export function Header(props: HeaderProps) {
 }
 
 function HeaderAction(props: HeaderActionProps) {
-  const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent, iconColor } = props
+  const {
+    backgroundColor,
+    iconName,
+    text,
+    tx,
+    txOptions,
+    onPress,
+    ActionComponent,
+    iconColor,
+    typeIcon,
+  } = props
 
   const content = tx ? translate(tx, txOptions) : text
 
@@ -241,16 +260,16 @@ function HeaderAction(props: HeaderActionProps) {
     )
   }
 
-  if (icon) {
+  if (iconName && typeIcon) {
     return (
-      <Icon
-        size={24}
-        icon={icon}
-        color={iconColor}
+      <TouchableOpacity
         onPress={onPress}
-        containerStyle={[$actionIconContainer, { backgroundColor }]}
-        style={isRTL ? { transform: [{ rotate: "180deg" }] } : {}}
-      />
+        style={$actionIconContainer}
+        disabled={!onPress}
+        activeOpacity={0.8}
+      >
+        <VectorsIcon size={20} type={typeIcon || "Feather"} name={iconName} color={iconColor} />
+      </TouchableOpacity>
     )
   }
 

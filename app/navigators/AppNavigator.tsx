@@ -17,7 +17,8 @@ import { useColorScheme } from "react-native"
 import Config from "../config"
 import {
   SplashScreen,
-  WelcomeScreen,
+  SecurityScreen,
+  ChangeLanguageScreen
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -40,6 +41,8 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
   splashScreen: undefined
   bottomTab: undefined
+  securityScreen: undefined
+  changeLanguageScreen: undefined
 }
 
 /**
@@ -64,6 +67,8 @@ const AppStack = observer(function AppStack() {
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
+      <Stack.Screen name="securityScreen" component={SecurityScreen} />
+      <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

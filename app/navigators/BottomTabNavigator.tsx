@@ -5,7 +5,7 @@ import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon, VectorsIcon } from "../components"
 import { translate } from "../i18n"
-import { WelcomeScreen } from "../screens"
+import { WelcomeScreen , SettingScreen} from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
@@ -13,6 +13,7 @@ export type DemoTabParamList = {
   homeScreen: undefined
   notificationScreen: undefined
   accountScreen: undefined
+  settingScreen: undefined
 }
 
 /**
@@ -61,10 +62,10 @@ export function BottomTabNavigator() {
       />
 
       <Tab.Screen
-        name="accountScreen"
-        component={WelcomeScreen}
+        name="settingScreen"
+        component={SettingScreen}
         options={{
-          tabBarLabel: "Tài khoản",
+          tabBarLabel: "Cài đặt",
           tabBarIcon: ({ focused }) => <VectorsIcon type="Ionicons" name="person" size={25} color={focused ? colors.primary500 : colors.border} />,
         }}
       />

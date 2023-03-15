@@ -24,8 +24,11 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
 
   useEffect(() => {
     setTimeout(() => {
-        navigation.navigate("bottomTab")
-    }, 5000);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "bottomTab" }],
+      })
+    }, 2000);
   }, [])
 
   // Pull in navigation via hook

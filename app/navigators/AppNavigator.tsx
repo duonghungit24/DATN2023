@@ -62,7 +62,6 @@ const AppStack = observer(function AppStack() {
       screenOptions={{ headerShown: false }}
       initialRouteName="splashScreen"
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
       {/** 🔥 Your screens go here */}

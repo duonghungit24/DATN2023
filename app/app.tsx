@@ -62,6 +62,12 @@ function App(props: AppProps) {
     setTimeout(() => {
       RNBootSplash.hide()
     }, 100)
+    // Animated.timing(animationProgress.current, {
+    //   toValue: 1,
+    //   duration: 5000,
+    //   easing: Easing.linear,
+    //   useNativeDriver: false
+    // }).start();
   })
 
   

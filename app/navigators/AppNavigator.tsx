@@ -16,6 +16,7 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import Config from "../config"
 import {
+  SplashScreen,
   WelcomeScreen,
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
@@ -36,8 +37,9 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
  */
 export type AppStackParamList = {
   Welcome: undefined
-  bottomTab: undefined
   // 🔥 Your screens go here
+  splashScreen: undefined
+  bottomTab: undefined
 }
 
 /**
@@ -58,9 +60,10 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="bottomTab"
+      initialRouteName="splashScreen"
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>

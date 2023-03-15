@@ -11,14 +11,15 @@
  */
 import "./i18n"
 import "./utils/ignoreWarnings"
-import React from "react"
+import React, { useRef } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import * as storage from "./utils/storage"
 import { setupReactotron } from "./services/reactotron"
 import RNBootSplash from "react-native-bootsplash"
-
+import { Animated, Easing } from "react-native"
+import Lottie from 'lottie-react-native';
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
 setupReactotron({
@@ -50,7 +51,7 @@ function App(props: AppProps) {
     onNavigationStateChange,
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
-
+  // const animationProgress = useRef(new Animated.Value(0))
   const { rehydrated } = useInitialRootStore(() => {
     // This runs after the root store has been initialized and rehydrated.
 
@@ -60,9 +61,10 @@ function App(props: AppProps) {
     // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
     setTimeout(() => {
       RNBootSplash.hide()
-    }, 500)
+    }, 100)
   })
 
+  
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.

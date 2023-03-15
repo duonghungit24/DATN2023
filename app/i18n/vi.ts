@@ -1,6 +1,8 @@
-import { Translations } from "./en"
 
-const vi: Translations = {
+const vi = {
+  chonngonngu: "Chọn ngôn ngữ",
+  ngonngu: "Ngôn ngữ",
+  tieptuc: "Tiếp tục",
   common: {
     ok: "dung rui",
     cancel: "bo qua",
@@ -28,3 +30,4 @@ const vi: Translations = {
 }
 
 export default vi
+export type Translations = typeof vi

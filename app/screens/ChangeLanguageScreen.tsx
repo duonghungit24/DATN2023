@@ -1,10 +1,12 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { FlatList, ViewStyle , View, TouchableOpacity} from "react-native"
+import { FlatList, ViewStyle, View, TouchableOpacity, Image, ImageStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text } from "../components"
+import { AppStackScreenProps, goBack } from "../navigators"
+import { Header, ItemSerapator, Screen, Text, VectorsIcon } from "../components"
 import { colors } from "../theme"
+import { configs } from "../utils/configs"
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -17,41 +19,80 @@ import { colors } from "../theme"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const ChangeLanguageScreen: FC<StackScreenProps<AppStackScreenProps, "ChangeLanguage">> = observer(function ChangeLanguageScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+export const ChangeLanguageScreen: FC<StackScreenProps<AppStackScreenProps, "ChangeLanguage">> =
+  observer(function ChangeLanguageScreen() {
+    // Pull in one of our MST stores
+    const { languageStore } = useStores()
+    const [isRefresh , setIsRefresh] = useState(false)
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
-  return (
-    <Screen style={$root} preset="fixed">
-      <Header typeIconLeft="Feather"  backgroundColor="blue"  leftIcon="search" titleTx="common.ok"/>
-      <FlatList 
-          data={[1,2,3,4]}
+    useEffect(() => {
+      setIsRefresh(!isRefresh)
+    }, [languageStore.language])
+    // Pull in navigation via hook
+    // const navigation = useNavigation()
+    return (
+      <Screen style={$root} preset="fixed">
+        <Header
+          typeIconLeft="AntDesign"
+          backgroundColor={colors.neutral000}
+          leftIcon="arrowleft"
+          titleTx="ngonngu"
+          onLeftPress={() => goBack()}
+        />
+        <FlatList
+          data={configs.LIST_LANGUAGE}
           keyExtractor={(_, index) => `${index}`}
-          renderItem={({item}) => {
-            return <ItemLanguage item={item}/>
+          renderItem={({ item }) => {
+            return (
+              <ItemLanguage
+                item={item}
+                check={languageStore.language == item.type}
+                onPress={() => languageStore.setLanguage(item.type)}
+              />
+            )
           }}
-      />
-    </Screen>
-  )
-})
+          style={$listView}
+          ItemSeparatorComponent={() => <ItemSerapator />}
+        />
+      </Screen>
+    )
+  })
 
-const ItemLanguage = ({item}) => {
+const ItemLanguage = ({ item, check, onPress }) => {
   return (
-    <TouchableOpacity style={$viewItem}>
-        {/* <Image source={} /> */}
-        <Text>hello</Text>
+    <TouchableOpacity style={$viewItem} onPress={onPress} activeOpacity={0.7}>
+      <Image
+        source={{ uri: "https://cdn-icons-png.flaticon.com/512/323/323319.png" }}
+        style={$image}
+      />
+      <Text>{item.name}</Text>
+      <View style={{ flex: 1 }} />
+      {check && (
+        <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.secondary500} />
+      )}
     </TouchableOpacity>
   )
 }
 
 const $root: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.neutral000
+  backgroundColor: colors.neutral000,
 }
-const $viewItem : ViewStyle = {
-  paddingVertical: 12, 
-  backgroundColor: colors.neutral400,
-  marginTop: 12
+const $viewItem: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center",
+  backgroundColor: colors.neutral000,
+  padding: 12,
+  paddingHorizontal: 16,
+}
+const $listView: ViewStyle = {
+  height: configs.windowHeight,
+  backgroundColor: colors.neutral000,
+  ...configs.shadow,
+}
+const $image: ImageStyle = {
+  width: 30,
+  height: 30,
+  borderRadius: 15,
+  marginRight: 12,
 }

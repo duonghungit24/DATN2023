@@ -26,9 +26,9 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
     setTimeout(() => {
       navigation.reset({
         index: 0,
-        routes: [{ name: "bottomTab" }],
+        routes: [{ name: "chooseLanguageScreen" }],
       })
-    }, 2000);
+    }, 3000);
   }, [])
 
   // Pull in navigation via hook

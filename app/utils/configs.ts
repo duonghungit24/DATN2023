@@ -26,4 +26,22 @@ export const configs = {
     shadowRadius: 3.84,
     elevation: 10,
   },
+  LIST_LANGUAGE: [
+    {
+      type: "vi",
+      name: "Vietnamese"
+    },
+    {
+      type: "en",
+      name: "English"
+    },
+    {
+      type: "ja",
+      name: "Japanese"
+    },
+    {
+      type: "ko",
+      name: "Korean"
+    },
+  ]
 }

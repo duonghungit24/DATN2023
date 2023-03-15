@@ -21,10 +21,10 @@ export type DemoTabParamList = {
  *
  * More info: https://reactnavigation.org/docs/typescript/#organizing-types
  */
-export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<DemoTabParamList, T>,
-  AppStackScreenProps<keyof AppStackParamList>
->
+// export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScreenProps<
+//   BottomTabScreenProps<DemoTabParamList, T>,
+//   AppStackScreenProps<keyof AppStackParamList>
+// >
 
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 
@@ -41,6 +41,7 @@ export function BottomTabNavigator() {
         tabBarInactiveTintColor: colors.border,
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
+        
       }}
     >
       <Tab.Screen

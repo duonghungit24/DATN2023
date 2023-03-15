@@ -1,4 +1,7 @@
 const en = {
+  chonngonngu: "Select language",
+  tieptuc: "Continue",
+  ngonngu: "Language",
   common: {
     ok: "OK!",
     cancel: "Cancel",
@@ -26,4 +29,4 @@ const en = {
 }
 
 export default en
-export type Translations = typeof en
+

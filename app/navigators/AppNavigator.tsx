@@ -18,7 +18,8 @@ import Config from "../config"
 import {
   SplashScreen,
   SecurityScreen,
-  ChangeLanguageScreen
+  ChangeLanguageScreen,
+  ChooseLanguageScreen
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -40,9 +41,10 @@ export type AppStackParamList = {
   Welcome: undefined
   // 🔥 Your screens go here
   splashScreen: undefined
-  bottomTab: undefined
   securityScreen: undefined
   changeLanguageScreen: undefined
+  chooseLanguageScreen: undefined
+  bottomTab: undefined
 }
 
 /**
@@ -66,6 +68,7 @@ const AppStack = observer(function AppStack() {
       initialRouteName="splashScreen"
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
+      <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen}/>
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
       <Stack.Screen name="securityScreen" component={SecurityScreen} />
       <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />
@@ -84,7 +87,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   return (
     <NavigationContainer
       ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      // theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
       <AppStack />

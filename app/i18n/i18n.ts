@@ -2,10 +2,11 @@ import i18n from "i18n-js"
 import { I18nManager } from "react-native"
 
 // if English isn't your default language, move Translations to the appropriate language file.
-import en, { Translations } from "./en"
+import en from "./en"
 import ar from "./ar"
 import ko from "./ko"
-import vi from "./vi"
+import vi, {Translations} from "./vi"
+import ja from "./ja"
 
 // i18n.fallbacks = true
 /**
@@ -13,7 +14,7 @@ import vi from "./vi"
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
  * if you change to another language and then return to English language code is now "en-US".
  */
-i18n.translations = { ar, en, "en-US": en, ko , vi}
+i18n.translations = { ar, en, "en-US": en, ko , vi, ja}
 
 i18n.locale = "vi"
 

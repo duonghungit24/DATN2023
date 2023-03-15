@@ -1,6 +1,7 @@
-import { Translations } from "./en"
 
-const ko: Translations = {
+const ko = {
+  chonngonngu: "Chọn ngôn ngữ",
+  tieptuc: "Tiếp tục",
   common: {
     ok: "확인!",
     cancel: "취소",

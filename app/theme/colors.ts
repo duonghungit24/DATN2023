@@ -2,7 +2,7 @@
 
 const palette = {
   neutral000: "#FFFFFF",
-  neutral100: "#FFFFFF",
+  neutral100: "#F9F9F9",
   neutral200: "#F4F2F1",
   neutral300: "#D7CEC9",
   neutral400: "#B6ACA6",
@@ -11,6 +11,7 @@ const palette = {
   neutral700: "#3C3836",
   neutral800: "#191015",
   neutral900: "#000000",
+  
 
   primary100: "#F4E0D9",
   primary200: "#E8C1B4",

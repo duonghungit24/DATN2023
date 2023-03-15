@@ -4,7 +4,7 @@ import i18n from "i18n-js"
 /**
  * Model description here for TypeScript hints.
  */
-type Language = "vi" | "ar" | "en"
+type Language = "vi" | "ko" | "en" | "ja"
 export const LanguagestoreModel = types
   .model("Languagestore")
   .props({

@@ -3,7 +3,9 @@ import moment from "moment"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
+  AgendaCalendar,
   Button,
+  Header,
   Text, VectorsIcon,
 } from "../components"
 import { isRTL } from "../i18n"
@@ -25,16 +27,15 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   return (
     <View style={$container}>
-       <Text tx="common.ok" />
-       <VectorsIcon type="Feather" name="search" />
-       <Button onPress={() => languageStore.setLanguage("en") } style={$welcomeFace}/>
+      <Header backgroundColor={colors.neutral000} />
+       <AgendaCalendar />
     </View>
   )
 })
 
 const $container: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background,
+  backgroundColor: colors.neutral000,
 }
 
 const $topContainer: ViewStyle = {

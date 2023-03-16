@@ -53,14 +53,14 @@ export function BottomTabNavigator() {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="notificationScreen"
         component={WelcomeScreen}
         options={{
           tabBarLabel: "Thông báo",
           tabBarIcon: ({ focused }) => <VectorsIcon type="Feather" name="bell" size={25} color={focused ? colors.primary500 : colors.border} />,
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="settingScreen"

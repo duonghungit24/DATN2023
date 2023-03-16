@@ -62,7 +62,7 @@ const ItemLanguage = ({ item, check, onPress }) => {
   return (
     <TouchableOpacity style={$viewItem} onPress={onPress} activeOpacity={0.7}>
       <Image
-        source={{ uri: "https://cdn-icons-png.flaticon.com/512/323/323319.png" }}
+        source={item.image}
         style={$image}
       />
       <Text>{item.name}</Text>

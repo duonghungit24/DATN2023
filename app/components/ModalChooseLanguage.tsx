@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { FlatList, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { FlatList, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle, Image, ImageStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
@@ -65,10 +65,12 @@ export const ModalChooseLanguage = observer(function ModalChooseLanguage(
   )
 })
 
-const ItemLanguage = ({ item, check, onPress }: any) => {
+const ItemLanguage = ({ item, check, onPress, image }: any) => {
   return (
     <TouchableOpacity style={$viewBtn} onPress={onPress}>
+      <Image source={item.image} style={$image} />
       <Text style={$name}>{item.name}</Text>
+      <View style={{flex: 1}}/>
       {check && (
         <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.primary600} />
       )}
@@ -94,11 +96,16 @@ const $title: TextStyle = {
 }
 const $viewBtn: ViewStyle = {
   flexDirection: "row",
-  justifyContent: "space-between",
   alignItems: "center",
   padding: 12,
 }
 const $name: TextStyle = {
   fontSize: 14,
   color: colors.neutral800,
+}
+const $image : ImageStyle = {
+  height: 30,
+  width: 30,
+  borderRadius: 15,
+  marginRight:12
 }

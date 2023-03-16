@@ -1,3 +1,4 @@
+import { iconLanguage } from './../theme/image';
 import { Dimensions, Platform } from "react-native"
 // Size Iphone 11 pro
 const guidelineBaseWidth = 375
@@ -29,19 +30,23 @@ export const configs = {
   LIST_LANGUAGE: [
     {
       type: "vi",
-      name: "Vietnamese"
+      name: "Vietnamese",
+      image: iconLanguage.iconVn
     },
     {
       type: "en",
-      name: "English"
+      name: "English",
+      image: iconLanguage.iconEn
     },
     {
       type: "ja",
-      name: "Japanese"
+      name: "Japanese",
+      image: iconLanguage.iconJa
     },
     {
       type: "ko",
-      name: "Korean"
+      name: "Korean",
+      image: iconLanguage.iconKo
     },
   ]
 }

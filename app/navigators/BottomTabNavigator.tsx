@@ -5,8 +5,9 @@ import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon, VectorsIcon } from "../components"
 import { translate } from "../i18n"
-import { WelcomeScreen , SettingScreen} from "../screens"
+import { WelcomeScreen, SettingScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
+import { configs } from "../utils/configs"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
@@ -14,6 +15,7 @@ export type DemoTabParamList = {
   notificationScreen: undefined
   accountScreen: undefined
   settingScreen: undefined
+  changllengeScreen: undefined
 }
 
 /**
@@ -36,38 +38,74 @@ export function BottomTabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [$tabBar, { height: bottom + 60 }],
+        tabBarStyle: [$tabBar],
         tabBarActiveTintColor: colors.primary500,
         tabBarInactiveTintColor: colors.border,
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
-        
       }}
     >
       <Tab.Screen
         name="homeScreen"
         component={WelcomeScreen}
         options={{
-          tabBarLabel: "Trang chủ",
-          tabBarIcon: ({ focused }) => <VectorsIcon type="Feather" name="home" size={25} color={focused ? colors.primary500 : colors.border} />,
+          tabBarLabel: "Lịch",
+          tabBarIcon: ({ focused }) => (
+            <VectorsIcon
+              type="AntDesign"
+              name="calendar"
+              size={25}
+              color={focused ? colors.primary500 : colors.border}
+            />
+          ),
         }}
       />
 
-      {/* <Tab.Screen
+      <Tab.Screen
         name="notificationScreen"
         component={WelcomeScreen}
         options={{
-          tabBarLabel: "Thông báo",
-          tabBarIcon: ({ focused }) => <VectorsIcon type="Feather" name="bell" size={25} color={focused ? colors.primary500 : colors.border} />,
+          tabBarLabel: "Quản lý",
+          tabBarIcon: ({ focused }) => (
+            <VectorsIcon
+              type="AntDesign"
+              name="exception1"
+              size={25}
+              color={focused ? colors.primary500 : colors.border}
+            />
+          ),
         }}
-      /> */}
+      />
+
+      <Tab.Screen
+        name="changllengeScreen"
+        component={WelcomeScreen}
+        options={{
+          tabBarLabel: "Thử thách",
+          tabBarIcon: ({ focused }) => (
+            <VectorsIcon
+              type="FontAwesome5"
+              name="balance-scale"
+              size={25}
+              color={focused ? colors.primary500 : colors.border}
+            />
+          ),
+        }}
+      />
 
       <Tab.Screen
         name="settingScreen"
         component={SettingScreen}
         options={{
           tabBarLabel: "Cài đặt",
-          tabBarIcon: ({ focused }) => <VectorsIcon type="Ionicons" name="person" size={25} color={focused ? colors.primary500 : colors.border} />,
+          tabBarIcon: ({ focused }) => (
+            <VectorsIcon
+              type="MaterialIcons"
+              name="settings"
+              size={25}
+              color={focused ? colors.primary500 : colors.border}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -75,25 +113,19 @@ export function BottomTabNavigator() {
 }
 
 const $tabBar: ViewStyle = {
-  backgroundColor: colors.neutral100,
+  backgroundColor: colors.neutral000,
   borderTopColor: colors.transparent,
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5,
+  ...configs.shadow,
+  height: 60,
+  alignContent: "center"
 }
 
 const $tabBarItem: ViewStyle = {
-  paddingTop: spacing.medium,
+    bottom: 0
 }
 
 const $tabBarLabel: TextStyle = {
-  fontSize: 10,
+  fontSize: 12,
   fontFamily: typography.primary.medium,
-  lineHeight: 16,
-  flex: 1,
+  flex: 1
 }

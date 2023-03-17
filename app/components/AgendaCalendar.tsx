@@ -151,8 +151,6 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
 const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
   const fontSize = isFirst ? 16 : 14;
   const color = isFirst ? "black" : "#43515c";
-  console.log("reser", reservation)
-  console.log("isFirst", isFirst)
   return (
     <Pressable
       style={[$item, { height: reservation.height }]}

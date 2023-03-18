@@ -136,6 +136,7 @@ const $baseViewStyle: ViewStyle = {
 
 const $baseTextStyle: TextStyle = {
   fontSize: 16,
+  color: colors.neutral000,
   lineHeight: 20,
   fontFamily: typography.primary.medium,
   textAlign: "center",
@@ -153,7 +154,7 @@ const $viewPresets = {
     {
       borderWidth: 1,
       borderColor: colors.neutral400,
-      backgroundColor: colors.neutral100,
+      backgroundColor: colors.primary500,
     },
   ] as StyleProp<ViewStyle>,
 

@@ -3,6 +3,7 @@ const en = {
   tieptuc: "Continue",
   ngonngu: "Language",
   caidat: "Setting",
+  batdau: "Start",
   common: {
     ok: "OK!",
     cancel: "Cancel",

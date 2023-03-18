@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { TouchableOpacity, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Screen, Text } from "../components"
+import { Header, Screen, Text } from "../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -24,7 +24,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="fixed">
-      <Text text="setting" />
+      <Header />
       <TouchableOpacity style={{paddingHorizontal: 16, backgroundColor: "red"}} onPress={() => navigation.navigate("changeLanguageScreen")}>
         <Text style={{fontSize: 20}}>ok</Text>
       </TouchableOpacity>

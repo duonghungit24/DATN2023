@@ -28,7 +28,7 @@ export const ChooseLanguageScreen: FC<StackScreenProps<AppStackScreenProps, "Cho
     // Pull in navigation via hook
     // const navigation = useNavigation()
     const nextScreen = () => {
-      navigation.navigate("bottomTab")
+      navigation.navigate("onboardingScreen")
     }
     return (
       <Screen style={$root} preset="fixed">

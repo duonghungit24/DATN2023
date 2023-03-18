@@ -7,6 +7,7 @@ const vi = {
   lich: "Lịch",
   quanly: "Quản lý",
   thuthach: "Thử thách",
+  batdau:"Bắt đầu",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

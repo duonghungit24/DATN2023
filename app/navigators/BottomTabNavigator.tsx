@@ -1,7 +1,8 @@
 import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { NavigationContainer } from "@react-navigation/native"
 import lastDayOfDecade from "date-fns/fp/lastDayOfDecade/index"
-import React, { useCallback, useRef } from "react"
+import { onSnapshot } from "mobx-state-tree"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import {
   Animated,
   TextStyle,
@@ -10,7 +11,8 @@ import {
   ViewStyle,
 } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { Icon, VectorsIcon, Text } from "../components"
+import {  VectorsIcon, Text } from "../components"
+import { useStores } from "../models"
 import { WelcomeScreen, SettingScreen, SecurityScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
@@ -38,8 +40,17 @@ export type DemoTabParamList = {
 const Tab = createBottomTabNavigator<DemoTabParamList>()
 
 export function BottomTabNavigator() {
-  const { bottom } = useSafeAreaInsets()
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
+  // const { languageStore } = useStores()
+  // const [refresh, setRefresh] = useState(false)
+  // useEffect(() => {
+  //   onSnapshot(languageStore, (snap) => {
+  //     console.log("ok", snap)
+  //     setRefresh(!refresh)
+  //   })
+  // }, [languageStore.language])
+
+
  
   const getIndex = (route) => {
    const dataRoute = ["homeScreen","notificationScreen","","changllengeScreen","settingScreen"]
@@ -50,7 +61,6 @@ export function BottomTabNavigator() {
 
   return (
   <>
- 
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -147,8 +157,7 @@ export function BottomTabNavigator() {
         height: 2,
         backgroundColor: 'red',
         position: 'absolute',
-        bottom: 60,
-        // Horizontal Padding = 20...
+        bottom: configs.windowHeight / 12,
         left: 0,
         borderRadius: 20,
         transform: [
@@ -189,13 +198,13 @@ function EmptyScreen() {
     </View>
   );
 }
-
 const $tabBar: ViewStyle = {
   backgroundColor: colors.neutral000,
   borderTopColor: colors.transparent,
   ...configs.shadow,
-  height: 60,
   justifyContent: "center",
+  paddingTop: 12,
+  height: configs.windowHeight / 12
 }
 const $viewItem: ViewStyle = {
   alignItems: "center",
@@ -211,7 +220,7 @@ const $btnAdd: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "red",
-  top: -30,
+  top: -42,
   width: 60,
   height: 60,
   borderRadius: 30,

@@ -2,6 +2,7 @@ const en = {
   chonngonngu: "Select language",
   tieptuc: "Continue",
   ngonngu: "Language",
+  caidat: "Setting",
   common: {
     ok: "OK!",
     cancel: "Cancel",

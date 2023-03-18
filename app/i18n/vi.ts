@@ -3,6 +3,10 @@ const vi = {
   chonngonngu: "Chọn ngôn ngữ",
   ngonngu: "Ngôn ngữ",
   tieptuc: "Tiếp tục",
+  caidat: "Cài đặt",
+  lich: "Lịch",
+  quanly: "Quản lý",
+  thuthach: "Thử thách",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

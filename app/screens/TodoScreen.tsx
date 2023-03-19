@@ -9,14 +9,14 @@ import { Screen, Text } from "../components"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
-// - Add `Memoscreen: undefined` to AppStackParamList
+// - Add `Todo: undefined` to AppStackParamList
 // - Import your screen, and add it to the stack:
-//     `<Stack.Screen name="Memoscreen" component={MemoscreenScreen} />`
+//     `<Stack.Screen name="Todo" component={TodoScreen} />`
 // Hint: Look for the 🔥!
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">> = observer(function MemoscreenScreen() {
+export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = observer(function TodoScreen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
 
@@ -24,7 +24,7 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="scroll">
-      <Text text="memoscreen" />
+      <Text text="todo" />
     </Screen>
   )
 })

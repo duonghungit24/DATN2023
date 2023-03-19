@@ -20,7 +20,10 @@ import {
   SecurityScreen,
   ChangeLanguageScreen,
   ChooseLanguageScreen,
-  OnboardingScreen
+  OnboardingScreen,
+  TodoScreen,
+  MemoScreen,
+  DiaryScreen
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -47,6 +50,9 @@ export type AppStackParamList = {
   chooseLanguageScreen: undefined
   bottomTab: undefined
   onboardingScreen : undefined
+  TodoScreen: undefined
+  MemoScreen: undefined
+  DiaryScreen:  undefined
 }
 
 /**
@@ -73,6 +79,7 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="onboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen}/>
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
+      <Stack.Screen name="MemoScreen" component={MemoScreen} />
       <Stack.Screen name="securityScreen" component={SecurityScreen} />
       <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />
       {/** 🔥 Your screens go here */}

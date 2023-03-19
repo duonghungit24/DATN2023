@@ -94,7 +94,7 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
 function navigationRestoredDefaultState(persistNavigation: PersistNavigationConfig) {
   if (persistNavigation === "always") return false
   // config route name moi truong dev
-    // if (persistNavigation === "dev" && __DEV__) return false
+  if (persistNavigation === "dev" && __DEV__) return false
   if (persistNavigation === "prod" && !__DEV__) return false
 
   // all other cases, disable restoration by returning true

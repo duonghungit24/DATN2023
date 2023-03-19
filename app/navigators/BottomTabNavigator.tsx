@@ -13,7 +13,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {  VectorsIcon, Text } from "../components"
 import { useStores } from "../models"
-import { WelcomeScreen, SettingScreen, SecurityScreen } from "../screens"
+import { WelcomeScreen, SettingScreen, SecurityScreen, MemoScreen, ChangllengeScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
 import { getActiveRouteName, navigationRef } from "./navigationUtilities"
@@ -96,7 +96,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="notificationScreen"
-        component={WelcomeScreen}
+        component={MemoScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom
@@ -125,7 +125,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="changllengeScreen"
-        component={WelcomeScreen}
+        component={ChangllengeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom

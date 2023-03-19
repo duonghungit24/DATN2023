@@ -84,3 +84,15 @@ export const colors = {
    */
   errorBackground: palette.angry100,
 }
+
+export const colorRandomItem = [
+  '#637aff',
+  '#60c5a8',
+  '#CCCCCC',
+  '#ff5454',
+  '#039a83',
+  '#dcb834',
+  '#8f06e4',
+  'skyblue',
+  '#ff4c98',
+]

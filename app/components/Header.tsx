@@ -78,6 +78,7 @@ export interface HeaderProps {
    * Overrides `leftIcon`, `leftTx` and `leftText`.
    */
   LeftActionComponent?: ReactElement
+
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
@@ -120,6 +121,8 @@ export interface HeaderProps {
    * What happens when you press the right icon or text action.
    */
   onRightPress?: TouchableOpacityProps["onPress"]
+
+  CenterActionComponent?: ReactElement
   /**
    * Override the default edges for the safe area.
    */
@@ -175,6 +178,7 @@ export function Header(props: HeaderProps) {
     containerStyle: $containerStyleOverride,
     typeIconLeft,
     typeIconRight,
+    CenterActionComponent
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
@@ -196,7 +200,7 @@ export function Header(props: HeaderProps) {
           ActionComponent={LeftActionComponent}
         />
 
-        {!!titleContent && (
+        {!!titleContent ? (
           <View
             style={[
               titleMode === "center" && $titleWrapperCenter,
@@ -212,7 +216,11 @@ export function Header(props: HeaderProps) {
               style={[$title, $titleStyleOverride]}
             />
           </View>
-        )}
+        ):     
+        CenterActionComponent
+        }
+
+           
 
         <HeaderAction
           tx={rightTx}

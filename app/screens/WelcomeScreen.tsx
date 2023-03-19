@@ -27,7 +27,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   return (
     <View style={$container}>
-      <Header backgroundColor={colors.neutral000} />
+      <Header backgroundColor="red" />
        <AgendaCalendar />
     </View>
   )

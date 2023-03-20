@@ -63,6 +63,9 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Merriweather-Black.ttf</string>
+		<string>Mukta-Bold.ttf</string>
+		<string>NotoSans-Bold.ttf</string>
 		<string>GoogleSans-Bold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

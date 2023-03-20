@@ -14,6 +14,20 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		4CFF1260346E0CBA7B1D42F5 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8B2EB368A96A9276BC332 /* ExpoModulesProvider.swift */; };
 		7699B88040F8A987B510C191 /* libPods-NoteTimeDiary-NoteTimeDiaryTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NoteTimeDiary-NoteTimeDiaryTests.a */; };
+		BA23233029C8C6C300717DE7 /* Mukta-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232229C8C6C200717DE7 /* Mukta-Medium.ttf */; };
+		BA23233129C8C6C300717DE7 /* NotoSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232329C8C6C200717DE7 /* NotoSans-Medium.ttf */; };
+		BA23233229C8C6C300717DE7 /* NotoSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232429C8C6C200717DE7 /* NotoSans-Light.ttf */; };
+		BA23233329C8C6C300717DE7 /* NotoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232529C8C6C200717DE7 /* NotoSans-SemiBold.ttf */; };
+		BA23233429C8C6C300717DE7 /* Merriweather-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232629C8C6C300717DE7 /* Merriweather-Light.ttf */; };
+		BA23233529C8C6C300717DE7 /* Merriweather-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232729C8C6C300717DE7 /* Merriweather-Bold.ttf */; };
+		BA23233629C8C6C300717DE7 /* Merriweather-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232829C8C6C300717DE7 /* Merriweather-Black.ttf */; };
+		BA23233729C8C6C300717DE7 /* Mukta-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232929C8C6C300717DE7 /* Mukta-Bold.ttf */; };
+		BA23233829C8C6C300717DE7 /* Mukta-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232A29C8C6C300717DE7 /* Mukta-Regular.ttf */; };
+		BA23233929C8C6C300717DE7 /* Mukta-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232B29C8C6C300717DE7 /* Mukta-SemiBold.ttf */; };
+		BA23233A29C8C6C300717DE7 /* NotoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232C29C8C6C300717DE7 /* NotoSans-Bold.ttf */; };
+		BA23233B29C8C6C300717DE7 /* Mukta-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232D29C8C6C300717DE7 /* Mukta-Light.ttf */; };
+		BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */; };
+		BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */; };
 		BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */; };
 		BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE406F552862D73000A81E39 /* BootSplash.storyboard */; };
 		DBFA6CAD6EA98F4FD0764555 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E126E0F4F6974883130B6A3 /* ExpoModulesProvider.swift */; };
@@ -47,6 +61,34 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-NoteTimeDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NoteTimeDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EF8B2EB368A96A9276BC332 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-NoteTimeDiary-NoteTimeDiaryTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig"; path = "Target Support Files/Pods-NoteTimeDiary-NoteTimeDiaryTests/Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig"; sourceTree = "<group>"; };
+		BA23230629C8C1C200717DE7 /* NotoSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Light.ttf"; path = "../assets/fonts/NotoSans-Light.ttf"; sourceTree = "<group>"; };
+		BA23230729C8C1C200717DE7 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Regular.ttf"; path = "../assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		BA23230829C8C1C200717DE7 /* Merriweather-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Light.ttf"; path = "../assets/fonts/Merriweather-Light.ttf"; sourceTree = "<group>"; };
+		BA23230929C8C1C200717DE7 /* Merriweather-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Black.ttf"; path = "../assets/fonts/Merriweather-Black.ttf"; sourceTree = "<group>"; };
+		BA23230A29C8C1C200717DE7 /* Mukta-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-SemiBold.ttf"; path = "../assets/fonts/Mukta-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA23230B29C8C1C200717DE7 /* Merriweather-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Bold.ttf"; path = "../assets/fonts/Merriweather-Bold.ttf"; sourceTree = "<group>"; };
+		BA23230C29C8C1C200717DE7 /* Mukta-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Medium.ttf"; path = "../assets/fonts/Mukta-Medium.ttf"; sourceTree = "<group>"; };
+		BA23230D29C8C1C200717DE7 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Bold.ttf"; path = "../assets/fonts/NotoSans-Bold.ttf"; sourceTree = "<group>"; };
+		BA23230E29C8C1C200717DE7 /* Mukta-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Regular.ttf"; path = "../assets/fonts/Mukta-Regular.ttf"; sourceTree = "<group>"; };
+		BA23230F29C8C1C200717DE7 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Regular.ttf"; path = "../assets/fonts/Merriweather-Regular.ttf"; sourceTree = "<group>"; };
+		BA23231029C8C1C200717DE7 /* NotoSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Medium.ttf"; path = "../assets/fonts/NotoSans-Medium.ttf"; sourceTree = "<group>"; };
+		BA23231129C8C1C200717DE7 /* NotoSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-SemiBold.ttf"; path = "../assets/fonts/NotoSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA23231229C8C1C200717DE7 /* Mukta-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Bold.ttf"; path = "../assets/fonts/Mukta-Bold.ttf"; sourceTree = "<group>"; };
+		BA23231329C8C1C200717DE7 /* Mukta-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Light.ttf"; path = "../assets/fonts/Mukta-Light.ttf"; sourceTree = "<group>"; };
+		BA23232229C8C6C200717DE7 /* Mukta-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Medium.ttf"; path = "../assets/fonts/Mukta-Medium.ttf"; sourceTree = "<group>"; };
+		BA23232329C8C6C200717DE7 /* NotoSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Medium.ttf"; path = "../assets/fonts/NotoSans-Medium.ttf"; sourceTree = "<group>"; };
+		BA23232429C8C6C200717DE7 /* NotoSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Light.ttf"; path = "../assets/fonts/NotoSans-Light.ttf"; sourceTree = "<group>"; };
+		BA23232529C8C6C200717DE7 /* NotoSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-SemiBold.ttf"; path = "../assets/fonts/NotoSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA23232629C8C6C300717DE7 /* Merriweather-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Light.ttf"; path = "../assets/fonts/Merriweather-Light.ttf"; sourceTree = "<group>"; };
+		BA23232729C8C6C300717DE7 /* Merriweather-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Bold.ttf"; path = "../assets/fonts/Merriweather-Bold.ttf"; sourceTree = "<group>"; };
+		BA23232829C8C6C300717DE7 /* Merriweather-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Black.ttf"; path = "../assets/fonts/Merriweather-Black.ttf"; sourceTree = "<group>"; };
+		BA23232929C8C6C300717DE7 /* Mukta-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Bold.ttf"; path = "../assets/fonts/Mukta-Bold.ttf"; sourceTree = "<group>"; };
+		BA23232A29C8C6C300717DE7 /* Mukta-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Regular.ttf"; path = "../assets/fonts/Mukta-Regular.ttf"; sourceTree = "<group>"; };
+		BA23232B29C8C6C300717DE7 /* Mukta-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-SemiBold.ttf"; path = "../assets/fonts/Mukta-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA23232C29C8C6C300717DE7 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Bold.ttf"; path = "../assets/fonts/NotoSans-Bold.ttf"; sourceTree = "<group>"; };
+		BA23232D29C8C6C300717DE7 /* Mukta-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mukta-Light.ttf"; path = "../assets/fonts/Mukta-Light.ttf"; sourceTree = "<group>"; };
+		BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Regular.ttf"; path = "../assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Regular.ttf"; path = "../assets/fonts/Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GoogleSans-Bold.otf"; path = "../assets/fonts/GoogleSans-Bold.otf"; sourceTree = "<group>"; };
 		BE406F552862D73000A81E39 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = NoteTimeDiary/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -122,6 +164,34 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BA23230929C8C1C200717DE7 /* Merriweather-Black.ttf */,
+				BA23232829C8C6C300717DE7 /* Merriweather-Black.ttf */,
+				BA23230B29C8C1C200717DE7 /* Merriweather-Bold.ttf */,
+				BA23232729C8C6C300717DE7 /* Merriweather-Bold.ttf */,
+				BA23230829C8C1C200717DE7 /* Merriweather-Light.ttf */,
+				BA23230F29C8C1C200717DE7 /* Merriweather-Regular.ttf */,
+				BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */,
+				BA23231229C8C1C200717DE7 /* Mukta-Bold.ttf */,
+				BA23231329C8C1C200717DE7 /* Mukta-Light.ttf */,
+				BA23232629C8C6C300717DE7 /* Merriweather-Light.ttf */,
+				BA23232929C8C6C300717DE7 /* Mukta-Bold.ttf */,
+				BA23232D29C8C6C300717DE7 /* Mukta-Light.ttf */,
+				BA23230C29C8C1C200717DE7 /* Mukta-Medium.ttf */,
+				BA23230E29C8C1C200717DE7 /* Mukta-Regular.ttf */,
+				BA23230A29C8C1C200717DE7 /* Mukta-SemiBold.ttf */,
+				BA23230D29C8C1C200717DE7 /* NotoSans-Bold.ttf */,
+				BA23232A29C8C6C300717DE7 /* Mukta-Regular.ttf */,
+				BA23232B29C8C6C300717DE7 /* Mukta-SemiBold.ttf */,
+				BA23232C29C8C6C300717DE7 /* NotoSans-Bold.ttf */,
+				BA23230629C8C1C200717DE7 /* NotoSans-Light.ttf */,
+				BA23232429C8C6C200717DE7 /* NotoSans-Light.ttf */,
+				BA23231029C8C1C200717DE7 /* NotoSans-Medium.ttf */,
+				BA23230729C8C1C200717DE7 /* NotoSans-Regular.ttf */,
+				BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */,
+				BA23231129C8C1C200717DE7 /* NotoSans-SemiBold.ttf */,
+				BA23232229C8C6C200717DE7 /* Mukta-Medium.ttf */,
+				BA23232329C8C6C200717DE7 /* NotoSans-Medium.ttf */,
+				BA23232529C8C6C200717DE7 /* NotoSans-SemiBold.ttf */,
 				BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */,
 				13B07FAE1A68108700A75B9A /* NoteTimeDiary */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -275,6 +345,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA23233029C8C6C300717DE7 /* Mukta-Medium.ttf in Resources */,
+				BA23233129C8C6C300717DE7 /* NotoSans-Medium.ttf in Resources */,
+				BA23233229C8C6C300717DE7 /* NotoSans-Light.ttf in Resources */,
+				BA23233329C8C6C300717DE7 /* NotoSans-SemiBold.ttf in Resources */,
+				BA23233429C8C6C300717DE7 /* Merriweather-Light.ttf in Resources */,
+				BA23233529C8C6C300717DE7 /* Merriweather-Bold.ttf in Resources */,
+				BA23233629C8C6C300717DE7 /* Merriweather-Black.ttf in Resources */,
+				BA23233729C8C6C300717DE7 /* Mukta-Bold.ttf in Resources */,
+				BA23233829C8C6C300717DE7 /* Mukta-Regular.ttf in Resources */,
+				BA23233929C8C6C300717DE7 /* Mukta-SemiBold.ttf in Resources */,
+				BA23233A29C8C6C300717DE7 /* NotoSans-Bold.ttf in Resources */,
+				BA23233B29C8C6C300717DE7 /* Mukta-Light.ttf in Resources */,
+				BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */,
+				BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */,
 				BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */,
 				BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,

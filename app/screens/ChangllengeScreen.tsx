@@ -77,7 +77,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       <Text text="changllenge" />
       <Header />
       <View style={{height: 50}}>
-      <Text>Calendar Module Example</Text>
+      <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
     </Screen>

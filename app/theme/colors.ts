@@ -37,6 +37,7 @@ const palette = {
 
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
+
 } as const
 
 export const colors = {
@@ -83,6 +84,10 @@ export const colors = {
    *
    */
   errorBackground: palette.angry100,
+  event: "#039a83",
+  memo:   '#dcb834',
+  todo:  '#ff4c98',
+  diary: '#637aff',
 }
 
 export const colorRandomItem = [

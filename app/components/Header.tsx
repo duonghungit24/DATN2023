@@ -191,7 +191,7 @@ export function Header(props: HeaderProps) {
         <HeaderAction
           tx={leftTx}
           text={leftText}
-          iconName={leftIcon}
+          iconName={leftIcon }
           typeIcon={typeIconLeft}
           iconColor={leftIconColor}
           onPress={onLeftPress}
@@ -274,7 +274,8 @@ function HeaderAction(props: HeaderActionProps) {
         onPress={onPress}
         style={$actionIconContainer}
         disabled={!onPress}
-        activeOpacity={0.8}
+        activeOpacity={0.5}
+        hitSlop={{top: 10, bottom:10, right: 10, left: 10}}
       >
         <VectorsIcon size={20} type={typeIcon || "Feather"} name={iconName} color={iconColor} />
       </TouchableOpacity>

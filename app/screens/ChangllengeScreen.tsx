@@ -1,9 +1,9 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Button, Platform, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text } from "../components"
+import { Header, ModalChoosePlan, Screen, Text } from "../components"
 import * as Calendar from 'expo-calendar';
 import moment from "moment"
 // import { useNavigation } from "@react-navigation/native"
@@ -56,6 +56,7 @@ async function createCalendar() {
 export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changllenge">> = observer(function ChangllengeScreen() {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
+  const [isVisible, setIsvisible] = useState(false)
   useEffect(() => {
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
@@ -74,11 +75,12 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="scroll">
-      <Text text="changllenge" />
+      <ModalChoosePlan isVisible={isVisible} onBackDropPress={() => setIsvisible(false)} />
       <Header />
       <View style={{height: 50}}>
       <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
+      <Button title="openmodal" onPress={() => setIsvisible(true)} />
     </View>
     </Screen>
   )

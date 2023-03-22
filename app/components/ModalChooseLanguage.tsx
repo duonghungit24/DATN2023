@@ -8,7 +8,6 @@ import { configs } from "../utils/configs"
 import { ItemSerapator } from "./ItemSerapator"
 import { VectorsIcon } from "./Vectoricon"
 import { useStores } from "../models"
-import { values } from "mobx"
 
 export interface ModalChooseLanguageProps {
   /**

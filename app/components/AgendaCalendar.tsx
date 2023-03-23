@@ -4,44 +4,104 @@ import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
 import { Agenda, AgendaEntry, AgendaSchedule, LocaleConfig } from "react-native-calendars"
+import { useStores } from "../models"
 
-LocaleConfig.locales["fr"] = {
-  monthNames: [
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-    "Décembre",
-  ],
-  monthNamesShort: [
-    "Janv.",
-    "Févr.",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juil.",
-    "Août",
-    "Sept.",
-    "Oct.",
-    "Nov.",
-    "Déc.",
-  ],
-  dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-  dayNamesShort: ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."],
-  today: "Aujourd'hui",
-}
-LocaleConfig.defaultLocale = "fr"
+const hourPickerLocales = {
+  vi: {
+    monthNames: [
+      'Tháng 1',
+      'Tháng 2',
+      'Tháng 3',
+      'Tháng 4',
+      'Tháng 5',
+      'Tháng 6',
+      'Tháng 7',
+      'Tháng 8',
+      'Tháng 9',
+      'Tháng 10',
+      'Tháng 11',
+      'Tháng 12',
+    ],
+    monthNamesShort: [
+      'T.1',
+      'T.2',
+      'T.3',
+      'T.4',
+      'T.5',
+      'T.6',
+      'T.7',
+      'T.8',
+      'T.9',
+      'T.10',
+      'T.11',
+      'T.12',
+    ],
+    dayNames: [
+      'Chủ nhật',
+      'Thứ hai',
+      'Thứ ba',
+      'Thứ tư',
+      'Thứ năm',
+      'Thứ sáu',
+      'Thứ bảy',
+    ],
+    dayNamesShort: [     
+      'CN',
+      'T2',
+      'T3',
+      'T4',
+      'T5',
+      'T6',
+      'T7',],
+    today: 'Hoje',
+  },
+  en: {
+    amDesignator: 'AM',
+    dayNames: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    monthNames: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthNamesShort: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    pmDesignator: 'PM',
+  },
+};
+
 const data = {
   "2022-11-23": [],
-  "2022-11-24": [
+  "2023-03-19": [
     {
       "id": "1",
       "name": "Live: notJust.Hack Kickstart",
@@ -49,7 +109,7 @@ const data = {
       "day": "2022-11-24"
     }
   ],
-  "2022-11-25": [
+  "2023-03-20": [
     {
       "id": "2",
       "name": "Workshop: Build any mobile application with React Native",
@@ -63,7 +123,7 @@ const data = {
       "day": "2022-11-25"
     }
   ],
-  "2022-11-26": [
+  "2023-03-24": [
     {
       "id": "4",
       "name": "Workshop: Build a Chat application in hours using Stream",
@@ -77,7 +137,7 @@ const data = {
       "day": "2022-11-26"
     }
   ],
-  "2022-11-27": [
+  "2023-03-22": [
     {
       "id": "6",
       "name": "Workshop: Build Full-Stack applications with Nhost",
@@ -91,7 +151,7 @@ const data = {
       "day": "2022-11-27"
     }
   ],
-  "2022-11-28": [
+  "2023-03-23": [
     {
       "id": "8",
       "name": "Demo Day",
@@ -100,6 +160,9 @@ const data = {
     }
   ]
 }
+
+LocaleConfig.locales['vi'] = hourPickerLocales['vi'];
+LocaleConfig.locales['en'] = hourPickerLocales['en'];
 export interface AgendaCalendarProps {
   /**
    * An optional style override useful for padding & margin.
@@ -112,8 +175,15 @@ export interface AgendaCalendarProps {
  */
 export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCalendarProps) {
   const { style } = props
+  const {languageStore }  = useStores()
   const $styles = [$container, style]
 
+  // React.useLayoutEffect(() => {
+  //   LocaleConfig.defaultLocale = languageStore.language
+  // },[languageStore.language])
+  LocaleConfig.defaultLocale = languageStore.language
+
+ 
 //   const timeToString = (time) => {
 //     const date = new Date(time);
 //     return date.toISOString().split('T')[0];
@@ -162,12 +232,14 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
   return (
     <View style={$styles}>
       <Agenda
+       key={languageStore.language}
         // The list of items that have to be displayed in agenda. If you want to render item as empty date
         // the value of date key has to be an empty array []. If there exists no value for date key it is
         // considered that the date in question is not yet loaded
         items={data}
         renderItem={renderItem}
-        selected="2022-11-24"
+        selected="2023-03-20"
+      
         // Callback that gets called when items for a certain month should be loaded (month became visible)
         // loadItemsForMonth={(month) => {
         //   console.log("trigger items loading")
@@ -227,7 +299,8 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         // }}
         // // Specify your item comparison function for increased performance
         // rowHasChanged={(r1, r2) => {
-        //   return r1.name !== r2.name
+        //   console.log(console.log("r1", r1))
+        //    return r1.name !== r2.name
         // }}
         // // Hide knob button. Default = false
         // hideKnob={true}
@@ -257,6 +330,32 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
  
         // // Agenda container style
         // style={{ }}
+        // theme={{
+        //   backgroundColor: '#f1f2f6',
+        //   calendarBackground: '#ffffff',
+        //   textSectionTitleColor: '#b6c1cd',
+        //   selectedDayBackgroundColor: '#fff',
+        //   selectedDayTextColor: "red",
+        //   todayTextColor: '#00adf5',
+        //   dayTextColor: '#2d4150',
+        //   textDisabledColor: '#d9e1e8',
+        //   dotColor: '#00adf5',
+        //   selectedDotColor: '#ffffff',
+        //   arrowColor: 'orange',
+        //   monthTextColor: "red",
+        //   indicatorColor: 'blue',
+        //   textDayFontWeight: '300',
+        //   textMonthFontWeight: 'bold',
+        //   textDayHeaderFontWeight: '300',
+        //   textDayFontSize: 20,
+        //   textMonthFontSize: 17,
+        //   textDayHeaderFontSize: 17,
+        //   agendaDayTextColor: 'yellow',
+        //   agendaDayNumColor: 'green',
+        //   agendaTodayColor: 'red',
+        //   agendaKnobColor: 'red',
+        // }}
+        
       />
     </View>
   )

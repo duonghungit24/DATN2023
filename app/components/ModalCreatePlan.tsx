@@ -30,9 +30,10 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       style={$styles}
       animationInTiming={500}
       animationOutTiming={500}
-      // propagateSwipe={true}
-      onSwipeStart={() => onBackDropPress()}
-    
+      onSwipeComplete={onBackDropPress}
+      swipeDirection={'down'}
+      propagateSwipe={true}
+
     >
       
     <View style={$viewContainer} >

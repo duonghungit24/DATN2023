@@ -17,7 +17,7 @@ import * as storage from "../../utils/storage"
  * The key we'll be saving our state as within async storage.
  */
 const ROOT_STATE_STORAGE_KEY = "root-v1"
-
+export let getsRootStore
 /**
  * Setup the root state.
  */
@@ -46,6 +46,6 @@ export async function setupRootStore(rootStore: RootStore) {
     _disposer()
     _disposer = undefined
   }
-
+  getsRootStore = rootStore
   return { rootStore, restoredState, unsubscribe }
 }

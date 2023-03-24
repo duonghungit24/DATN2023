@@ -13,6 +13,8 @@ const vi = {
   ghichu: "Ghi chú",
   nhatky: "Nhật ký",
   kehoach: "Bạn có kế hoạch gì không?",
+  tieude: "Tiêu đề",
+  noidung: "Thêm nội dung",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

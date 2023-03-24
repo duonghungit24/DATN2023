@@ -9,6 +9,8 @@ const en = {
   ghichu: "Memo",
   nhatky: "Diary",
   kehoach: "Do you have the plan?",
+  tieude: "Title",
+  noidung: "Add content",
   common: {
     ok: "OK!",
     cancel: "Cancel",

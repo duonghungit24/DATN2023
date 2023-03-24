@@ -161,7 +161,7 @@ const $viewButton : ViewStyle = {
   flexDirection: 'row',
   height: 40,
   width: "70%",
-  backgroundColor: colors.angry500,
+  backgroundColor: colors.primary500,
   alignItems: 'center',
   justifyContent: "center",
   borderRadius: 12

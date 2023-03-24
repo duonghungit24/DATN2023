@@ -15,6 +15,8 @@ import { Button, Screen, Text } from "../components"
 import { colors } from "../theme"
 import { JumpingTransition } from "react-native-reanimated"
 import { configs } from "../utils/configs"
+import { onboarding } from "../theme/image"
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -29,22 +31,19 @@ const listOnboarding = [
     id: 1,
     title: "Manage Goals",
     text: "Set your business strategy and achieve the goals you are aiming for",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png",
+    image: onboarding.onboarding1
   },
   {
     id: 2,
     title: "Manage Goals2",
     text: "Set your business strategy and achieve the goals you are aiming for",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png",
+    image: onboarding.onboarding2
   },
   {
     id: 3,
     title: "Manage Goals3",
     text: "Set your business strategy and achieve the goals you are aiming for",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png",
+    image: onboarding.onboarding3
   },
 ]
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
@@ -52,7 +51,7 @@ const listOnboarding = [
 export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboarding">> = observer(
   function OnboardingScreen({ navigation }) {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+     const { authStore } = useStores()
     const imgRef = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
 
@@ -74,6 +73,7 @@ export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboard
 
     const onPressActiveIndex = () => {
       if (activeIndex == listOnboarding.length - 1) {
+        authStore.setIntro()
         navigation.reset({
           index: 0,
           routes: [{ name: "bottomTab" }],
@@ -93,17 +93,18 @@ export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboard
           scrollEnabled={false}
           // onMomentumScrollEnd ={(e) => scrollToActive(Math.floor(e.nativeEvent.contentOffset.x/configs.windowWidth))}
           renderItem={({ item, index }) => {
-            return <Image source={{ uri: item.image }} style={$image} />
+            return <Image source={item.image} style={$image} />
           }}
           horizontal
           showsHorizontalScrollIndicator={false}
+          style={{marginHorizontal: 24}}
         />
          <View style={{bottom: configs.windowHeight / 3}}>
             <Text style={$title}>{listOnboarding[activeIndex].title}</Text>
             <Text style={$text}>{listOnboarding[activeIndex].text}</Text>
           </View>
         <View style={$viewBtn}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row"}}>
             {listOnboarding.map((_, index) => {
               return <View key={index} style={index == activeIndex ? $activeDot : $nonActiveDot} />
             })}
@@ -123,10 +124,10 @@ const $root: ViewStyle = {
   alignItems: "flex-start",
 }
 const $image: ImageStyle = {
-  width: configs.windowWidth,
+  width: configs.windowWidth - 48,
   height: configs.windowHeight / 2.5,
   resizeMode: "contain",
-  top: 70
+  top: 100,
 }
 const $title: TextStyle = {
   fontSize: 20,

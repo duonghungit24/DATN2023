@@ -78,7 +78,7 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="onboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen}/>
-      <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
+      <Stack.Screen name="bottomTab" component={BottomTabNavigator} /> 
       <Stack.Screen name="MemoScreen" component={MemoScreen} />
       <Stack.Screen name="securityScreen" component={SecurityScreen} />
       <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />

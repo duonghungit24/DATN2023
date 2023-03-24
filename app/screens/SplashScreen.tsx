@@ -5,6 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps, navigate } from "../navigators"
 import { Screen, Text } from "../components"
 import LottieView from 'lottie-react-native';
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -19,16 +20,29 @@ import LottieView from 'lottie-react-native';
 // @ts-ignore
 export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscreen">> = observer(function SplashscreenScreen({navigation}) {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+  const { authStore } = useStores()
   const animationProgress = useRef(new Animated.Value(0))
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "chooseLanguageScreen" }],
-      })
-    }, 3000);
+    if(authStore.isIntro)
+    {
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "chooseLanguageScreen" }],
+        })
+      }, 3000);
+    }
+    else
+    {
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "bottomTab" }],
+        })
+      }, 3000);
+    }
+   
   }, [])
 
   // Pull in navigation via hook

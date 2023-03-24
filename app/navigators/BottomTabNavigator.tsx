@@ -11,7 +11,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import {  VectorsIcon, Text } from "../components"
+import {  VectorsIcon, Text, ModalChoosePlan } from "../components"
 import { useStores } from "../models"
 import { WelcomeScreen, SettingScreen, SecurityScreen, MemoScreen, ChangllengeScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
@@ -41,6 +41,7 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
 
 export function BottomTabNavigator() {
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
+  const [isVisible, setIsvisible] = useState(false)
   // const { languageStore } = useStores()
   // const [refresh, setRefresh] = useState(false)
   // useEffect(() => {
@@ -61,6 +62,7 @@ export function BottomTabNavigator() {
 
   return (
   <>
+    <ModalChoosePlan isVisible={isVisible} onBackDropPress={() => setIsvisible(false)} />
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -120,7 +122,7 @@ export function BottomTabNavigator() {
               size={28}
             />
           ),
-          tabBarButton: (props) => <ButtonAdd {...props} />,
+          tabBarButton: (props) => <ButtonAdd {...props} onPress={() => setIsvisible(true)} />,
         }}
       />
       <Tab.Screen
@@ -184,9 +186,9 @@ const ItemBottom = ({ typeIcon, nameIcon, labelTx, focused }: any) => {
   )
 }
 
-const ButtonAdd = ({ children }) => {
+const ButtonAdd = ({ children , onPress }) => {
   return (
-    <TouchableOpacity onPress={() => console.log("ok")} style={$btnAdd} activeOpacity={0.9}>
+    <TouchableOpacity onPress={onPress} style={$btnAdd} activeOpacity={0.9}>
       {children}
     </TouchableOpacity>
   )

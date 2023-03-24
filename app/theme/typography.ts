@@ -1,14 +1,14 @@
 import { Platform, TextStyle } from "react-native"
 
 const fonts = {
-  googleSans: {
+  
     // Cross-platform Google font.
-    light:  "GoogleSans-Bold",
-    normal:  "GoogleSans-Bold",
-    medium:  "GoogleSans-Bold",
-    semiBold:  "GoogleSans-Bold",
-    bold:  "GoogleSans-Bold",
-  },
+    light:  "GoogleSans-Light",
+    regular:  "GoogleSans-Regular",
+    medium:  "NotoSans-Medium",
+    semiBold:  "NotoSans-Bold",
+    bold:  "NotoSans-Bold",
+
 }
 
 export const typography = {
@@ -19,7 +19,7 @@ export const typography = {
   /**
    * The primary font. Used in most places.
    */
-  primary: fonts.googleSans,
+  primary: fonts,
   // familyBold: Platform.select({ ios: "GoogleSans-Bold", android: "GoogleSans-Bold" }),
   // familyLight: Platform.select({ ios: "GoogleSans-Light", android: "GoogleSans-Light" }),
   // familyMedium: Platform.select({ ios: "GoogleSans-Medium", android: "GoogleSans-Medium" }),

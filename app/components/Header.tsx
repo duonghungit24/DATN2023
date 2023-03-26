@@ -210,8 +210,9 @@ export function Header(props: HeaderProps) {
             pointerEvents="none"
           >
             <Text
-              weight="medium"
-              size="md"
+              // weight="medium"
+              // size="md"
+              preset="bold"
               text={titleContent}
               style={[$title, $titleStyleOverride]}
             />
@@ -277,7 +278,7 @@ function HeaderAction(props: HeaderActionProps) {
         activeOpacity={0.5}
         hitSlop={{top: 10, bottom:10, right: 10, left: 10}}
       >
-        <VectorsIcon size={20} type={typeIcon || "Feather"} name={iconName} color={iconColor} />
+        <VectorsIcon size={25} type={typeIcon || "Feather"} name={iconName} color={iconColor} />
       </TouchableOpacity>
     )
   }
@@ -298,6 +299,7 @@ const $container: ViewStyle = {
 
 const $title: TextStyle = {
   textAlign: "center",
+  fontSize: 18
 }
 
 const $actionTextContainer: ViewStyle = {

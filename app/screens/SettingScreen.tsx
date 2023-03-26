@@ -60,7 +60,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header />
+        <Header titleTx="caidat" />
         <TouchableOpacity
           style={{ paddingHorizontal: 16, backgroundColor: "red" }}
           onPress={() => navigation.navigate("changeLanguageScreen")}

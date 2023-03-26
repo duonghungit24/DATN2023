@@ -246,7 +246,7 @@ const $inputWrapperStyle: ViewStyle = {
 const $inputStyle: TextStyle = {
   flex: 1,
   alignSelf: "stretch",
-  fontFamily: typography.primary.normal,
+  ... typography.textMedium,
   color: colors.text,
   fontSize: 16,
   height: 24,

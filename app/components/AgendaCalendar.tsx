@@ -268,6 +268,7 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         // futureScrollRange={50}
         // // Specify how each item should be rendered in agenda
         // renderItem={(item, firstItemInDay) => {
+        //   console.log("item", firstItemInDay)
         //   return (
         //     <TouchableOpacity style={{height: 20}}>
         //     <Text style={{color: "red"}}>{item.name}</Text>

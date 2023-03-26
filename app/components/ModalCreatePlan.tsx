@@ -1,5 +1,13 @@
 import * as React from "react"
-import { ScrollView, StyleProp, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  ScrollView,
+  StyleProp,
+  TextInput,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
@@ -60,7 +68,7 @@ const HeaderCreate = (props: HeaderCreateProps) => {
       <TouchableOpacity activeOpacity={0.7} onPress={onPressBack}>
         <VectorsIcon name="arrowleft" type="AntDesign" size={25} color={colors.primary500} />
       </TouchableOpacity>
-      <Text style={$nameHeader} tx={typeName} preset="bold" />
+      <Text  style={$nameHeader} tx={typeName} preset="bold" />
       <TouchableOpacity activeOpacity={0.7} onPress={onPressAdd}>
         <VectorsIcon name="check" type="Feather" size={25} color={colors.primary500} />
       </TouchableOpacity>
@@ -71,8 +79,21 @@ const HeaderCreate = (props: HeaderCreateProps) => {
 const TitleAndContent = () => {
   return (
     <View style={$viewTitleContent}>
-        <TextField placeholderTx="tieude" inputWrapperStyle={$wrapInput}  autoFocus/>
-        <TextField placeholderTx="noidung" inputWrapperStyle={$wrapInput} multiline/>
+      <TextField
+        placeholderTx="tieude"
+        inputWrapperStyle={$wrapInput}
+        autoFocus
+        clearButtonMode="while-editing"
+        placeholderTextColor={colors.neutral900}
+        style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
+      />
+      <TextField
+        placeholderTx="noidung"
+        inputWrapperStyle={$wrapInput}
+        multiline
+        clearButtonMode="while-editing"
+        style={{fontSize: 14, ...typography.textBold, color: colors.neutral700 }}
+      />
     </View>
   )
 }
@@ -87,23 +108,25 @@ const $viewContainer: ViewStyle = {
   flex: 1,
   borderTopLeftRadius: 12,
   borderTopRightRadius: 12,
-  paddingHorizontal: 16,
 }
 const $viewHead: ViewStyle = {
   flexDirection: "row",
   paddingVertical: 12,
+  paddingHorizontal: 16,
 }
 const $nameHeader: TextStyle = {
   flex: 1,
   textAlign: "center",
-  fontSize: 16,
-  color: colors.neutral900
+  fontSize: 18,
+  color: colors.neutral900,
 }
-const $viewTitleContent : ViewStyle = {
+const $viewTitleContent: ViewStyle = {
   backgroundColor: colors.neutral000,
   paddingHorizontal: 16,
   borderRadius: 8,
   paddingVertical: 12,
-  ...configs.shadow
+  ...configs.shadow,
+  marginHorizontal: 16,
+  marginVertical: 16,
 }
-const $wrapInput : ViewStyle = {borderWidth: 0, backgroundColor: colors.neutral000}
+const $wrapInput: ViewStyle = { borderWidth: 0, backgroundColor: colors.neutral000 }

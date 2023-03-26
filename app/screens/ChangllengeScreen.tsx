@@ -75,12 +75,10 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="scroll">
-      <ModalChoosePlan isVisible={isVisible} onBackDropPress={() => setIsvisible(false)} />
       <Header />
       <View style={{height: 50}}>
       <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
-      <Button title="openmodal" onPress={() => setIsvisible(true)} />
     </View>
     </Screen>
   )

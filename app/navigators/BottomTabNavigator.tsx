@@ -155,7 +155,7 @@ export function BottomTabNavigator() {
       />
     </Tab.Navigator>
       <Animated.View style={{
-        width: configs.windowWidth/4 - 20,
+        width: (configs.windowWidth - 60) / 4,
         height: 2,
         backgroundColor: 'red',
         position: 'absolute',

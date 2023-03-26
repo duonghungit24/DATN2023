@@ -6,6 +6,7 @@ import { AppStackScreenProps, navigate } from "../navigators"
 import { Screen, Text } from "../components"
 import LottieView from 'lottie-react-native';
 import { useStores } from "../models"
+import * as LocalAuthentication from 'expo-local-authentication';
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -35,6 +36,30 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
     }
     else
     {
+      if(authStore.biometric)
+      {
+        setTimeout(() => {
+          setBiometric()
+        }, 3000);
+      }
+      else
+      {  
+        setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "chooseLanguageScreen" }],
+          })
+        }, 3000);
+      }
+    }
+   
+  }, [])
+
+  const setBiometric = async() => {
+    const result = await LocalAuthentication.authenticateAsync()
+    console.log("restok", result)
+    if(result.success)
+    {
       setTimeout(() => {
         navigation.reset({
           index: 0,
@@ -42,9 +67,7 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
         })
       }, 3000);
     }
-   
-  }, [])
-
+}
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
@@ -62,7 +85,7 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
 const $root: ViewStyle = {
   flex: 1,
   alignItems: 'center',
-  justifyContent:"center"
+  justifyContent:"center", 
 }
 const $styleLotte : ViewStyle = {
   width: "60%",

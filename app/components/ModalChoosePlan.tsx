@@ -29,7 +29,6 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
   return (
     <Modal
       isVisible={isVisible}
-      onBackdropPress={onBackDropPress}
       style={$styles}
       animationInTiming={500}
       animationOutTiming={500}

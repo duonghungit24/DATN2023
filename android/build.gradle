@@ -4,11 +4,11 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
     ext {
-        buildToolsVersion = "31.0.0"
+        buildToolsVersion = "30.0.3"
         minSdkVersion = 23
-        compileSdkVersion = 31
-        targetSdkVersion = 31
-        kotlin_version = "1.6.0" // Update this to your version
+        compileSdkVersion = 33
+        targetSdkVersion = 33
+        kotlin_version = "1.8.0" // Update this to your version
 
         if (System.properties['os.arch'] == "aarch64") {
             // For M1 Users we need to use the NDK 24 which added support for aarch64

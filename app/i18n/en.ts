@@ -11,6 +11,7 @@ const en = {
   kehoach: "Do you have the plan?",
   tieude: "Title",
   noidung: "Add content",
+  canhbao: "FaceID / FingerPrint / Password incorrect",
   common: {
     ok: "OK!",
     cancel: "Cancel",

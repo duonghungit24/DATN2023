@@ -15,6 +15,7 @@ const vi = {
   kehoach: "Bạn có kế hoạch gì không?",
   tieude: "Tiêu đề",
   noidung: "Thêm nội dung",
+  canhbao: "FaceID / Vân tay / Mật khẩu không chính xác",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

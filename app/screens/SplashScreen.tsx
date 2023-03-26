@@ -39,7 +39,10 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
       if(authStore.biometric)
       {
         setTimeout(() => {
-          setBiometric()
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "securityScreen" }],
+          })
         }, 3000);
       }
       else
@@ -55,19 +58,6 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
    
   }, [])
 
-  const setBiometric = async() => {
-    const result = await LocalAuthentication.authenticateAsync()
-    console.log("restok", result)
-    if(result.success)
-    {
-      setTimeout(() => {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "bottomTab" }],
-        })
-      }, 3000);
-    }
-}
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (

@@ -2,7 +2,7 @@ import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigatio
 import { NavigationContainer } from "@react-navigation/native"
 import lastDayOfDecade from "date-fns/fp/lastDayOfDecade/index"
 import { onSnapshot } from "mobx-state-tree"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 import {
   Animated,
   TextStyle,
@@ -12,11 +12,11 @@ import {
 } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {  VectorsIcon, Text, ModalChoosePlan } from "../components"
+import { translate } from "../i18n"
 import { useStores } from "../models"
 import { WelcomeScreen, SettingScreen, SecurityScreen, MemoScreen, ChangllengeScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
-import { getActiveRouteName, navigationRef } from "./navigationUtilities"
 
 export type DemoTabParamList = {
   homeScreen: undefined
@@ -42,14 +42,13 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
 export function BottomTabNavigator() {
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
   const [isVisible, setIsvisible] = useState(false)
-  // const { languageStore } = useStores()
-  // const [refresh, setRefresh] = useState(false)
-  // useEffect(() => {
-  //   onSnapshot(languageStore, (snap) => {
-  //     console.log("ok", snap)
-  //     setRefresh(!refresh)
-  //   })
-  // }, [languageStore.language])
+  const { languageStore } = useStores()
+  const [refresh, setRefresh] = useState(false)
+  useEffect(() => {
+    onSnapshot(languageStore, (snap) => {
+      setRefresh(!refresh)
+    })
+  }, [languageStore.language])
 
 
  

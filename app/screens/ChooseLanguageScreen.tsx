@@ -47,7 +47,7 @@ export const ChooseLanguageScreen: FC<StackScreenProps<AppStackScreenProps, "Cho
 const ButtonChoose = ({ text, onPress }: any) => {
   return (
     <TouchableOpacity style={$viewBtn} activeOpacity={0.7} onPress={onPress}>
-      <Text tx={!text && "chonngonngu"} text={text} style={{ color: colors.neutral900, fontSize: 16 }} />
+      <Text preset="medium" tx={!text && "chonngonngu"} text={text} style={{ color: colors.neutral900, fontSize: 16 }} />
     </TouchableOpacity>
   )
 }

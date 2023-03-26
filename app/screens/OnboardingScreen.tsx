@@ -100,8 +100,8 @@ export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboard
           style={{marginHorizontal: 24}}
         />
          <View style={{bottom: configs.windowHeight / 3}}>
-            <Text style={$title}>{listOnboarding[activeIndex].title}</Text>
-            <Text style={$text}>{listOnboarding[activeIndex].text}</Text>
+            <Text preset="bold"  style={$title}>{listOnboarding[activeIndex].title}</Text>
+            <Text preset="medium" style={$text}>{listOnboarding[activeIndex].text}</Text>
           </View>
         <View style={$viewBtn}>
           <View style={{ flexDirection: "row"}}>
@@ -170,7 +170,8 @@ const $text: TextStyle = {
   color: colors.neutral600,
   fontSize: 14,
   paddingHorizontal: 24,
-  textAlign: 'center'
+  textAlign: 'center',
+  marginTop: 4
 }
 const $textBtn : TextStyle = {
   color : colors.neutral000,

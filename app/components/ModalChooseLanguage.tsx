@@ -39,7 +39,7 @@ export const ModalChooseLanguage = observer(function ModalChooseLanguage(
       animationOutTiming={500}
     >
       <View style={$viewModal}>
-        <Text tx="chonngonngu" style={$title} />
+        <Text preset="bold" tx="chonngonngu" style={$title} />
         <FlatList
           data={configs.LIST_LANGUAGE}
           keyExtractor={(_, index) => `${index}`}
@@ -68,7 +68,7 @@ const ItemLanguage = ({ item, check, onPress, image }: any) => {
   return (
     <TouchableOpacity style={$viewBtn} onPress={onPress}>
       <Image source={item.image} style={$image} />
-      <Text style={$name}>{item.name}</Text>
+      <Text preset="medium" style={$name}>{item.name}</Text>
       <View style={{flex: 1}}/>
       {check && (
         <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.primary600} />

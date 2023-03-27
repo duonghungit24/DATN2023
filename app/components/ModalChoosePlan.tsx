@@ -8,6 +8,7 @@ import { configs } from "../utils/configs"
 import { Header } from "./Header"
 import { VectorsIcon } from "./Vectoricon"
 import { ModalCreatePlan } from "./ModalCreatePlan"
+import { ModalCreateDiary } from "./ModalCreateDiary"
 
 export interface ModalChoosePlanProps {
   /**
@@ -24,17 +25,18 @@ export interface ModalChoosePlanProps {
 export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalChoosePlanProps) {
   const { style, isVisible, onBackDropPress } = props
   const $styles = [$container, style]
-  const [isVisibleCreate, setIsvisibleCreate] = React.useState(false)
+  const [isVisibleCreate, setIsvisibleCreate] = React.useState(0)
 
   return (
     <Modal
       isVisible={isVisible}
       style={$styles}
-      animationInTiming={500}
+      animationInTiming={600}
       animationOutTiming={500}
       hideModalContentWhileAnimating={true}
     >
-      <ModalCreatePlan isVisible={isVisibleCreate} onBackDropPress={() => setIsvisibleCreate(false)}/>
+      <ModalCreatePlan isVisible={isVisibleCreate == 1} onBackDropPress={() => setIsvisibleCreate(0)}/>
+      <ModalCreateDiary isVisible={isVisibleCreate == 2} onBackDropPress={() => setIsvisibleCreate(0)}/>
       <Header
         leftIcon="arrowleft"
         typeIconLeft="AntDesign"
@@ -52,7 +54,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
             typeIcon="FontAwesome"
             nameIcon="calendar"
             colorIcon={colors.event}
-            onPress={() => setIsvisibleCreate(true)}
+            onPress={() => setIsvisibleCreate(1)}
           />
           <ItemPlan
             textPlan="congviec"
@@ -73,7 +75,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
             typeIcon="FontAwesome"
             nameIcon="file-text"
             colorIcon={colors.diary}
-           
+            onPress={() => setIsvisibleCreate(2)}
           />
         </View>
       </View>

@@ -57,6 +57,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
   const [isVisible, setIsvisible] = useState(false)
+
   useEffect(() => {
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();

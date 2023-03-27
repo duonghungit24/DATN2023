@@ -16,6 +16,11 @@ const vi = {
   tieude: "Tiêu đề",
   noidung: "Thêm nội dung",
   canhbao: "FaceID / Vân tay / Mật khẩu không chính xác",
+  baomat: "Bảo mật",
+  thongbao:"Thông báo",
+  batvantay: "Vui lòng bật vân tay",
+  nhatkytext: "Bạn cảm thấy ra sao?",
+  bieutuongcamxuc: "Chọn emoji",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

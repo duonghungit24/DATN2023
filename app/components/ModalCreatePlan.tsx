@@ -2,7 +2,6 @@ import * as React from "react"
 import {
   ScrollView,
   StyleProp,
-  TextInput,
   TextStyle,
   TouchableOpacity,
   View,
@@ -15,7 +14,6 @@ import Modal from "react-native-modal"
 import { VectorsIcon } from "./Vectoricon"
 import { TxKeyPath } from "../i18n"
 import { TextField } from "./TextField"
-import { color } from "react-native-reanimated"
 import { configs } from "../utils/configs"
 
 export interface ModalCreatePlanProps {
@@ -39,7 +37,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       isVisible={isVisible}
       onBackdropPress={onBackDropPress}
       style={$styles}
-      animationInTiming={500}
+      animationInTiming={600}
       animationOutTiming={500}
       onSwipeComplete={onBackDropPress}
       swipeDirection={"down"}
@@ -61,7 +59,7 @@ interface HeaderCreateProps {
   onPressBack: () => void
   onPressAdd: () => void
 }
-const HeaderCreate = (props: HeaderCreateProps) => {
+export const HeaderCreate = (props: HeaderCreateProps) => {
   const { typeName, onPressAdd, onPressBack } = props
   return (
     <View style={$viewHead}>

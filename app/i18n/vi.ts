@@ -21,6 +21,11 @@ const vi = {
   batvantay: "Vui lòng bật vân tay",
   nhatkytext: "Bạn cảm thấy ra sao?",
   bieutuongcamxuc: "Chọn emoji",
+  vitri: "Vị trí",
+  ghim: "Ghim",
+  thoigian: "Thời gian",
+  xacnhan: "Xác nhận",
+  huy: "Huỷ",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

@@ -20,6 +20,11 @@ const en = {
   batvantay: "Please enable fingerprint",
   nhatkytext: "How do you feel?",
   bieutuongcamxuc: "Choose emoji",
+  vitri: "Location",
+  ghim:'Pin',
+  thoigian: "DateTime",
+  xacnhan: "Confirm",
+  huy: "Cancle",
   common: {
     ok: "OK!",
     cancel: "Cancel",

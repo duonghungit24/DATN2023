@@ -97,6 +97,90 @@ const hourPickerLocales = {
     ],
     pmDesignator: 'PM',
   },
+  ja: {
+    amDesignator: 'AM',
+    dayNames: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    monthNames: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthNamesShort: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    pmDesignator: 'PM',
+  },
+  ko: {
+    amDesignator: 'AM',
+    dayNames: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    monthNames: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthNamesShort: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    pmDesignator: 'PM',
+  },
 };
 
 const data = {
@@ -163,6 +247,8 @@ const data = {
 
 LocaleConfig.locales['vi'] = hourPickerLocales['vi'];
 LocaleConfig.locales['en'] = hourPickerLocales['en'];
+LocaleConfig.locales['ja'] = hourPickerLocales['ja'];
+LocaleConfig.locales['ko'] = hourPickerLocales['ko'];
 export interface AgendaCalendarProps {
   /**
    * An optional style override useful for padding & margin.

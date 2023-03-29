@@ -45,6 +45,8 @@
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cho phép ứng dụng truy cập thư viện  </string>
 	<key>NSRemindersUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>

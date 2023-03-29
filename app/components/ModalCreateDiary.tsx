@@ -1,5 +1,14 @@
-import React, { useState } from "react"
-import { ImageStyle, ScrollView, StyleProp,TouchableOpacity, View, ViewStyle , Image, TextStyle} from "react-native"
+import React, { useMemo, useState } from "react"
+import {
+  ImageStyle,
+  ScrollView,
+  StyleProp,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  Image,
+  TextStyle,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
@@ -13,6 +22,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { useStores } from "../models"
 import { utils } from "../utils"
 import { translate } from "../i18n"
+import ImagePicker from "react-native-image-crop-picker"
+import ImageView from "react-native-image-viewing"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -43,9 +54,58 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const [toggleDate, setToggleDate] = useState(false)
   const [togglePin, setTogglePin] = useState(false)
   const [isVisibleDate, setIsvisibleDate] = useState<TypeTime>({ type: "date", show: false })
+  const [images, setImages] = useState([])
+  const [isVisibleImg, setIsvisibleImg] = useState(false)
+  const [indexImg, setIndexImg] = useState(-1)
+
+  const pickImage = () => {
+    ImagePicker.openPicker({
+      multiple: true,
+    }).then((listImages) => {
+      console.log("list", listImages)
+      const result = listImages.map((el) => {
+        return {
+          id: el.filename,
+          uri: el.sourceURL,
+        }
+      })
+      setImages([...images, ...result])
+    })
+  }
+
+  const DisplayImage = useMemo(() => {
+    return (
+      <SelectImage
+        dataImages={images}
+        onPressAdd={pickImage}
+        onPressView={(index) => viewImage(index)}
+        onPressRemove={(value) => onPressRemoveImg(value)}
+      />
+    )
+  }, [images.length])
+
+  const viewImage = (index) => {
+    setIsvisibleImg(true)
+    setIndexImg(index)
+  }
+
+  const onPressRemoveImg = (value) => {
+    const dt = images.filter((el) => el.id != value.id)
+    setImages(dt)
+  }
 
   const onConfirmDate = (value) => {
     console.log("value", new Date(value).getHours())
+    if(isVisibleDate.type == "date")
+    {
+      setDate(utils.displayDate(value))
+    }
+    else if(isVisibleDate.type == "time")
+    {
+      const time = `${new Date(value).getHours()} ${new Date(value).getMinutes()} `
+      setTime(time)
+    }
+    setIsvisibleDate({ type: "date", show: false })
   }
 
   return (
@@ -61,6 +121,13 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       avoidKeyboard
     >
       <View style={$viewContainer}>
+        <ImageView
+          images={images}
+          imageIndex={indexImg}
+          visible={isVisibleImg}
+          onRequestClose={() => setIsvisibleImg(false)}
+        />
+
         <DateTimePickerModal
           locale={languageStore.language}
           isVisible={isVisibleDate.show}
@@ -71,7 +138,10 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           confirmTextIOS={translate("xacnhan")}
         />
         <HeaderCreate typeName="nhatky" onPressBack={onBackDropPress} onPressAdd={() => {}} />
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
           <View style={$viewTitleContent}>
             <TextField
               placeholderTx="nhatkytext"
@@ -161,7 +231,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               clearButtonMode="while-editing"
               // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
             />
-            <SelectImage />
+            {DisplayImage}
           </View>
         </ScrollView>
       </View>
@@ -173,18 +243,34 @@ const LeftAccesstory = ({ typeIcon, nameIcon, colorIcon }: any) => {
   return <VectorsIcon type={typeIcon} name={nameIcon} color={colorIcon} size={20} />
 }
 
-const SelectImage = ({onPressAdd, onPressRemove} : any) => {
+const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }: any) => {
   return (
     <View style={$viewRowImg}>
       <VectorsIcon type="Feather" name="image" color="red" size={20} style={{ marginRight: 12 }} />
-      <TouchableOpacity style={$viewBtnImg} activeOpacity={0.8}>
-        <TouchableOpacity style={$btnClose} onPress={onPressRemove}>
-          <VectorsIcon type="Ionicons" name="md-close-outline" color="white" size={20} />
-        </TouchableOpacity>
-        <Image source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png"}}  style={$image}/>
-      </TouchableOpacity>
+      {dataImages.length > 0
+        ? dataImages.map((el, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={$viewBtnImg}
+                activeOpacity={0.8}
+                onPress={() => onPressView(index)}
+              >
+                <TouchableOpacity style={$btnClose} onPress={() => onPressRemove(el)}>
+                  <VectorsIcon type="Ionicons" name="md-close-outline" color="white" size={20} />
+                </TouchableOpacity>
+                <Image
+                  source={{
+                    uri: el.uri,
+                  }}
+                  style={$image}
+                />
+              </TouchableOpacity>
+            )
+          })
+        : null}
       <TouchableOpacity style={[$viewBtnImg, $viewAddImg]} onPress={onPressAdd}>
-          <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
+        <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
       </TouchableOpacity>
     </View>
   )
@@ -225,11 +311,13 @@ const $viewToggle: ViewStyle = {
 const $viewRowImg: ViewStyle = {
   flexDirection: "row",
   alignItems: "center",
+  flexWrap: "wrap",
 }
 const $viewBtnImg: ViewStyle = {
   height: 50,
   width: 40,
   marginRight: 16,
+  marginTop: 12,
 }
 const $btnClose: ViewStyle = {
   height: 20,
@@ -240,21 +328,21 @@ const $btnClose: ViewStyle = {
   top: -8,
   right: -8,
   alignContent: "center",
-  justifyContent: 'center'
+  justifyContent: "center",
 }
-const $viewAddImg : ViewStyle  = {
+const $viewAddImg: ViewStyle = {
   borderWidth: 1,
   borderColor: colors.neutral500,
   justifyContent: "center",
-  alignItems:'center'
+  alignItems: "center",
 }
-const $image :ImageStyle = {
+const $image: ImageStyle = {
   height: "100%",
   width: "100%",
   zIndex: -10,
-  resizeMode:"cover"
+  resizeMode: "cover",
 }
-const $textEmoji : TextStyle = {
+const $textEmoji: TextStyle = {
   fontSize: 18,
-  textAlign: "center"
+  textAlign: "center",
 }

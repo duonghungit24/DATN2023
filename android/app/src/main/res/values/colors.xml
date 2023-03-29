@@ -1,3 +1,4 @@
 <resources>
     <color name="bootsplash_background">#191015</color>
+    <color name="@color/mainRed">#191015</color>
 </resources>

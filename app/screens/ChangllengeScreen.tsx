@@ -6,6 +6,7 @@ import { AppStackScreenProps } from "../navigators"
 import { Header, ModalChoosePlan, Screen, Text } from "../components"
 import * as Calendar from 'expo-calendar';
 import moment from "moment"
+import { TopTabAnimated } from "../hooks/useTabAnimated"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -75,13 +76,15 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
-    <Screen style={$root} preset="scroll">
-      <Header />
-      <View style={{height: 50}}>
-      <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
-      <Button title="Create a new calendar" onPress={createCalendar} />
-    </View>
-    </Screen>
+    // <Screen style={$root} preset="fixed">
+    //   <Header />
+    //   <View style={{height: 50}}>
+    //   <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
+    //   <Button title="Create a new calendar" onPress={createCalendar} />
+     
+    // </View>
+    // </Screen>
+    <TopTabAnimated />
   )
 })
 

@@ -62,7 +62,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
     ImagePicker.openPicker({
       multiple: true,
     }).then((listImages) => {
-      console.log("list", listImages)
       const result = listImages.map((el) => {
         return {
           id: el.filename,
@@ -95,10 +94,10 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   }
 
   const onConfirmDate = (value) => {
-    console.log("value", new Date(value).getHours())
+    console.log("value",  (new Date()).getTime() + Number(50))
     if(isVisibleDate.type == "date")
     {
-      setDate(utils.displayDate(value))
+      setDate(value)
     }
     else if(isVisibleDate.type == "time")
     {
@@ -107,6 +106,8 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
     }
     setIsvisibleDate({ type: "date", show: false })
   }
+
+  console.log("tiem", new Date().getTime() + Number(50))
 
   return (
     <Modal

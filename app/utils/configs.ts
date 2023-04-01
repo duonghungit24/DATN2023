@@ -1,4 +1,4 @@
-import { iconLanguage } from './../theme/image';
+import { iconLanguage } from "./../theme/image"
 import { Dimensions, Platform } from "react-native"
 // Size Iphone 11 pro
 const guidelineBaseWidth = 375
@@ -31,25 +31,25 @@ export const configs = {
     {
       type: "vi",
       name: "Vietnamese",
-      image: iconLanguage.iconVn
+      image: iconLanguage.iconVn,
     },
     {
       type: "en",
       name: "English",
-      image: iconLanguage.iconEn
+      image: iconLanguage.iconEn,
     },
     {
       type: "ja",
       name: "Japanese",
-      image: iconLanguage.iconJa
+      image: iconLanguage.iconJa,
     },
     {
       type: "ko",
       name: "Korean",
-      image: iconLanguage.iconKo
+      image: iconLanguage.iconKo,
     },
   ],
-  Animations : [
+  Animations: [
     "fadeIn",
     "fadeInUp",
     "fadeInDown",
@@ -59,19 +59,25 @@ export const configs = {
     "fadeInLeftBig",
     "fadeInRight",
     "fadeInRightBig",
-  
+
     "flipInX",
     "flipInY",
-   
+
     "slideInDown",
     "slideInUp",
     "slideInLeft",
     "slideInRight",
-    
+
     "zoomIn",
     "zoomInDown",
     "zoomInUp",
     "zoomInLeft",
     "zoomInRight",
-  ]
+  ],
+  ENUM_CREATE: {
+    EVENT: "event",
+    WORK: "work",
+    NOTE: "note",
+    DIARY: "diary",
+  },
 }

@@ -55,7 +55,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
 })
 
 interface HeaderCreateProps {
-  typeName: TxKeyPath
+  typeName: any
   onPressBack: () => void
   onPressAdd: () => void
 }
@@ -74,7 +74,7 @@ export const HeaderCreate = (props: HeaderCreateProps) => {
   )
 }
 
-const TitleAndContent = () => {
+export const TitleAndContent = () => {
   return (
     <View style={$viewTitleContent}>
       <TextField

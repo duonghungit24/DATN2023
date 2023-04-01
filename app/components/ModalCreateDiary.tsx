@@ -13,7 +13,7 @@ import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
 import Modal from "react-native-modal"
-import { HeaderCreate } from "./ModalCreatePlan"
+import { HeaderCreate, TitleAndContent } from "./ModalCreatePlan"
 import { TextField } from "./TextField"
 import { configs } from "../utils/configs"
 import { VectorsIcon } from "./Vectoricon"
@@ -24,6 +24,7 @@ import { utils } from "../utils"
 import { translate } from "../i18n"
 import ImagePicker from "react-native-image-crop-picker"
 import ImageView from "react-native-image-viewing"
+import uuid from "react-native-uuid"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -32,6 +33,7 @@ export interface ModalCreateDiaryProps {
   style?: StyleProp<ViewStyle>
   isVisible: boolean
   onBackDropPress: () => void
+  type : "note" | "diary"
 }
 
 interface TypeTime {
@@ -42,7 +44,7 @@ interface TypeTime {
  * Describe your component here
  */
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
-  const { style, isVisible, onBackDropPress } = props
+  const { style, isVisible, onBackDropPress, type } = props
   const { languageStore } = useStores()
   const $styles = [$container, style]
 
@@ -64,7 +66,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
     }).then((listImages) => {
       const result = listImages.map((el) => {
         return {
-          id: el.filename,
+          id: uuid.v4(),
           uri: el.sourceURL,
         }
       })
@@ -94,19 +96,68 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   }
 
   const onConfirmDate = (value) => {
-    console.log("value",  (new Date()).getTime() + Number(50))
-    if(isVisibleDate.type == "date")
-    {
+    console.log("value", new Date().getTime() + Number(50))
+    if (isVisibleDate.type == "date") {
       setDate(value)
-    }
-    else if(isVisibleDate.type == "time")
-    {
+    } else if (isVisibleDate.type == "time") {
       const time = `${new Date(value).getHours()} ${new Date(value).getMinutes()} `
       setTime(time)
     }
     setIsvisibleDate({ type: "date", show: false })
   }
 
+  const showToggleDate = useMemo(() => {
+    return (
+      <>
+        <TextField
+          LeftAccessory={() => (
+            <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon="red" />
+          )}
+          value={utils.displayDate(date)}
+          inputWrapperStyle={$wrapInput}
+          clearButtonMode="while-editing"
+          editable={false}
+          onPressIn={() => setIsvisibleDate({ type: "date", show: true })}
+          // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
+        />
+        <TextField
+          LeftAccessory={() => (
+            <LeftAccesstory typeIcon="Feather" nameIcon="clock" colorIcon="red" />
+          )}
+          value={time}
+          inputWrapperStyle={$wrapInput}
+          clearButtonMode="while-editing"
+          editable={false}
+          onPressIn={() => setIsvisibleDate({ type: "time", show: true })}
+          // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
+        />
+      </>
+    )
+  }, [toggleDate])
+
+  const showHeaderCreate = useMemo(() => {
+    return (
+      <>
+        {
+          type == "note" 
+          ?
+          <TitleAndContent />
+          :
+          <View style={$viewTitleContent}>
+          <TextField
+            placeholderTx="nhatkytext"
+            inputWrapperStyle={$wrapInput}
+            autoFocus
+            clearButtonMode="while-editing"
+            placeholderTextColor={colors.neutral900}
+            multiline
+            style={$inputDiary}
+          />
+        </View>
+        }
+      </>
+    )
+  },[type])
   console.log("tiem", new Date().getTime() + Number(50))
 
   return (
@@ -114,12 +165,13 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       isVisible={isVisible}
       onBackdropPress={onBackDropPress}
       style={$styles}
-      animationInTiming={600}
+      animationInTiming={500}
       animationOutTiming={500}
       onSwipeComplete={onBackDropPress}
       swipeDirection={"down"}
       propagateSwipe={true}
       avoidKeyboard
+      // useNativeDriver={true}
     >
       <View style={$viewContainer}>
         <ImageView
@@ -138,22 +190,12 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
-        <HeaderCreate typeName="nhatky" onPressBack={onBackDropPress} onPressAdd={() => {}} />
+        <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 20 }}
         >
-          <View style={$viewTitleContent}>
-            <TextField
-              placeholderTx="nhatkytext"
-              inputWrapperStyle={$wrapInput}
-              autoFocus
-              clearButtonMode="while-editing"
-              placeholderTextColor={colors.neutral900}
-              multiline
-              style={$inputDiary}
-            />
-          </View>
+          {showHeaderCreate}
           <View style={[$viewTitleContent, { height: 100 }]}>
             <Text preset="bold" tx="bieutuongcamxuc" style={$textEmoji} />
           </View>
@@ -176,28 +218,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
                 onPress={() => setToggleDate(!toggleDate)}
               />
             </View>
-            <TextField
-              LeftAccessory={() => (
-                <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon="red" />
-              )}
-              value={utils.displayDate(date)}
-              inputWrapperStyle={$wrapInput}
-              clearButtonMode="while-editing"
-              editable={false}
-              onPressIn={() => setIsvisibleDate({ type: "date", show: true })}
-              // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
-            />
-            <TextField
-              LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Feather" nameIcon="clock" colorIcon="red" />
-              )}
-              value={time}
-              inputWrapperStyle={$wrapInput}
-              clearButtonMode="while-editing"
-              editable={false}
-              onPressIn={() => setIsvisibleDate({ type: "time", show: true })}
-              // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
-            />
+            {toggleDate && showToggleDate}
             <View style={$viewToggle}>
               <TextField
                 LeftAccessory={() => (
@@ -210,6 +231,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               />
               <Toggle variant="switch" value={togglePin} onPress={() => setTogglePin(!togglePin)} />
             </View>
+            <CustomColor />
             <TextField
               value={url}
               LeftAccessory={() => (
@@ -273,6 +295,55 @@ const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }
       <TouchableOpacity style={[$viewBtnImg, $viewAddImg]} onPress={onPressAdd}>
         <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
       </TouchableOpacity>
+    </View>
+  )
+}
+
+const CustomColor = ({ colorIcon, onPressSelectCustom, onPressColor }) => {
+  const [color, setColor] = useState(1)
+
+  return (
+    <View>
+      <TextField
+        LeftAccessory={() => (
+          <LeftAccesstory typeIcon="MaterialIcons" nameIcon="color-lens" colorIcon="red" />
+        )}
+        placeholderTx="tuychon"
+        inputWrapperStyle={$wrapInput}
+        containerStyle={{ flex: 1 }}
+        style={{ ...typography.textBold }}
+        placeholderTextColor={colors.neutral900}
+        editable={false}
+        onPressIn={onPressSelectCustom}
+        RightAccessory={() => (
+          <LeftAccesstory
+            typeIcon="Feather"
+            nameIcon="chevron-right"
+            colorIcon={colors.neutral500}
+          />
+        )}
+      />
+      <View style={$viewRowColor}>
+        {[1, 2, 3, 4, 5, 6].map((el, index) => {
+          const $colorSelect =
+            color == el
+              ? [$viewCircleAtive, { borderColor: "red", borderWidth: 2 }]
+              : $viewCircleAtive
+          return (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={1}
+              onPress={() => {
+                onPressColor
+                setColor(el)
+              }}
+              style={$colorSelect}
+            >
+              <View style={[$viewColor, { backgroundColor: "blue" }]} />
+            </TouchableOpacity>
+          )
+        })}
+      </View>
     </View>
   )
 }
@@ -346,4 +417,26 @@ const $image: ImageStyle = {
 const $textEmoji: TextStyle = {
   fontSize: 18,
   textAlign: "center",
+}
+const $textCustom: TextStyle = {
+  fontSize: 14,
+  color: colors.neutral900,
+}
+const $viewRowColor: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  marginVertical: 8,
+}
+const $viewColor: ViewStyle = {
+  height: 18,
+  width: 18,
+  borderRadius: 10,
+}
+const $viewCircleAtive: ViewStyle = {
+  backgroundColor: colors.neutral000,
+  height: 25,
+  width: 25,
+  borderRadius: 25,
+  alignItems: "center",
+  justifyContent: "center",
 }

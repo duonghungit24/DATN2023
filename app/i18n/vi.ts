@@ -27,6 +27,9 @@ const vi = {
   xacnhan: "Xác nhận",
   huy: "Huỷ",
   tuychon: "Tuỳ chọn",
+  nhacnho: "Nhắc nhở",
+  demnguoc: "Đếm ngược",
+  nhiemvunho: "Nhiệm vụ nhỏ",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

@@ -26,6 +26,9 @@ const en = {
   xacnhan: "Confirm",
   huy: "Cancle",
   tuychon: "Custom",
+  nhacnho: "Reminder",
+  demnguoc: "Countdown",
+  nhiemvunho: "Task small",
   common: {
     ok: "OK!",
     cancel: "Cancel",

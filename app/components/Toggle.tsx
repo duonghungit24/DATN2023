@@ -395,7 +395,7 @@ function Switch(props: ToggleInputProps) {
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
-    colors.secondary500,
+    colors.primary500,
   ].filter(Boolean)[0]
 
   const knobBackgroundColor = (function () {

@@ -262,7 +262,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   )
 })
 
-const LeftAccesstory = ({ typeIcon, nameIcon, colorIcon }: any) => {
+export const LeftAccesstory = ({ typeIcon, nameIcon, colorIcon }: any) => {
   return <VectorsIcon type={typeIcon} name={nameIcon} color={colorIcon} size={20} />
 }
 

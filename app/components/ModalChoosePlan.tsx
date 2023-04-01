@@ -26,10 +26,14 @@ type typeModal = {
   type: "note" | "diary",
   show: boolean
 }
+type typeModalEvent = {
+  type: "event" | "work",
+  show: boolean
+}
 export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalChoosePlanProps) {
   const { style, isVisible, onBackDropPress } = props
   const $styles = [$container, style]
-  const [isVisibleEventWork, setIsvisibleEventWork] = React.useState({ type: "", show: false })
+  const [isVisibleEventWork, setIsvisibleEventWork] = React.useState<typeModalEvent>({ type: "event", show: false })
   const [isVisibleNoteDiary, setIsvisibleNoteDiary] = React.useState<typeModal>({ type: "note", show: false })
 
   return (
@@ -41,13 +45,14 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
       hideModalContentWhileAnimating={true}
     >
       <ModalCreatePlan
+        type={isVisibleEventWork.type}
         isVisible={isVisibleEventWork.show}
         onBackDropPress={() => setIsvisibleEventWork({ type: "", show: false })}
       />
       <ModalCreateDiary
         type={isVisibleNoteDiary.type}
         isVisible={isVisibleNoteDiary.show}
-        onBackDropPress={() => setIsvisibleNoteDiary({ type: "note", show: false })}
+        onBackDropPress={() => setIsvisibleNoteDiary({ type: "", show: false })}
       />
       <Header
         leftIcon="arrowleft"
@@ -66,14 +71,14 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               typeIcon="FontAwesome"
               nameIcon="calendar"
               colorIcon={colors.event}
-              onPress={() => setIsvisibleEventWork({type: "", show:  true})}
+              onPress={() => setIsvisibleEventWork({type: "event", show:  true})}
             />
             <ItemPlan
               textPlan="work"
               typeIcon="FontAwesome5"
               nameIcon="check"
               colorIcon={colors.todo}
-              onPress={() => setIsvisibleEventWork({type: "", show:  true})}
+              onPress={() => setIsvisibleEventWork({type: "work", show:  true})}
             />
             <ItemPlan
               textPlan="note"

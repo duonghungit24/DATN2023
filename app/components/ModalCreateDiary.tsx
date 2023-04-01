@@ -180,7 +180,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           visible={isVisibleImg}
           onRequestClose={() => setIsvisibleImg(false)}
         />
-
         <DateTimePickerModal
           locale={languageStore.language}
           isVisible={isVisibleDate.show}

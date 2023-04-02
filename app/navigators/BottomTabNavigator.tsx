@@ -158,7 +158,7 @@ export function BottomTabNavigator() {
         height: 2,
         backgroundColor: 'red',
         position: 'absolute',
-        bottom: configs.windowHeight / 12,
+        bottom: configs.windowHeight / 11,
         left: 0,
         borderRadius: 20,
         transform: [
@@ -205,7 +205,7 @@ const $tabBar: ViewStyle = {
   ...configs.shadow,
   justifyContent: "center",
   paddingTop: 12,
-  height: configs.windowHeight / 12
+  height: configs.windowHeight / 11
 }
 const $viewItem: ViewStyle = {
   alignItems: "center",

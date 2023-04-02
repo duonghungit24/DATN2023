@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
+import { goBack } from "../navigators"
 import { colors, spacing } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
@@ -152,14 +153,14 @@ interface HeaderActionProps {
  */
 export function Header(props: HeaderProps) {
   const {
-    backgroundColor = colors.background,
+    backgroundColor = colors.neutral000,
     LeftActionComponent,
     leftIcon,
     leftIconColor,
     leftText,
     leftTx,
     leftTxOptions,
-    onLeftPress,
+    onLeftPress = goBack,
     onRightPress,
     RightActionComponent,
     rightIcon,

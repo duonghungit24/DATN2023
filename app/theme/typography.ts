@@ -3,10 +3,10 @@ import { Platform, TextStyle } from "react-native"
 const fonts = {
   
     // Cross-platform Google font.
-    light:  "GoogleSans-Light",
-    regular:  "GoogleSans-Regular",
+    light:  "NotoSans-Light",
+    regular:  "NotoSans-Regular",
     medium:  "NotoSans-Medium",
-    semiBold:  "NotoSans-Bold",
+    semiBold:  "NotoSans-SemiBold",
     bold:  "NotoSans-Bold",
 
 }

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Button, Platform, View, ViewStyle } from "react-native"
+import { Button, Platform, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
 import { Header, ModalChoosePlan, Screen, Text } from "../components"
@@ -54,7 +54,7 @@ async function createCalendar() {
  
 }
 
-export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changllenge">> = observer(function ChangllengeScreen() {
+export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changllenge">> = observer(function ChangllengeScreen({navigation}) {
   // Pull in one of our MST stores
   // const { someStore, anotherStore } = useStores()
   const [isVisible, setIsvisible] = useState(false)
@@ -76,15 +76,17 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
-    // <Screen style={$root} preset="fixed">
-    //   <Header />
-    //   <View style={{height: 50}}>
-    //   <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
-    //   <Button title="Create a new calendar" onPress={createCalendar} />
-     
-    // </View>
-    // </Screen>
-    <TopTabAnimated />
+    <Screen style={$root} preset="fixed">
+      <Header />
+      <View style={{height: 50}}>
+      <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
+      <Button title="Create a new calendar" onPress={createCalendar} />
+    </View>
+      <TopTabAnimated />
+      <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
+          <Text>Go event</Text>
+      </TouchableOpacity>
+    </Screen>
   )
 })
 

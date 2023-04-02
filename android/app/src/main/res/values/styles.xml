@@ -13,12 +13,8 @@
     </style>
 
  <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!-- <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/mainRed</item>
-    </style>
-    <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/mainRed</item>
-    </style>
+    </style> -->
 
 </resources>

@@ -7,6 +7,7 @@ import { Header, ModalChoosePlan, Screen, Text } from "../components"
 import * as Calendar from 'expo-calendar';
 import moment from "moment"
 import { TopTabAnimated } from "../hooks/useTabAnimated"
+import { utils } from "../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -85,6 +86,12 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       <TopTabAnimated />
       <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
           <Text>Go event</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => utils.showToast({
+        type:"success",
+        text1:"ok"
+      })}>
+          <Text>show toast</Text>
       </TouchableOpacity>
     </Screen>
   )

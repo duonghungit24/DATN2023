@@ -20,6 +20,8 @@ import { setupReactotron } from "./services/reactotron"
 import RNBootSplash from "react-native-bootsplash"
 import { Animated, Easing } from "react-native"
 import Lottie from 'lottie-react-native';
+import { toastConfig } from "./utils/toastConfigs"
+import Toast from "react-native-toast-message"
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
 setupReactotron({
@@ -86,6 +88,7 @@ function App(props: AppProps) {
           initialState={initialNavigationState}
           onStateChange={onNavigationStateChange}
         />
+        <Toast position="top" config={toastConfig} />
     </SafeAreaProvider>
   )
 }

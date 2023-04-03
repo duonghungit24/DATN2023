@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, TouchableOpacity, FlatList } from "react-native"
+import { ViewStyle, View, TouchableOpacity, FlatList, Button, Platform } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
 import { Header, Screen, Text, VectorsIcon } from "../components"
@@ -9,6 +9,15 @@ import * as Animatable from "react-native-animatable"
 import { configs } from "../utils/configs"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
+import * as Notifications from "expo-notifications"
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+})
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -20,48 +29,100 @@ import { configs } from "../utils/configs"
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">> = observer(
-  function MemoscreenScreen({navigation}) {
+  function MemoscreenScreen({ navigation }) {
     // Pull in one of our MST stores
     // const { someStore, anotherStore } = useStores()
     const viewRef = useRef(null)
     const animation = configs.Animations[Math.floor(Math.random() * configs.Animations.length)]
 
     useEffect(() => {
-      const unsubscribe = navigation.addListener('focus', () => {
-        viewRef.current.animate({ 0: { opacity: 0.5, }, 1: { opacity: 1 } });
+      const unsubscribe = navigation.addListener("focus", () => {
+        viewRef.current.animate({ 0: { opacity: 0.5 }, 1: { opacity: 1 } })
       })
       // ToastAndroid.show(animation+ ' Animation', ToastAndroid.SHORT);
-      return () => unsubscribe;
+      return () => unsubscribe
     }, [navigation])
 
+
+    useEffect(() => {
+      getPermission()
+      requestPermissionsAsync()
+    }, []);
+
     const renderItem = ({ item, index }) => (
-      <ListItem item={item} animation={animation} index={index}  navigation={navigation} />)
+      <ListItem item={item} animation={animation} index={index} navigation={navigation} />
+    )
     // Pull in navigation via hook
     // const navigation = useNavigation()
+    async function schedulePushNotification() {
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Time's up!",
+          body: "Change sides!",
+        },
+        trigger: {
+          seconds: 2,
+        },
+      })
+    }
+    async function getPermission() {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync()
+      let finalStatus = existingStatus
+      console.log("status",finalStatus)
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync()
+        finalStatus = status
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!")
+        return
+      }
+    }
+
+    const requestPermissionsAsync = async() => {
+       await Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: true,
+          allowSound: true,
+          allowAnnouncements: true,
+        },
+      });
+    }
     return (
       <Screen style={$root} preset="fixed">
         <Header backgroundColor="red" title="memo" />
+        <Button
+          title="Press to schedule a notification"
+          onPress={async () => {
+            await schedulePushNotification()
+          }}
+        />
+        <Button
+          title="Press to schedule a notification"
+          onPress={requestPermissionsAsync}
+        />
         <Animatable.View
           ref={viewRef}
-          easing={'ease-in-out'}
-         duration={500}
-          style={{flexShrink: 1}}
+          easing={"ease-in-out"}
+          duration={500}
+          style={{ flexShrink: 1 }}
         >
-         <FlatList
-            data={Array(15).fill('')}
+          <FlatList
+            data={Array(15).fill("")}
             keyExtractor={(_, index) => `${index}`}
             numColumns={2}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 100}}
+            contentContainerStyle={{ paddingBottom: 100 }}
           />
-      </Animatable.View>
+        </Animatable.View>
       </Screen>
     )
   },
 )
 
-const ListItem = ({ item, index, animation, navigation } : any) => {
+const ListItem = ({ item, index, animation, navigation }: any) => {
   const bgColor = (i) => colorRandomItem[i % colorRandomItem.length]
 
   return (
@@ -86,7 +147,7 @@ const ListItem = ({ item, index, animation, navigation } : any) => {
             alignItems: "center",
           }}
         >
-          <Text style={{fontSize: 14}}>Lorem ipsum</Text>
+          <Text style={{ fontSize: 14 }}>Lorem ipsum</Text>
           <VectorsIcon type="Feather" name="more-vertical" size={20} color={"black"} />
         </View>
       </View>

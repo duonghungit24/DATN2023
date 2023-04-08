@@ -30,6 +30,10 @@ const vi = {
   nhacnho: "Nhắc nhở",
   demnguoc: "Đếm ngược",
   nhiemvunho: "Nhiệm vụ nhỏ",
+  chinhsachbaomat: "Chính sách bảo mật",
+  phanhoi: "Phản hồi",
+  danhgia: "Đánh giá",
+  dieukien: "Điều kiện",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

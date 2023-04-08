@@ -29,6 +29,10 @@ const en = {
   nhacnho: "Reminder",
   demnguoc: "Countdown",
   nhiemvunho: "Task small",
+  chinhsachbaomat: "Privacy Policy",
+  phanhoi: "Feedback",
+  danhgia: "Rate",
+  dieukien: "Terms",
   common: {
     ok: "OK!",
     cancel: "Cancel",

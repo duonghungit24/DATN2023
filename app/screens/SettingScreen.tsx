@@ -1,12 +1,21 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Alert, Switch, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  Alert,
+  ScrollView,
+  Switch,
+  TextStyle,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+  ViewStyle,
+} from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
 import { Header, Screen, Text, Toggle, VectorsIcon } from "../components"
 import * as LocalAuthentication from "expo-local-authentication"
 import { useStores } from "../models"
-import { colors } from "../theme"
+import { colorRandomItem, colors } from "../theme"
 import { onSnapshot } from "mobx-state-tree"
 import { translate } from "../i18n"
 import { configs } from "../utils/configs"
@@ -67,24 +76,66 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
         authStore.setBiometric(false)
       }
     }
-
+    const colorScheme = useColorScheme()
+    console.log("color",colorScheme)
     console.log("item", new Date(Date.now()))
     // Pull in navigation via hook
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
         <Header titleTx="caidat" backgroundColor={colors.neutral100} />
-        <View style={$viewContent}>
-          <ItemSetting
-            typeIcon="AntDesign"
-            nameIcon="rightcircle"
-            bgColor="red"
-            titleTx="ngonngu"
-            onPress={() => navigation.navigate("changeLanguageScreen")}
-          />
-          <View style={$line} />
-          <ItemSwitch activeToggle={statusBiometric} onChangeToggle={setBiometric} />
-        </View>
+        <ScrollView contentContainerStyle={{ paddingBottom: configs.windowHeight / 10}}>
+          <View style={$viewContent}>
+            <ItemSetting
+              typeIcon="FontAwesome"
+              nameIcon="language"
+              bgColor={colorRandomItem[0]}
+              titleTx="ngonngu"
+              onPress={() => navigation.navigate("changeLanguageScreen")}
+            />
+            <View style={$line} />
+            <ItemSwitch
+              typeIcon="Fontisto"
+              nameIcon="locked"
+              activeToggle={statusBiometric}
+              onChangeToggle={setBiometric}
+              bgColor={colorRandomItem[3]}
+            />
+          </View>
+          <View style={$viewContent}>
+            <ItemSetting
+              typeIcon="MaterialIcons"
+              nameIcon="feedback"
+              bgColor={colorRandomItem[4]}
+              titleTx="phanhoi"
+              onPress={() => navigation.navigate("changeLanguageScreen")}
+            />
+            <View style={$line} />
+            <ItemSetting
+              typeIcon="MaterialIcons"
+              nameIcon="star-rate"
+              bgColor={colorRandomItem[8]}
+              titleTx="danhgia"
+              onPress={() => navigation.navigate("changeLanguageScreen")}
+            />
+            <View style={$line} />
+            <ItemSetting
+              typeIcon="Ionicons"
+              nameIcon="reader-outline"
+              bgColor={colorRandomItem[5]}
+              titleTx="dieukien"
+              onPress={() => navigation.navigate("changeLanguageScreen")}
+            />
+            <View style={$line} />
+            <ItemSetting
+              typeIcon="MaterialIcons"
+              nameIcon="policy"
+              bgColor={colorRandomItem[6]}
+              titleTx="chinhsachbaomat"
+              onPress={() => navigation.navigate("changeLanguageScreen")}
+            />
+          </View>
+        </ScrollView>
       </Screen>
     )
   },
@@ -93,7 +144,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
 const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor }) => {
   return (
     <TouchableOpacity style={$viewItem} onPress={onPress}>
-      <View style={$viewIcon}>
+      <View style={[$viewIcon, { backgroundColor: bgColor }]}>
         <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
       </View>
       <Text preset="bold" tx={titleTx} style={$textItem} />
@@ -101,9 +152,12 @@ const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor }) => {
     </TouchableOpacity>
   )
 }
-const ItemSwitch = ({ activeToggle, onChangeToggle }) => {
+const ItemSwitch = ({ activeToggle, onChangeToggle, typeIcon, nameIcon, bgColor }) => {
   return (
     <View style={$viewItem}>
+      <View style={[$viewIcon, { backgroundColor: bgColor }]}>
+        <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
+      </View>
       <Text preset="bold" tx="baomat" style={$textItem} />
       <Toggle variant="switch" value={activeToggle} onPress={onChangeToggle} />
     </View>
@@ -116,7 +170,8 @@ const $root: ViewStyle = {
 }
 const $viewItem: ViewStyle = {
   flexDirection: "row",
-  backgroundColor: "blue",
+  alignItems: "center",
+  padding: 12,
 }
 const $textItem: TextStyle = {
   flex: 1,
@@ -125,16 +180,18 @@ const $textItem: TextStyle = {
 const $line: ViewStyle = {
   height: 0.5,
   backgroundColor: colors.neutral300,
-  marginVertical: 16,
 }
 const $viewIcon: ViewStyle = {
   backgroundColor: "red",
   alignItems: "center",
   justifyContent: "center",
-  padding: 6,
+  padding: 8,
+  marginRight: 8,
+  borderRadius: 6,
 }
-const $viewContent : ViewStyle = {
-  padding: 16,
+const $viewContent: ViewStyle = {
+  margin: 16,
   ...configs.shadow,
-  backgroundColor :'red'
+  backgroundColor: colors.neutral000,
+  borderRadius: 12,
 }

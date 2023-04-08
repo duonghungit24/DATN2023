@@ -26,7 +26,7 @@ export const ListEvent = observer(() => {
 const ItemLine = ({ currentIndex, lengthEvent }) => {
   return (
     <View
-      style={{ width: "10%", height: "100%", alignItems: "center", position: "absolute", top: 50 }}
+      style={{ width: "10%", height: "90%", alignItems: "center", position: "absolute", top: "50%" }}
     >
       <VectorsIcon type="AntDesign" name="checkcircle" color="red" size={20} style={{ paddingBottom: 8 }} />
       {lengthEvent != currentIndex ? <View style={$line} /> : null}

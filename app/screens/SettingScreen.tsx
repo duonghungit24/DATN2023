@@ -3,12 +3,13 @@ import { observer } from "mobx-react-lite"
 import { Alert, Switch, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text, VectorsIcon } from "../components"
+import { Header, Screen, Text, Toggle, VectorsIcon } from "../components"
 import * as LocalAuthentication from "expo-local-authentication"
 import { useStores } from "../models"
 import { colors } from "../theme"
 import { onSnapshot } from "mobx-state-tree"
 import { translate } from "../i18n"
+import { configs } from "../utils/configs"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -54,7 +55,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
             Alert.alert(translate("thongbao"), translate("batvantay"))
             return
           } else {
-            // set biometric 
+            // set biometric
             const result = await LocalAuthentication.authenticateAsync()
             console.log("restok", result)
             if (result.success) {
@@ -67,52 +68,73 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
       }
     }
 
-    console.log("item",new Date(Date.now()))
+    console.log("item", new Date(Date.now()))
     // Pull in navigation via hook
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header titleTx="caidat" backgroundColor={colors.neutral100}/>
-        <ItemSetting titleTx="ngonngu" onPress={() => navigation.navigate("changeLanguageScreen")}/>
-        <View style={$line} />
-        <View style={$viewItem}>
-        <Text preset="bold" tx="baomat" style={$textItem}/>
-        <Switch value={statusBiometric} onChange={setBiometric} />
+        <Header titleTx="caidat" backgroundColor={colors.neutral100} />
+        <View style={$viewContent}>
+          <ItemSetting
+            typeIcon="AntDesign"
+            nameIcon="rightcircle"
+            bgColor="red"
+            titleTx="ngonngu"
+            onPress={() => navigation.navigate("changeLanguageScreen")}
+          />
+          <View style={$line} />
+          <ItemSwitch activeToggle={statusBiometric} onChangeToggle={setBiometric} />
         </View>
       </Screen>
     )
   },
 )
 
-const ItemSetting = ({onPress , titleTx}) => {
+const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor }) => {
   return (
     <TouchableOpacity style={$viewItem} onPress={onPress}>
-        <Text preset="bold" tx={titleTx} style={$textItem} />
-        <VectorsIcon 
-          type="Feather"
-          name="chevron-right"
-          size={25}
-          color={colors.neutral900}
-        />
+      <View style={$viewIcon}>
+        <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
+      </View>
+      <Text preset="bold" tx={titleTx} style={$textItem} />
+      <VectorsIcon type="Feather" name="chevron-right" size={25} color={colors.neutral900} />
     </TouchableOpacity>
+  )
+}
+const ItemSwitch = ({ activeToggle, onChangeToggle }) => {
+  return (
+    <View style={$viewItem}>
+      <Text preset="bold" tx="baomat" style={$textItem} />
+      <Toggle variant="switch" value={activeToggle} onPress={onChangeToggle} />
+    </View>
   )
 }
 
 const $root: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.neutral100
+  backgroundColor: colors.neutral100,
 }
-const $viewItem : ViewStyle = {
-  flexDirection: 'row',
-  paddingHorizontal: 16,
-  backgroundColor: colors.neutral000,
+const $viewItem: ViewStyle = {
+  flexDirection: "row",
+  backgroundColor: "blue",
 }
-const $textItem : TextStyle = {
-  flex:1,
-   fontSize: 16
+const $textItem: TextStyle = {
+  flex: 1,
+  fontSize: 16,
 }
 const $line: ViewStyle = {
-  height: 1,
+  height: 0.5,
   backgroundColor: colors.neutral300,
-  marginVertical:16
+  marginVertical: 16,
+}
+const $viewIcon: ViewStyle = {
+  backgroundColor: "red",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 6,
+}
+const $viewContent : ViewStyle = {
+  padding: 16,
+  ...configs.shadow,
+  backgroundColor :'red'
 }

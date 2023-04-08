@@ -108,7 +108,7 @@ const hourPickerLocales = {
       'Friday',
       'Saturday',
     ],
-    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    dayNamesShort: ['Sun1', 'Mon1', 'Tue1', 'Wed1', 'Thu1', 'Fri1', 'Sat1'],
     monthNames: [
       'January',
       'February',
@@ -263,10 +263,6 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
   const { style } = props
   const {languageStore }  = useStores()
   const $styles = [$container, style]
-
-  // React.useLayoutEffect(() => {
-  //   LocaleConfig.defaultLocale = languageStore.language
-  // },[languageStore.language])
   LocaleConfig.defaultLocale = languageStore.language
 
  

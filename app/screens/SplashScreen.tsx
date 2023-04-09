@@ -7,6 +7,7 @@ import { Screen, Text } from "../components"
 import LottieView from 'lottie-react-native';
 import { useStores } from "../models"
 import * as LocalAuthentication from 'expo-local-authentication';
+import { View } from "react-native-animatable"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -62,21 +63,22 @@ export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscree
   // const navigation = useNavigation()
   return (
     <Screen style={$root} preset="fixed">
+      <View style={$container}>
        <LottieView
         source={require('../../assets/images/task.json')}
         style={$styleLotte}
         autoPlay
         loop
       />
+        </View>
     </Screen>
   )
 })
 
 const $root: ViewStyle = {
   flex: 1,
-  alignItems: 'center',
-  justifyContent:"center", 
 }
+const $container : ViewStyle = {flex:1, justifyContent:'center', alignItems: 'center'}
 const $styleLotte : ViewStyle = {
   width: "60%",
   aspectRatio: 1,

@@ -14,6 +14,14 @@ export const utils = {
   displayDate: (date) => {
     return date ? moment(date).format(configs.formatDateDisplay) : ""
   },
+  displayDateHour: (date) => {
+      let dateFormat = ""
+      if (date) {
+        dateFormat = moment(date).format("DD/MM/YYYY HH:mm")
+        return dateFormat
+      }
+      return dateFormat
+  },
   zeroPad(value, length) {
     return `${value}`.padStart(length, "0")
   },

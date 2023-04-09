@@ -209,10 +209,12 @@ export const HeaderCreate = (props: HeaderCreateProps) => {
   )
 }
 
-export const TitleAndContent = () => {
+export const TitleAndContent = ({title, content, onChangeTitle, onChangeContent}) => {
   return (
     <View style={$viewTitleContent}>
       <TextField
+        value={title}
+        onChangeText={onChangeTitle}
         placeholderTx="tieude"
         inputWrapperStyle={$wrapInput}
         autoFocus
@@ -221,6 +223,8 @@ export const TitleAndContent = () => {
         style={{ fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
       />
       <TextField
+        value={content}
+        onChangeText={onChangeContent}
         placeholderTx="noidung"
         inputWrapperStyle={$wrapInput}
         multiline

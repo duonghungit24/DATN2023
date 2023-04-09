@@ -33,7 +33,7 @@ export interface ModalCreateDiaryProps {
   style?: StyleProp<ViewStyle>
   isVisible: boolean
   onBackDropPress: () => void
-  type : "note" | "diary"
+  type: "note" | "diary"
 }
 
 interface TypeTime {
@@ -45,9 +45,11 @@ interface TypeTime {
  */
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore } = useStores()
+  const { languageStore, memoStore } = useStores()
   const $styles = [$container, style]
 
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
   const [date, setDate] = useState(new Date().toISOString())
@@ -138,27 +140,48 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const showHeaderCreate = useMemo(() => {
     return (
       <>
-        {
-          type == "note" 
-          ?
-          <TitleAndContent />
-          :
-          <View style={$viewTitleContent}>
-          <TextField
-            placeholderTx="nhatkytext"
-            inputWrapperStyle={$wrapInput}
-            autoFocus
-            clearButtonMode="while-editing"
-            placeholderTextColor={colors.neutral900}
-            multiline
-            style={$inputDiary}
+        {type == "note" ? (
+          <TitleAndContent
+            title={title}
+            onChangeTitle={setTitle}
+            content={content}
+            onChangeContent={setContent}
           />
-        </View>
-        }
+        ) : (
+          <View style={$viewTitleContent}>
+            <TextField
+              placeholderTx="nhatkytext"
+              inputWrapperStyle={$wrapInput}
+              autoFocus
+              clearButtonMode="while-editing"
+              placeholderTextColor={colors.neutral900}
+              multiline
+              style={$inputDiary}
+            />
+          </View>
+        )}
       </>
     )
-  },[type])
-  console.log("tiem", new Date().getTime() + Number(50))
+  }, [type, title, content])
+ // console.log("date",utils.displayDateHour(date))
+
+  // tạo ghi chú hoặc nhật ký
+  const onCreate = () => {
+    const item = {
+      id: uuid.v4(),
+      title: title,
+      content: content,
+      time: date.toString(),
+      emoji: "",
+      isPin: togglePin,
+      color: "#5d6700",
+      location: location,
+      url: url,
+      listImg: images
+    }
+    console.log("item", item)
+    memoStore.addMemo(item)
+  }
 
   return (
     <Modal
@@ -189,7 +212,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
-        <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
+        <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={onCreate} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 20 }}
@@ -232,7 +255,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             </View>
             <CustomColor />
             <TextField
-              value={url}
+              value={location}
               LeftAccessory={() => (
                 <LeftAccesstory typeIcon="Ionicons" nameIcon="location-sharp" colorIcon="red" />
               )}
@@ -240,7 +263,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               onChangeText={setLocation}
               inputWrapperStyle={$wrapInput}
               clearButtonMode="while-editing"
-              // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
             />
             <TextField
               value={url}
@@ -251,7 +273,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               inputWrapperStyle={$wrapInput}
               onChangeText={setUrl}
               clearButtonMode="while-editing"
-              // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
             />
             {DisplayImage}
           </View>

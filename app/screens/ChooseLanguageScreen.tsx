@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TouchableOpacity, ViewStyle } from "react-native"
+import { TouchableOpacity, ViewStyle,View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
 import { Button, ModalChooseLanguage, Screen, Text, VectorsIcon } from "../components"
@@ -38,8 +38,11 @@ export const ChooseLanguageScreen: FC<StackScreenProps<AppStackScreenProps, "Cho
           onBackDropPress={() => setIsVisible(false)}
           onPressValue={(value) => setItemSelect(value)}
         />
+        <View style={$container}>
+
         <ButtonChoose text={itemSelect.name} onPress={() => setIsVisible(true)} />
         <Button tx="tieptuc" style={$btnContinue} onPress={nextScreen}/>
+        </View>
       </Screen>
     )
   })
@@ -55,6 +58,10 @@ const ButtonChoose = ({ text, onPress }: any) => {
 const $root: ViewStyle = {
   flex: 1,
   backgroundColor: colors.neutral000,
+
+}
+const $container : ViewStyle = {
+  flex: 1,
   justifyContent: "center", 
   paddingHorizontal: 16,
 }

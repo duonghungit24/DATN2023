@@ -83,9 +83,12 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
-      <TopTabAnimated />
+    
       <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
           <Text>Go event</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("diaryScreen")}>
+          <Text>Go diary</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => utils.showToast({
         type:"success",
@@ -93,6 +96,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       })}>
           <Text>show toast</Text>
       </TouchableOpacity>
+      <TopTabAnimated />
     </Screen>
   )
 })

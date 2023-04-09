@@ -51,9 +51,9 @@ export type AppStackParamList = {
   chooseLanguageScreen: undefined
   bottomTab: undefined
   onboardingScreen : undefined
-  TodoScreen: undefined
-  MemoScreen: undefined
-  DiaryScreen:  undefined
+  todoScreen: undefined
+  memoScreen: undefined
+  diaryScreen:  undefined
   eventScreen: undefined
 }
 
@@ -81,10 +81,11 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="onboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen}/>
       <Stack.Screen name="bottomTab" component={BottomTabNavigator} /> 
-      <Stack.Screen name="MemoScreen" component={MemoScreen} />
+      <Stack.Screen name="memoScreen" component={MemoScreen} />
       <Stack.Screen name="securityScreen" component={SecurityScreen} />
       <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />
       <Stack.Screen name="eventScreen" component={EventScreen} />
+      <Stack.Screen name="diaryScreen" component={DiaryScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

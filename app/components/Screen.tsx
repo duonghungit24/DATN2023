@@ -239,4 +239,6 @@ const $outerStyle: ViewStyle = {
 const $innerStyle: ViewStyle = {
   justifyContent: "flex-start",
   alignItems: "stretch",
+  height: "100%",
+  width: "100%",
 }

@@ -28,7 +28,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     return (
       <Screen style={$root} preset="fixed">
         <Header  leftIcon="arrowleft" typeIconLeft="AntDesign" />
-        <ScrollView contentContainerStyle={{ paddingBottom: 156 }}>
+        <ScrollView >
           <ListEvent />
         </ScrollView>
       </Screen>

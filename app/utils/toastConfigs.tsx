@@ -49,7 +49,7 @@ export const toastConfig = {
   ),
   warning: ({ text1, text2, onPress }: ToastProps) => (
     <TouchableOpacity activeOpacity={0.2} onPress={onPress} style={$btnToast}>
-      <VectorsIcon type="MaterialIcons" name="warning" size={25} color={colors.warning} />
+      <VectorsIcon type="MaterialIcons" name="warning" size={25} color={colors.accent500} />
       <View style={$content}>
         {text1 ? <Text preset="bold" style={$text1}>{text1}</Text> : null}
         {text2 ? <Text preset="regular" style={$text2}>{text2}</Text> : null}

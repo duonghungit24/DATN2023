@@ -19,6 +19,7 @@ import { colorRandomItem, colors } from "../theme"
 import { onSnapshot } from "mobx-state-tree"
 import { translate } from "../i18n"
 import { configs } from "../utils/configs"
+import { utils } from "../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -55,13 +56,19 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
         const reusltSupport = await LocalAuthentication.supportedAuthenticationTypesAsync()
         console.log("result", reusltSupport)
         if (reusltSupport.length == 0) {
-          Alert.alert("thong bao", "khong ho tro roi")
+          utils.showToast({
+            type: "warning",
+            text1: "Thiết bị không hỗ trợ FaceID / Vân tay"
+          })
           return
         } else {
           // check xem máy đã bật faceid hay vân tay chưa
           const result = await LocalAuthentication.isEnrolledAsync()
           if (!result) {
-            Alert.alert(translate("thongbao"), translate("batvantay"))
+            utils.showToast({
+              type: "warning",
+              text1: translate("batvantay")
+            })
             return
           } else {
             // set biometric

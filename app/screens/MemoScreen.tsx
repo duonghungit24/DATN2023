@@ -180,7 +180,7 @@ const $textContent: TextStyle = {
 }
 const $viewDate : ViewStyle = {
     bottom: 0,
-    backgroundColor: colorRandomItem[1],
+    backgroundColor: "#FEE1E9",
     padding: 4, borderRadius: 4
 }
 const $textDate: TextStyle = {

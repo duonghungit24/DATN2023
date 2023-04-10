@@ -126,7 +126,7 @@ const $textItem: TextStyle = {
 }
 const $viewTitle: ViewStyle = {
   paddingHorizontal: 12,
-  backgroundColor: "blue",
+  backgroundColor: "#FFF4E7",
   paddingVertical: 8,
   width: "30%",
   borderTopRightRadius: 24,

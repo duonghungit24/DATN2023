@@ -26,8 +26,8 @@ export const MemoModel = types
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     addMemo : (item) => {
-      const obj = {...item}
-       self.listMemo.push(obj)
+      const arr = [item, ...self.listMemo]
+       self.listMemo = cast(arr)
        self.isRefreshMemo += 1
     },
     editMemo: (item) => {

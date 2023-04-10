@@ -62,7 +62,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
         onLeftPress={onBackDropPress}
       />
       <View style={$viewPosition}>
-        <ButtonSelectDay />
+        {/* <ButtonSelectDay /> */}
         <View style={$viewModal}>
           <Text style={$textPlan} tx="kehoach" />
           <View style={$viewBtn}>
@@ -72,6 +72,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               nameIcon="calendar"
               colorIcon={colors.event}
               onPress={() => setIsvisibleEventWork({type: "event", show:  true})}
+              bgColor="#E0FEF4"
             />
             <ItemPlan
               textPlan="work"
@@ -79,6 +80,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               nameIcon="check"
               colorIcon={colors.todo}
               onPress={() => setIsvisibleEventWork({type: "work", show:  true})}
+              bgColor="#FEE1E9"
             />
             <ItemPlan
               textPlan="note"
@@ -86,6 +88,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               nameIcon="pencil"
               colorIcon={colors.memo}
               onPress={() => setIsvisibleNoteDiary({type: "note", show: true})}
+              bgColor="#FFF4E7"
             />
             <ItemPlan
               textPlan="diary"
@@ -93,6 +96,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               nameIcon="file-text"
               colorIcon={colors.diary}
               onPress={() => setIsvisibleNoteDiary({type: "diary", show: true})}
+              bgColor="#EEF0FE"
             />
           </View>
         </View>
@@ -163,8 +167,8 @@ const $btnPlan: ViewStyle = {
   alignItems: "center",
 }
 const $circlePlan: ViewStyle = {
-  height: 60,
-  width: 60,
+  height: 50,
+  width: 50,
   backgroundColor: "white",
   borderRadius: 30,
   alignItems: "center",
@@ -173,6 +177,7 @@ const $circlePlan: ViewStyle = {
 const $textPlanItem: TextStyle = {
   fontSize: 14,
   ...typography.textBoldMedium,
+  marginTop: 4
 }
 const $viewButton: ViewStyle = {
   flexDirection: "row",

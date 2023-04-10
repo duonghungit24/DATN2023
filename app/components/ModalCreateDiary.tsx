@@ -98,11 +98,12 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   }
 
   const onConfirmDate = (value) => {
-    console.log("value", new Date().getTime() + Number(50))
     if (isVisibleDate.type == "date") {
       setDate(value)
     } else if (isVisibleDate.type == "time") {
-      const time = `${new Date(value).getHours()} ${new Date(value).getMinutes()} `
+      
+      const time = `${new Date(value).getHours()}:${new Date(value).getMinutes()} `
+      console.log("time", value, time)
       setTime(time)
     }
     setIsvisibleDate({ type: "date", show: false })
@@ -135,7 +136,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         />
       </>
     )
-  }, [toggleDate])
+  }, [toggleDate, date, time])
 
   const showHeaderCreate = useMemo(() => {
     return (
@@ -225,7 +226,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             <View style={$viewToggle}>
               <TextField
                 LeftAccessory={() => (
-                  <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon="red" />
+                  <LeftAccesstory typeIcon="Ionicons" nameIcon="ios-today" colorIcon="red" />
                 )}
                 placeholderTx="thoigian"
                 inputWrapperStyle={$wrapInput}

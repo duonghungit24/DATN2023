@@ -18,7 +18,7 @@ const vi = {
   canhbao: "FaceID / Vân tay / Mật khẩu không chính xác",
   baomat: "Bảo mật",
   thongbao:"Thông báo",
-  batvantay: "Vui lòng bật vân tay",
+  batvantay: "Vui lòng bật FaceID / Vân tay",
   nhatkytext: "Bạn cảm thấy ra sao?",
   bieutuongcamxuc: "Chọn emoji",
   vitri: "Vị trí",

@@ -181,7 +181,8 @@ const $textContent: TextStyle = {
 const $viewDate : ViewStyle = {
     bottom: 0,
     backgroundColor: "#FEE1E9",
-    padding: 4, borderRadius: 4
+    padding: 4, borderRadius: 4,
+    alignItems:'center'
 }
 const $textDate: TextStyle = {
   color: colors.primary500

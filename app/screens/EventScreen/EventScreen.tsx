@@ -39,7 +39,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
       start: `${getDate(-1)} 09:20:00`,
       end: `${getDate(-1)} 12:00:00`,
       title: 'Merge Request to React Native Calendars',
-      summary: 'Merge Timeline Calendar to React Native Calendars'
+      summary: 'Merge Timeline Calendar to React Native Calendars',
     },
     {
       start: `${getDate()} 01:15:00`,
@@ -77,6 +77,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     unavailableHours: [{start: 0, end: 6}, {start: 22, end: 24}],
     overlapEventsSpacing: 8,
     rightEdgeSpacing: 24,
+    onEventPress: (value) => console.log("value", value)
   };
   // console.log("event", eventsByDate)
     // Pull in navigation via hook
@@ -99,7 +100,12 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
           firstDay={1}
           // leftArrowImageSource={require('../img/previous.png')}
           // rightArrowImageSource={require('../img/next.png')}
-        //  markedDates={this.marked}
+         markedDates={{
+          '2023-04-11': {
+            dots: [{key: 'running', color: 'blue'}, {key: '2', color: 'red'}]
+          },
+        }}
+        markingType="multi-dot"
         />
         <TimelineList
           events={eventsByDate}
@@ -108,6 +114,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
           scrollToNow
           scrollToFirst
           initialTime={INITIAL_TIME}
+    
         />
       </CalendarProvider>
       </Screen>

@@ -49,6 +49,14 @@
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "sounds": ["./assets/sounds/clockAlarm.wav"]
+        }
+      ]
+    ]
   }
 }

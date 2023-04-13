@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		4CFF1260346E0CBA7B1D42F5 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8B2EB368A96A9276BC332 /* ExpoModulesProvider.swift */; };
 		7699B88040F8A987B510C191 /* libPods-NoteTimeDiary-NoteTimeDiaryTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NoteTimeDiary-NoteTimeDiaryTests.a */; };
+		BA03591C29E85CD5007D906D /* clockAlarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA03591B29E85CD5007D906D /* clockAlarm.wav */; };
 		BA23233029C8C6C300717DE7 /* Mukta-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232229C8C6C200717DE7 /* Mukta-Medium.ttf */; };
 		BA23233129C8C6C300717DE7 /* NotoSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232329C8C6C200717DE7 /* NotoSans-Medium.ttf */; };
 		BA23233229C8C6C300717DE7 /* NotoSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232429C8C6C200717DE7 /* NotoSans-Light.ttf */; };
@@ -61,6 +62,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-NoteTimeDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NoteTimeDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EF8B2EB368A96A9276BC332 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-NoteTimeDiary-NoteTimeDiaryTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig"; path = "Target Support Files/Pods-NoteTimeDiary-NoteTimeDiaryTests/Pods-NoteTimeDiary-NoteTimeDiaryTests.release.xcconfig"; sourceTree = "<group>"; };
+		BA03591B29E85CD5007D906D /* clockAlarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = clockAlarm.wav; path = ../../../Downloads/clockAlarm.wav; sourceTree = "<group>"; };
 		BA23230629C8C1C200717DE7 /* NotoSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Light.ttf"; path = "../assets/fonts/NotoSans-Light.ttf"; sourceTree = "<group>"; };
 		BA23230729C8C1C200717DE7 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Regular.ttf"; path = "../assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		BA23230829C8C1C200717DE7 /* Merriweather-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Light.ttf"; path = "../assets/fonts/Merriweather-Light.ttf"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		13B07FAE1A68108700A75B9A /* NoteTimeDiary */ = {
 			isa = PBXGroup;
 			children = (
+				BA03591B29E85CD5007D906D /* clockAlarm.wav */,
 				BA2E691629DB19CC008E3A7F /* NoteTimeDiary.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -360,6 +363,7 @@
 				BA23233A29C8C6C300717DE7 /* NotoSans-Bold.ttf in Resources */,
 				BA23233B29C8C6C300717DE7 /* Mukta-Light.ttf in Resources */,
 				BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */,
+				BA03591C29E85CD5007D906D /* clockAlarm.wav in Resources */,
 				BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */,
 				BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */,
 				BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */,

@@ -21,14 +21,6 @@ import * as Notifications from "expo-notifications"
 import { useStores } from "../models"
 import { utils } from "../utils"
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-})
-
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
 // - Add `Memoscreen: undefined` to AppStackParamList
@@ -64,55 +56,10 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
       />
     )
     // // Pull in navigation via hook
-    // // const navigation = useNavigation()
-    // async function schedulePushNotification() {
-    //   Notifications.scheduleNotificationAsync({
-    //     content: {
-    //       title: "Time's up!",
-    //       body: "Change sides!",
-    //     },
-    //     trigger: {
-    //       seconds: 2,
-    //     },
-    //   })
-    // }
-    // async function getPermission() {
-    //   const { status: existingStatus } = await Notifications.getPermissionsAsync()
-    //   let finalStatus = existingStatus
-    //   console.log("status",finalStatus)
-    //   if (existingStatus !== "granted") {
-    //     const { status } = await Notifications.requestPermissionsAsync()
-    //     finalStatus = status
-    //   }
-    //   if (finalStatus !== "granted") {
-    //     alert("Failed to get push token for push notification!")
-    //     return
-    //   }
-    // }
-
-    // const requestPermissionsAsync = async() => {
-    //    await Notifications.requestPermissionsAsync({
-    //     ios: {
-    //       allowAlert: true,
-    //       allowBadge: true,
-    //       allowSound: true,
-    //       allowAnnouncements: true,
-    //     },
-    //   });
-    // }
+    // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header backgroundColor="red" title="memo" />
-        {/* <Button
-          title="Press to schedule a notification"
-          onPress={async () => {
-            await schedulePushNotification()
-          }}
-        />
-        <Button
-          title="Press to schedule a notification"
-          onPress={requestPermissionsAsync}
-        /> */}
+        <Header backgroundColor="red" titleTx="note" />
         <Animatable.View animation="slideInUp" duration={1000} style={{ flex: 1 }}>
           <FlatList
             data={listMemo.slice()}

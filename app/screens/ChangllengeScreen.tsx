@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Button, Platform, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -10,6 +10,14 @@ import { TopTabAnimated } from "../hooks/useTabAnimated"
 import { utils } from "../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
+import * as Notifications from "expo-notifications"
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+})
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -74,6 +82,69 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   console.log("gio",  moment("11:30").add(0, 'm').toDate())
   console.log("moment", moment().format())
   console.log("test",moment(moment().format()).add(5, 'm').toDate())
+
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState({});
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+  
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      console.log("notification", notification)
+      setNotification(notification);
+    });
+
+    // nhấn vào sẽ gọi khi kill app
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log("remove",response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  async function schedulePushNotification() {
+    const id = await  Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Time's up!",
+          body: "Change sides!",
+          sound:"clockAlarm.wav"
+        },
+        trigger: {
+          seconds: 2,
+        },
+      })
+
+      console.log("id", id)
+    }
+    async function getPermission() {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync()
+      let finalStatus = existingStatus
+      console.log("status",finalStatus)
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync()
+        finalStatus = status
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!")
+        return
+      }
+    }
+
+    const requestPermissionsAsync = async() => {
+       await Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: true,
+          allowSound: true,
+          allowAnnouncements: true,
+        },
+      });
+    }
+
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
@@ -83,7 +154,21 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
-    
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Title: {notification && notification?.request?.content.title} </Text>
+        <Text>Body: {notification && notification?.request?.content.body}</Text>
+        <Text>Data: {notification && JSON.stringify(notification?.request?.content.data)}</Text>
+      </View>
+    <Button
+          title="Press to schedule a notification"
+          onPress={async () => {
+            await schedulePushNotification()
+          }}
+        />
+        <Button
+          title="Press to schedule a notification"
+          onPress={getPermission}
+        />
       <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
           <Text>Go event</Text>
       </TouchableOpacity>

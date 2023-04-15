@@ -33,6 +33,9 @@ const en = {
   phanhoi: "Feedback",
   danhgia: "Rate",
   dieukien: "Terms",
+  ambao: "Sound",
+  chonambao: "Choose sound",
+  luu: "Save",
   common: {
     ok: "OK!",
     cancel: "Cancel",

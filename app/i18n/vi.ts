@@ -25,7 +25,7 @@ const vi = {
   ghim: "Ghim",
   thoigian: "Thời gian",
   xacnhan: "Xác nhận",
-  huy: "Huỷ",
+  huy: "Huỷ bỏ",
   tuychon: "Tuỳ chọn",
   nhacnho: "Nhắc nhở",
   demnguoc: "Đếm ngược",
@@ -34,6 +34,9 @@ const vi = {
   phanhoi: "Phản hồi",
   danhgia: "Đánh giá",
   dieukien: "Điều kiện",
+  ambao: "Âm báo",
+  chonambao: "Chọn âm báo",
+  luu: "Lưu",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

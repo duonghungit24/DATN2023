@@ -68,7 +68,7 @@ const ItemLanguage = ({ item, check, onPress }) => {
       <Text>{item.name}</Text>
       <View style={{ flex: 1 }} />
       {check && (
-        <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.secondary500} />
+        <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.success} />
       )}
     </TouchableOpacity>
   )

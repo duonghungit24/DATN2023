@@ -30,6 +30,7 @@ Notifications.setNotificationHandler({
 // @ts-ignore
 async function getDefaultCalendarSource() {
   const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+  console.log("default", defaultCalendar)
   return defaultCalendar.source;
 }
 
@@ -62,6 +63,7 @@ async function createCalendar() {
  console.log("re", create)
  
 }
+
 
 export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changllenge">> = observer(function ChangllengeScreen({navigation}) {
   // Pull in one of our MST stores
@@ -111,14 +113,18 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
         content: {
           title: "Time's up!",
           body: "Change sides!",
-          sound:"clockAlarm.wav"
+         sound:"clockAlarm.wav"
         },
         trigger: {
-          seconds: 2,
+          seconds: 10,
+        //  repeats: true,
         },
       })
 
       console.log("id", id)
+
+      // xoá hết list thông báo
+  //  await  Notifications.cancelAllScheduledNotificationsAsync()
     }
     async function getPermission() {
       const { status: existingStatus } = await Notifications.getPermissionsAsync()
@@ -135,6 +141,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
     }
 
     const requestPermissionsAsync = async() => {
+    //  console.log("ok")
        await Notifications.requestPermissionsAsync({
         ios: {
           allowAlert: true,
@@ -145,6 +152,10 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       });
     }
 
+    const getAllNotification = async() => {
+      const result = await Notifications.getAllScheduledNotificationsAsync()
+      console.log("list", result)
+    }
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
@@ -159,6 +170,10 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
         <Text>Body: {notification && notification?.request?.content.body}</Text>
         <Text>Data: {notification && JSON.stringify(notification?.request?.content.data)}</Text>
       </View>
+      <Button
+          title="get list"
+          onPress={getDefaultCalendarSource}
+        />
     <Button
           title="Press to schedule a notification"
           onPress={async () => {
@@ -167,7 +182,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
         />
         <Button
           title="Press to schedule a notification"
-          onPress={getPermission}
+          onPress={requestPermissionsAsync}
         />
       <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
           <Text>Go event</Text>

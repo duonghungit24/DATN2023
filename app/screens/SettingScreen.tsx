@@ -12,7 +12,7 @@ import {
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text, Toggle, VectorsIcon } from "../components"
+import { Header, ModalChooseSound, Screen, Text, Toggle, VectorsIcon } from "../components"
 import * as LocalAuthentication from "expo-local-authentication"
 import { useStores } from "../models"
 import { colorRandomItem, colors } from "../theme"
@@ -36,10 +36,12 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
   function SettingScreen({ navigation }) {
     // Pull in one of our MST stores
     const { authStore } = useStores()
+    const { languageStore } = useStores()
     const [isSupportBiometric, setSupportBiometric] = useState(true)
     const [statusBiometric, setStatusBiometric] = useState(false)
-    const { languageStore } = useStores()
     const [refresh, setRefresh] = useState(false)
+    const [isVisibleSound, setVisilbeSound] = useState(false) 
+
     useEffect(() => {
       onSnapshot(languageStore, (snap) => {
         setRefresh(!refresh)
@@ -90,6 +92,10 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
+        <ModalChooseSound 
+          isVisible={isVisibleSound}
+          onBackDropPress={() => setVisilbeSound(false) }
+        />
         <Header titleTx="caidat" backgroundColor={colors.neutral100} />
         <ScrollView contentContainerStyle={{ paddingBottom: configs.windowHeight / 10}}>
           <View style={$viewContent}>
@@ -107,6 +113,14 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
               activeToggle={statusBiometric}
               onChangeToggle={setBiometric}
               bgColor={colorRandomItem[3]}
+            />
+             <View style={$line} />
+             <ItemSetting
+              typeIcon="FontAwesome"
+              nameIcon="language"
+              bgColor={colorRandomItem[0]}
+              titleTx="ambao"
+              onPress={() => setVisilbeSound(true)}
             />
           </View>
           <View style={$viewContent}>

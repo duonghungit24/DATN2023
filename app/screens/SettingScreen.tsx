@@ -116,9 +116,9 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
             />
              <View style={$line} />
              <ItemSetting
-              typeIcon="FontAwesome"
-              nameIcon="language"
-              bgColor={colorRandomItem[0]}
+              typeIcon="AntDesign"
+              nameIcon="sound"
+              bgColor={colorRandomItem[1]}
               titleTx="ambao"
               onPress={() => setVisilbeSound(true)}
             />
@@ -169,7 +169,7 @@ const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor }) => {
         <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
       </View>
       <Text preset="bold" tx={titleTx} style={$textItem} />
-      <VectorsIcon type="Feather" name="chevron-right" size={25} color={colors.neutral900} />
+      <VectorsIcon type="Feather" name="chevron-right" size={25} color={colors.neutral500} />
     </TouchableOpacity>
   )
 }

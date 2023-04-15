@@ -30,6 +30,7 @@
 		BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */; };
 		BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */; };
 		BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */; };
+		BAFA9B1D29EB095C002F75F1 /* quanDoi.wav in Resources */ = {isa = PBXBuildFile; fileRef = BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */; };
 		BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE406F552862D73000A81E39 /* BootSplash.storyboard */; };
 		DBFA6CAD6EA98F4FD0764555 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E126E0F4F6974883130B6A3 /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Regular.ttf"; path = "../assets/fonts/Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		BA2E691629DB19CC008E3A7F /* NoteTimeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = NoteTimeDiary.entitlements; path = NoteTimeDiary/NoteTimeDiary.entitlements; sourceTree = "<group>"; };
 		BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GoogleSans-Bold.otf"; path = "../assets/fonts/GoogleSans-Bold.otf"; sourceTree = "<group>"; };
+		BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = quanDoi.wav; path = ../../../Downloads/quanDoi.wav; sourceTree = "<group>"; };
 		BE406F552862D73000A81E39 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = NoteTimeDiary/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				BA03591B29E85CD5007D906D /* clockAlarm.wav */,
+				BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */,
 				BA2E691629DB19CC008E3A7F /* NoteTimeDiary.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -365,6 +368,7 @@
 				BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */,
 				BA03591C29E85CD5007D906D /* clockAlarm.wav in Resources */,
 				BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */,
+				BAFA9B1D29EB095C002F75F1 /* quanDoi.wav in Resources */,
 				BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */,
 				BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,

@@ -113,10 +113,11 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
         content: {
           title: "Time's up!",
           body: "Change sides!",
-         sound:"clockAlarm.wav"
+        //  sound:"quanDoi.wav"
+         sound: ""
         },
         trigger: {
-          seconds: 10,
+          seconds: 2,
         //  repeats: true,
         },
       })

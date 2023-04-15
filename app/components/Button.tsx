@@ -152,8 +152,8 @@ const $viewPresets = {
   default: [
     $baseViewStyle,
     {
-      borderWidth: 1,
-      borderColor: colors.neutral400,
+      // borderWidth: 1,
+      // borderColor: colors.neutral400,
       backgroundColor: colors.primary500,
     },
   ] as StyleProp<ViewStyle>,
@@ -173,13 +173,13 @@ const $textPresets: Record<Presets, StyleProp<TextStyle>> = {
 }
 
 const $pressedViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
-  default: { backgroundColor: colors.neutral200 },
-  filled: { backgroundColor: colors.neutral400 },
-  reversed: { backgroundColor: colors.neutral700 },
+  default: {  },
+  filled: { backgroundColor: colors.primary500 },
+  reversed: { backgroundColor: colors.primary500 },
 }
 
 const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
-  default: { opacity: 0.9 },
+  default: { opacity: 0.7 },
   filled: { opacity: 0.9 },
   reversed: { opacity: 0.9 },
 }

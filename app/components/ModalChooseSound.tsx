@@ -1,5 +1,13 @@
 import * as React from "react"
-import { FlatList, ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  FlatList,
+  ScrollView,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
 import { Text } from "./Text"
@@ -8,6 +16,7 @@ import { configs } from "../utils/configs"
 import { Button } from "./Button"
 import { VectorsIcon } from "./Vectoricon"
 import { ItemSerapator } from "./ItemSerapator"
+import Sound from "react-native-sound"
 
 export interface ModalChooseSoundProps {
   /**
@@ -22,17 +31,17 @@ const LIST_SOUND = [
   {
     nameDisplay: "Mặc định",
     source: "",
-    nameSound: ""
+    nameSound: "",
   },
   {
     nameDisplay: "Clock Alarm",
     source: require("../../assets/sounds/clockAlarm.wav"),
-    nameSound: "clockAlarm.wav"
+    nameSound: "clockAlarm.wav",
   },
   {
     nameDisplay: "Quân đội",
-    source: require("../../assets/sounds/clockAlarm.wav"),
-    nameSound: "clockAlarm.wav"
+    source: require("../../assets/sounds/quanDoi.wav"),
+    nameSound: "quanDoi.wav",
   },
 ]
 /**
@@ -42,31 +51,67 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
   const { style, isVisible, onBackDropPress } = props
   const $styles = [$container, style]
   const [sound, setSound] = React.useState<any>({})
+  const soundCurrent = React.useRef(null)
+
+  React.useEffect(() => {
+    Sound.setCategory("Playback", true) // true = mixWithOthers
+  }, [])
+
+  console.log("sound", soundCurrent)
+
+  function playSound(item) {
+    const callback = (error, sound) => {
+      if (error) {
+        return
+      }
+      sound.play(() => {
+        // Release when it's done so we're not using up resources
+        sound.release()
+      })
+    }
+    // If the audio is a 'require' then the second parameter must be the callback.
+    if (soundCurrent.current == "null") {
+      soundCurrent.current = new Sound(item.source, (error) => callback(error, sound))
+    } else {
+      const sound = new Sound(item.source, (error) => callback(error, sound))
+      soundCurrent.current?.stop(() => {
+        sound.play()
+      })
+      soundCurrent.current = sound
+    }
+  }
 
   return (
-    <Modal
-      isVisible={isVisible}
-      style={$styles}
-      animationInTiming={500}
-      animationOutTiming={500}
-    >
+    <Modal isVisible={isVisible} style={$styles} animationInTiming={500} animationOutTiming={500}>
       <View style={$content}>
         <Text preset="bold" tx="chonambao" style={$label} />
-        <FlatList 
+        <FlatList
           data={LIST_SOUND}
           keyExtractor={(_, index) => `${index}`}
-          renderItem={({item, index}) => {
-            return <ItemSound item={item} onPress={() => setSound(item)} check={sound.nameSound == item.nameSound} />
+          renderItem={({ item, index }) => {
+            return (
+              <ItemSound
+                item={item}
+                onPress={() => {
+                  setSound(item)
+                  playSound(item)
+                }}
+                check={sound.nameSound == item.nameSound}
+              />
+            )
           }}
-          contentContainerStyle={{padding: 16}}
-          ItemSeparatorComponent={() => <ItemSerapator  />}
+          contentContainerStyle={{ padding: 16 }}
+          ItemSeparatorComponent={() => <ItemSerapator />}
         />
         <View style={$viewButton}>
           <Button
             tx="huy"
             style={[$viewBtn, { backgroundColor: colors.neutral300 }]}
             textStyle={{ color: colors.neutral900 }}
-            onPress={onBackDropPress}
+            onPress={() => {
+              soundCurrent.current?.stop()
+              onBackDropPress()
+            }}
           />
           <View style={{ width: 16 }} />
           <Button tx="luu" style={$viewBtn} />
@@ -76,14 +121,15 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
   )
 })
 
-const ItemSound = ( {check, onPress, item}) => {
+const ItemSound = ({ check, onPress, item }) => {
   return (
     <TouchableOpacity style={$viewItem} onPress={onPress}>
-      <Text preset="medium" style={$text}>{item.nameDisplay}</Text>
-      {
-        check && <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.success} />
-      }
-   
+      <Text preset="medium" style={$text}>
+        {item.nameDisplay}
+      </Text>
+      {check && (
+        <VectorsIcon type="AntDesign" name="checkcircle" size={20} color={colors.success} />
+      )}
     </TouchableOpacity>
   )
 }
@@ -113,12 +159,12 @@ const $viewBtn: ViewStyle = {
   flex: 1,
   borderRadius: 24,
 }
-const $viewItem : ViewStyle = {
+const $viewItem: ViewStyle = {
   flexDirection: "row",
   paddingVertical: 12,
 }
-const $text : TextStyle = {
+const $text: TextStyle = {
   flex: 1,
   color: colors.neutral700,
-  fontSize: 14
+  fontSize: 14,
 }

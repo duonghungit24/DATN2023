@@ -4,11 +4,18 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 /**
  * Model description here for TypeScript hints.
  */
+const SoundModel = types.model({
+  nameDisplay: types.maybeNull(types.string),
+  source: types.maybeNull(types.frozen()),
+  nameSound: types.maybeNull(types.string),
+})
+
 export const AuthStoreModel = types
   .model("AuthStore")
   .props({
     isIntro: types.optional(types.boolean, true),
-    biometric: types.optional(types.boolean, false)
+    biometric: types.optional(types.boolean, false),
+    sound: types.optional(SoundModel, { nameDisplay: "Mặc định", source: "", nameSound: "" }),
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -16,8 +23,11 @@ export const AuthStoreModel = types
     setIntro: () => {
       self.isIntro = false
     },
-    setBiometric: (status : boolean) => {
+    setBiometric: (status: boolean) => {
       self.biometric = status
+    },
+    setSound: (sound) => {
+      self.sound = sound
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

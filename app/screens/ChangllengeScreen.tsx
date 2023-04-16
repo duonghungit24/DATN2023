@@ -11,6 +11,7 @@ import { utils } from "../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 import * as Notifications from "expo-notifications"
+import { useStores } from "../models"
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -67,7 +68,7 @@ async function createCalendar() {
 
 export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changllenge">> = observer(function ChangllengeScreen({navigation}) {
   // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+   const { authStore } = useStores()
   const [isVisible, setIsvisible] = useState(false)
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
           title: "Time's up!",
           body: "Change sides!",
         //  sound:"quanDoi.wav"
-         sound: ""
+         sound: authStore.sound.nameSound || ""
         },
         trigger: {
           seconds: 2,

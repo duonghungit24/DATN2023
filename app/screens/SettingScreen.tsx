@@ -41,6 +41,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     const [statusBiometric, setStatusBiometric] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [isVisibleSound, setVisilbeSound] = useState(false) 
+    const [sound, setSound] = useState<any>({})
 
     useEffect(() => {
       onSnapshot(languageStore, (snap) => {
@@ -51,6 +52,10 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     useLayoutEffect(() => {
       setStatusBiometric(authStore.biometric)
     }, [authStore.biometric])
+
+    useEffect(() => {
+      setSound(authStore.sound)
+    }, [authStore.sound])
 
     const setBiometric = async () => {
       if (!statusBiometric) {
@@ -93,6 +98,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     return (
       <Screen style={$root} preset="fixed">
         <ModalChooseSound 
+        soundValue={sound}
           isVisible={isVisibleSound}
           onBackDropPress={() => setVisilbeSound(false) }
         />
@@ -120,6 +126,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
               nameIcon="sound"
               bgColor={colorRandomItem[1]}
               titleTx="ambao"
+              textRight={sound.nameDisplay}
               onPress={() => setVisilbeSound(true)}
             />
           </View>
@@ -162,13 +169,17 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
   },
 )
 
-const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor }) => {
+const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor, textRight }: any) => {
   return (
     <TouchableOpacity style={$viewItem} onPress={onPress}>
       <View style={[$viewIcon, { backgroundColor: bgColor }]}>
         <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
       </View>
       <Text preset="bold" tx={titleTx} style={$textItem} />
+      {
+        textRight ? <Text preset="medium" style={$textRight} >{textRight}</Text> : null
+      }
+      
       <VectorsIcon type="Feather" name="chevron-right" size={25} color={colors.neutral500} />
     </TouchableOpacity>
   )
@@ -215,4 +226,7 @@ const $viewContent: ViewStyle = {
   ...configs.shadow,
   backgroundColor: colors.neutral000,
   borderRadius: 12,
+}
+const $textRight : TextStyle = {
+    color: colors.neutral700
 }

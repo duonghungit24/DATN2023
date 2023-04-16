@@ -29,6 +29,14 @@
 		BA23233B29C8C6C300717DE7 /* Mukta-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232D29C8C6C300717DE7 /* Mukta-Light.ttf */; };
 		BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */; };
 		BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */; };
+		BA6404C029EBF68A0028ED1B /* endHour.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404BC29EBF68A0028ED1B /* endHour.wav */; };
+		BA6404C129EBF68B0028ED1B /* chiuchiu.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404BD29EBF68A0028ED1B /* chiuchiu.wav */; };
+		BA6404C229EBF68B0028ED1B /* bipbip.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404BE29EBF68A0028ED1B /* bipbip.wav */; };
+		BA6404C329EBF68B0028ED1B /* error.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404BF29EBF68A0028ED1B /* error.wav */; };
+		BA6404C529EBF6990028ED1B /* ringTone.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404C429EBF6990028ED1B /* ringTone.wav */; };
+		BA6404C829EBF6A90028ED1B /* wave.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404C629EBF6A90028ED1B /* wave.wav */; };
+		BA6404C929EBF6A90028ED1B /* alarmReo.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404C729EBF6A90028ED1B /* alarmReo.wav */; };
+		BA6404CB29EBF6B00028ED1B /* tiktik.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA6404CA29EBF6B00028ED1B /* tiktik.wav */; };
 		BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */; };
 		BAFA9B1D29EB095C002F75F1 /* quanDoi.wav in Resources */ = {isa = PBXBuildFile; fileRef = BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */; };
 		BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE406F552862D73000A81E39 /* BootSplash.storyboard */; };
@@ -93,6 +101,14 @@
 		BA23232E29C8C6C300717DE7 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NotoSans-Regular.ttf"; path = "../assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		BA23232F29C8C6C300717DE7 /* Merriweather-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Merriweather-Regular.ttf"; path = "../assets/fonts/Merriweather-Regular.ttf"; sourceTree = "<group>"; };
 		BA2E691629DB19CC008E3A7F /* NoteTimeDiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = NoteTimeDiary.entitlements; path = NoteTimeDiary/NoteTimeDiary.entitlements; sourceTree = "<group>"; };
+		BA6404BC29EBF68A0028ED1B /* endHour.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = endHour.wav; path = ../assets/sounds/endHour.wav; sourceTree = "<group>"; };
+		BA6404BD29EBF68A0028ED1B /* chiuchiu.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = chiuchiu.wav; path = ../assets/sounds/chiuchiu.wav; sourceTree = "<group>"; };
+		BA6404BE29EBF68A0028ED1B /* bipbip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bipbip.wav; path = ../assets/sounds/bipbip.wav; sourceTree = "<group>"; };
+		BA6404BF29EBF68A0028ED1B /* error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = error.wav; path = ../assets/sounds/error.wav; sourceTree = "<group>"; };
+		BA6404C429EBF6990028ED1B /* ringTone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringTone.wav; path = ../assets/sounds/ringTone.wav; sourceTree = "<group>"; };
+		BA6404C629EBF6A90028ED1B /* wave.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = wave.wav; path = ../assets/sounds/wave.wav; sourceTree = "<group>"; };
+		BA6404C729EBF6A90028ED1B /* alarmReo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = alarmReo.wav; path = ../assets/sounds/alarmReo.wav; sourceTree = "<group>"; };
+		BA6404CA29EBF6B00028ED1B /* tiktik.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tiktik.wav; path = ../assets/sounds/tiktik.wav; sourceTree = "<group>"; };
 		BAFA574029C0B21400F651D4 /* GoogleSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GoogleSans-Bold.otf"; path = "../assets/fonts/GoogleSans-Bold.otf"; sourceTree = "<group>"; };
 		BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = quanDoi.wav; path = ../../../Downloads/quanDoi.wav; sourceTree = "<group>"; };
 		BE406F552862D73000A81E39 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = NoteTimeDiary/BootSplash.storyboard; sourceTree = "<group>"; };
@@ -141,6 +157,14 @@
 			children = (
 				BA03591B29E85CD5007D906D /* clockAlarm.wav */,
 				BAFA9B1C29EB095C002F75F1 /* quanDoi.wav */,
+				BA6404C429EBF6990028ED1B /* ringTone.wav */,
+				BA6404C729EBF6A90028ED1B /* alarmReo.wav */,
+				BA6404CA29EBF6B00028ED1B /* tiktik.wav */,
+				BA6404C629EBF6A90028ED1B /* wave.wav */,
+				BA6404BE29EBF68A0028ED1B /* bipbip.wav */,
+				BA6404BD29EBF68A0028ED1B /* chiuchiu.wav */,
+				BA6404BC29EBF68A0028ED1B /* endHour.wav */,
+				BA6404BF29EBF68A0028ED1B /* error.wav */,
 				BA2E691629DB19CC008E3A7F /* NoteTimeDiary.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -355,12 +379,16 @@
 			files = (
 				BA23233029C8C6C300717DE7 /* Mukta-Medium.ttf in Resources */,
 				BA23233129C8C6C300717DE7 /* NotoSans-Medium.ttf in Resources */,
+				BA6404C329EBF68B0028ED1B /* error.wav in Resources */,
 				BA23233229C8C6C300717DE7 /* NotoSans-Light.ttf in Resources */,
 				BA23233329C8C6C300717DE7 /* NotoSans-SemiBold.ttf in Resources */,
+				BA6404C829EBF6A90028ED1B /* wave.wav in Resources */,
 				BA23233429C8C6C300717DE7 /* Merriweather-Light.ttf in Resources */,
 				BA23233529C8C6C300717DE7 /* Merriweather-Bold.ttf in Resources */,
+				BA6404C129EBF68B0028ED1B /* chiuchiu.wav in Resources */,
 				BA23233629C8C6C300717DE7 /* Merriweather-Black.ttf in Resources */,
 				BA23233729C8C6C300717DE7 /* Mukta-Bold.ttf in Resources */,
+				BA6404C029EBF68A0028ED1B /* endHour.wav in Resources */,
 				BA23233829C8C6C300717DE7 /* Mukta-Regular.ttf in Resources */,
 				BA23233929C8C6C300717DE7 /* Mukta-SemiBold.ttf in Resources */,
 				BA23233A29C8C6C300717DE7 /* NotoSans-Bold.ttf in Resources */,
@@ -368,10 +396,14 @@
 				BA23233C29C8C6C300717DE7 /* NotoSans-Regular.ttf in Resources */,
 				BA03591C29E85CD5007D906D /* clockAlarm.wav in Resources */,
 				BA23233D29C8C6C300717DE7 /* Merriweather-Regular.ttf in Resources */,
+				BA6404C929EBF6A90028ED1B /* alarmReo.wav in Resources */,
 				BAFA9B1D29EB095C002F75F1 /* quanDoi.wav in Resources */,
+				BA6404C229EBF68B0028ED1B /* bipbip.wav in Resources */,
 				BAFA574129C0B21500F651D4 /* GoogleSans-Bold.otf in Resources */,
 				BE406F562862D73000A81E39 /* BootSplash.storyboard in Resources */,
+				BA6404C529EBF6990028ED1B /* ringTone.wav in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BA6404CB29EBF6B00028ED1B /* tiktik.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

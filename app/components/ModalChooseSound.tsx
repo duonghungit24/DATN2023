@@ -17,6 +17,7 @@ import { Button } from "./Button"
 import { VectorsIcon } from "./Vectoricon"
 import { ItemSerapator } from "./ItemSerapator"
 import Sound from "react-native-sound"
+import { useStores } from "../models"
 
 export interface ModalChooseSoundProps {
   /**
@@ -25,6 +26,7 @@ export interface ModalChooseSoundProps {
   style?: StyleProp<ViewStyle>
   isVisible: boolean
   onBackDropPress: () => void
+  soundValue : any
 }
 
 const LIST_SOUND = [
@@ -43,21 +45,64 @@ const LIST_SOUND = [
     source: require("../../assets/sounds/quanDoi.wav"),
     nameSound: "quanDoi.wav",
   },
+  {
+    nameDisplay: "Bip bip",
+    source: require("../../assets/sounds/bipbip.wav"),
+    nameSound: "bipbip.wav",
+  },
+  {
+    nameDisplay: "End hour",
+    source: require("../../assets/sounds/endHour.wav"),
+    nameSound: "endHour.wav",
+  },
+  {
+    nameDisplay: "Chiu chiu",
+    source: require("../../assets/sounds/chiuchiu.wav"),
+    nameSound: "chiuchiu.wav",
+  },
+  {
+    nameDisplay: "Ring tone",
+    source: require("../../assets/sounds/ringTone.wav"),
+    nameSound: "ringTone.wav",
+  },
+  {
+    nameDisplay: "Tik tik",
+    source: require("../../assets/sounds/tiktik.wav"),
+    nameSound: "tiktik.wav",
+  },
+  {
+    nameDisplay: "Wave",
+    source: require("../../assets/sounds/wave.wav"),
+    nameSound: "wave.wav",
+  },
+  {
+    nameDisplay: "Alarm reo",
+    source: require("../../assets/sounds/alarmReo.wav"),
+    nameSound: "alarmReo.wav",
+  },
+  {
+    nameDisplay: "Error",
+    source: require("../../assets/sounds/error.wav"),
+    nameSound: "error.wav",
+  },
 ]
 /**
  * Describe your component here
  */
 export const ModalChooseSound = observer(function ModalChooseSound(props: ModalChooseSoundProps) {
-  const { style, isVisible, onBackDropPress } = props
+  const { style, isVisible, onBackDropPress, soundValue } = props
+  const {authStore} = useStores()
   const $styles = [$container, style]
   const [sound, setSound] = React.useState<any>({})
   const soundCurrent = React.useRef(null)
 
   React.useEffect(() => {
+    if(soundValue)
+    {
+      setSound(soundValue)
+    }
     Sound.setCategory("Playback", true) // true = mixWithOthers
-  }, [])
-
-  console.log("sound", soundCurrent)
+  }, [isVisible])
 
   function playSound(item) {
     const callback = (error, sound) => {
@@ -79,6 +124,12 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
       })
       soundCurrent.current = sound
     }
+  }
+
+  const onPressSound = () => {
+    soundCurrent.current?.stop()
+    authStore.setSound(sound)
+    onBackDropPress()
   }
 
   return (
@@ -114,7 +165,7 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
             }}
           />
           <View style={{ width: 16 }} />
-          <Button tx="luu" style={$viewBtn} />
+          <Button tx="luu" style={$viewBtn} onPress={onPressSound}/>
         </View>
       </View>
     </Modal>

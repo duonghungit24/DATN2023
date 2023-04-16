@@ -45,7 +45,7 @@ interface TypeTime {
  */
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore, memoStore } = useStores()
+  const { languageStore, memoStore , diaryStore} = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -168,6 +168,22 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
 
   // tạo ghi chú hoặc nhật ký
   const onCreate = () => {
+    if(type == "diary")
+    {
+      const item = {
+        id: uuid.v4(),
+        content: "okiiinha",
+        time: date.toString(),
+        emoji: "",
+        isPin: togglePin,
+        color: "#5d6700",
+        location: location,
+        url: url,
+        listImg: images
+      }
+      diaryStore.addDiray(time , item)
+      return
+    }
     const item = {
       id: uuid.v4(),
       title: title,
@@ -182,6 +198,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
     }
     console.log("item", item)
     memoStore.addMemo(item)
+
   }
 
   return (

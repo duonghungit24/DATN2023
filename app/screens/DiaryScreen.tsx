@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React, { FC, useCallback, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   TouchableOpacity,
@@ -23,6 +23,7 @@ import {
   CalendarList,
 } from "react-native-calendars"
 import DateRangePicker from "../utils/DateRangeConfigs.js"
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -75,10 +76,15 @@ const agendaItems = [
 export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = observer(
   function DiaryScreen() {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
-
+    const { diaryStore } = useStores()
+    const [listDiary, setListDiray] = useState([])
     // Pull in navigation via hook
+    useEffect(() => {
+      setListDiray(diaryStore.getListDiary())
+    }, [diaryStore.diaryMap])
     // const navigation = useNavigation()
+
+    console.log("setlist", listDiary[0]?.listDiary)
 
     const renderItem = useCallback(({ item }: any) => {
       return <ItemDiary />
@@ -128,15 +134,13 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
           <AgendaList
             sections={agendaItems}
             renderItem={renderItem}
-            renderSectionHeader={(infor) => {
-              return (
-                <View style={$viewTitle}>
+            renderSectionHeader={(section) => (
+              <View style={$viewTitle}>
                   <Text preset="bold" style={$textTitle}>
-                    {infor}
+                    {section}
                   </Text>
                 </View>
-              )
-            }}
+            )}
             // scrollToNextEvent
             //  sectionStyle={$viewSection}
             dayFormat={"dd/MM/yyyy"}

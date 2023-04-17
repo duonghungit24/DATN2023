@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react"
+import React, { FC, useCallback, useEffect, useLayoutEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   TouchableOpacity,
@@ -8,6 +8,8 @@ import {
   FlatList,
   TouchableWithoutFeedback,
   TextStyle,
+  Image,
+  ImageStyle,
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
@@ -24,6 +26,9 @@ import {
 } from "react-native-calendars"
 import DateRangePicker from "../utils/DateRangeConfigs.js"
 import { useStores } from "../models"
+import { utils } from "../utils"
+import ImageView from "react-native-image-viewing"
+
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -78,16 +83,19 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     // Pull in one of our MST stores
     const { diaryStore } = useStores()
     const [listDiary, setListDiray] = useState([])
+    const [dateNow, setDateNow] = useState(new Date().toISOString())
     // Pull in navigation via hook
-    useEffect(() => {
+    useLayoutEffect(() => {
       setListDiray(diaryStore.getListDiary())
     }, [diaryStore.diaryMap])
     // const navigation = useNavigation()
 
-    console.log("setlist", listDiary[0]?.listDiary)
+    console.log("setlist", listDiary[2]?.data)
+    console.log("Date", dateNow)
 
     const renderItem = useCallback(({ item }: any) => {
-      return <ItemDiary />
+      console.log("item", item)
+      return <ItemDiary item={item} />
     }, [])
 
     return (
@@ -95,7 +103,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
         <Header titleTx="diary" backgroundColor={colors.neutral000} />
 
         <CalendarProvider
-          date={agendaItems[1]?.title}
+          date={dateNow}
           // onDateChanged={(date) => console.log("date", date)}
           // onMonthChange={onMonthChange}
           showTodayButton
@@ -116,7 +124,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
           <ExpandableCalendar
             // horizontal={false}
             // hideArrows
-           // disablePan
+            // disablePan
             // hideKnob
             // initialPosition={ExpandableCalendar.positions.OPEN}
             // calendarStyle={styles.calendar}
@@ -132,14 +140,14 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             // closeOnDayPress={false}
           />
           <AgendaList
-            sections={agendaItems}
+            sections={listDiary}
             renderItem={renderItem}
             renderSectionHeader={(section) => (
               <View style={$viewTitle}>
-                  <Text preset="bold" style={$textTitle}>
-                    {section}
-                  </Text>
-                </View>
+                <Text preset="bold" style={$textTitle}>
+                  {utils.displayDate(section)}
+                </Text>
+              </View>
             )}
             // scrollToNextEvent
             //  sectionStyle={$viewSection}
@@ -158,40 +166,46 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
   },
 )
 
-const ItemDiary = () => {
+const ItemDiary = ({ item }) => {
+  const [indexImg, setIndexImg] = useState(0)
+  const [isVisible, setIsvisible] = useState(false)
+
+  const viewImage = (index) => {
+    setIsvisible(true)
+    setIndexImg(index)
+  }
+
   return (
     <>
-      {/* <View style={$viewTitle}>
-        <Text preset="bold" style={$textTitle}>
-          09/04/2023
-        </Text>
-      </View> */}
+     <ImageView
+          images={item.images}
+          imageIndex={indexImg}
+          visible={isVisible}
+          onRequestClose={() => setIsvisible(false)}
+        />
       <TouchableWithoutFeedback onPress={() => console.log("opk")}>
         <View style={$viewRow}>
           <Text preset="bold" style={$time}>
-            05:09 CH
+            {utils.hoursAndMinutes(item.time)}
           </Text>
           <View style={$viewShadow}>
             <View style={{ flex: 1 }}>
               <Text preset="medium" style={$textItem}>
-                hiihi
+                {item.content}
               </Text>
               <FlatList
-                data={[1, 2, 3, 4, 5, 6, 7, 8]}
+                data={item.images}
                 keyExtractor={(_, index) => `${index}`}
                 scrollEventThrottle={16}
                 renderItem={({ item, index }) => {
                   return (
                     <View onStartShouldSetResponder={() => true}>
-                      <TouchableOpacity onPress={() => console.log("ok")}>
-                        <View
-                          style={{
-                            height: 50,
-                            width: 35,
-                            backgroundColor: "red",
-                            margin: 4,
-                            borderRadius: 4,
+                      <TouchableOpacity onPress={() => viewImage(index)}>
+                        <Image
+                          source={{
+                            uri: item.uri,
                           }}
+                          style={$image}
                         />
                       </TouchableOpacity>
                     </View>
@@ -246,6 +260,7 @@ const $viewRow: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   paddingHorizontal: 16,
+  marginTop: 12,
 }
 const $viewShadow: ViewStyle = {
   flex: 1,
@@ -257,6 +272,7 @@ const $viewShadow: ViewStyle = {
   borderRadius: 12,
   ...configs.shadow,
   marginLeft: 16,
+  minHeight: 80
 }
 const $container: ViewStyle = {}
 const $time: TextStyle = {
@@ -264,6 +280,8 @@ const $time: TextStyle = {
 }
 const $textItem: TextStyle = {
   color: colors.neutral900,
+  fontSize: 14,
+  paddingVertical: 4
 }
 const $viewTitle: ViewStyle = {
   paddingHorizontal: 12,
@@ -272,13 +290,12 @@ const $viewTitle: ViewStyle = {
   width: "30%",
   borderTopRightRadius: 24,
   borderBottomRightRadius: 24,
-  marginVertical: 12,
+  marginTop: 12,
 }
 const $textTitle: TextStyle = {}
-const $viewSection: ViewStyle = {
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "red",
-  width: "30%",
-  borderRadius: 40,
+const $image: ImageStyle = {
+  height: 50,
+  width: 35,
+  margin: 4,
+  borderRadius: 4,
 }

@@ -22,10 +22,22 @@ export const utils = {
       }
       return dateFormat
   },
+  displayDateCalendar: (date) => {
+    let dateFormat = ""
+    if (date) {
+      dateFormat = moment(date).format("YYYY-MM-DD")
+      return dateFormat
+    }
+    return dateFormat
+  },
   zeroPad(value, length) {
     return `${value}`.padStart(length, "0")
   },
   getTime() {
     return `${utils.zeroPad(new Date().getHours(), 2)}:${utils.zeroPad(new Date().getMinutes(), 2)}`
   },
+  hoursAndMinutes: (date) => {
+    const now = new Date(date);
+    return  utils.zeroPad(now.getHours(),2) + ':' + utils.zeroPad(now.getMinutes(),2);
+  }
 }

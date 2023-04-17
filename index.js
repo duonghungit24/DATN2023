@@ -5,5 +5,8 @@
 import App from "./app/app.tsx"
 import { AppRegistry } from "react-native"
 
+// import { LogBox } from 'react-native';
+// LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+// LogBox.ignoreAllLogs();//Ignore all log notifications
 AppRegistry.registerComponent("NoteTimeDiary", () => App)
 export default App

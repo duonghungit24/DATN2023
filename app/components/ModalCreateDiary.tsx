@@ -52,12 +52,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const [content, setContent] = useState("")
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
-  const [date, setDate] = useState(new Date().toISOString())
-  const [time, setTime] = useState(utils.getTime())
+  const [date, setDate] = useState(new Date())
 
   const [toggleDate, setToggleDate] = useState(false)
   const [togglePin, setTogglePin] = useState(false)
-  const [isVisibleDate, setIsvisibleDate] = useState<TypeTime>({ type: "date", show: false })
+  const [isVisibleDate, setIsvisibleDate] = useState(false)
   const [images, setImages] = useState([])
   const [isVisibleImg, setIsvisibleImg] = useState(false)
   const [indexImg, setIndexImg] = useState(-1)
@@ -98,15 +97,8 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   }
 
   const onConfirmDate = (value) => {
-    if (isVisibleDate.type == "date") {
-      setDate(value)
-    } else if (isVisibleDate.type == "time") {
-      
-      const time = `${new Date(value).getHours()}:${new Date(value).getMinutes()} `
-      console.log("time", value, time)
-      setTime(time)
-    }
-    setIsvisibleDate({ type: "date", show: false })
+    setDate(value)
+    setIsvisibleDate(false)
   }
 
   const showToggleDate = useMemo(() => {
@@ -120,23 +112,14 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           inputWrapperStyle={$wrapInput}
           clearButtonMode="while-editing"
           editable={false}
-          onPressIn={() => setIsvisibleDate({ type: "date", show: true })}
-          // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
-        />
-        <TextField
-          LeftAccessory={() => (
-            <LeftAccesstory typeIcon="Feather" nameIcon="clock" colorIcon="red" />
-          )}
-          value={time}
-          inputWrapperStyle={$wrapInput}
-          clearButtonMode="while-editing"
-          editable={false}
-          onPressIn={() => setIsvisibleDate({ type: "time", show: true })}
-          // style={{fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
+          onPressIn={() => setIsvisibleDate(true)}
+         
         />
       </>
     )
-  }, [toggleDate, date, time])
+  }, [toggleDate, date])
+
+  console.log("date", new Date(date).getHours())
 
   const showHeaderCreate = useMemo(() => {
     return (
@@ -151,6 +134,8 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         ) : (
           <View style={$viewTitleContent}>
             <TextField
+              value={content}
+              onChangeText={setContent}
               placeholderTx="nhatkytext"
               inputWrapperStyle={$wrapInput}
               autoFocus
@@ -172,16 +157,17 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
     {
       const item = {
         id: uuid.v4(),
-        content: "okiiinha",
+        content: content,
         time: date.toString(),
         emoji: "",
         isPin: togglePin,
         color: "#5d6700",
         location: location,
         url: url,
-        listImg: images
+        images: images
       }
-      diaryStore.addDiray(time , item)
+      diaryStore.addDiray(utils.displayDateCalendar(date),item)
+      console.log("ok")
       return
     }
     const item = {
@@ -222,11 +208,12 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           onRequestClose={() => setIsvisibleImg(false)}
         />
         <DateTimePickerModal
+          date={date}
           locale={languageStore.language}
-          isVisible={isVisibleDate.show}
-          mode={isVisibleDate.type}
+          isVisible={isVisibleDate}
+          mode={"datetime"}
           onConfirm={onConfirmDate}
-          onCancel={() => setIsvisibleDate({ type: "date", show: false })}
+          onCancel={() => setIsvisibleDate(false)}
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />

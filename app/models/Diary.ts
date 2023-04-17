@@ -10,7 +10,7 @@ import { ListDiaryStoreModel } from "./ListDiaryStore"
 export const DiaryModel = types
   .model("Diary")
   .props({
-    diaryMap: types.map(types.frozen(ListDiaryStoreModel)),
+    diaryMap: types.map(types.optional(ListDiaryStoreModel, {})),
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -18,19 +18,22 @@ export const DiaryModel = types
     addDiray : (key,data) => {
       if(self.diaryMap.has(key))
       {
-
+        self.diaryMap.get(key).listDiary.push(data)
       }
       else
       {
-        self.diaryMap.set(key, {listDiary:[ data] })
+        const dt = []
+        dt.push(data)
+        self.diaryMap.set(key, {listDiary:dt })
       }
     },
     getListDiary : () => {
       const data = []
       self.diaryMap.forEach((value, key) => {
+        console.log("valie", value)
         data.push({
           title: key,
-          ...value
+          data: value.listDiary.slice()
         })
       })
       return data

@@ -94,7 +94,6 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     console.log("Date", dateNow)
 
     const renderItem = useCallback(({ item }: any) => {
-      console.log("item", item)
       return <ItemDiary item={item} />
     }, [])
 
@@ -153,6 +152,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             //  sectionStyle={$viewSection}
             dayFormat={"dd/MM/yyyy"}
             markToday={false}
+            contentContainerStyle={{paddingBottom: 16}}
           />
         </CalendarProvider>
         {/* <FlatList

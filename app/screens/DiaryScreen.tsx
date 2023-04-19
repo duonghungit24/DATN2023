@@ -100,12 +100,10 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     return (
       <Screen style={$root} preset="fixed">
         <Header titleTx="diary" backgroundColor={colors.neutral000} />
-
         <CalendarProvider
           date={dateNow}
           // onDateChanged={(date) => console.log("date", date)}
           // onMonthChange={onMonthChange}
-          showTodayButton
           // disabledOpacity={0.6}
           // theme={todayBtnTheme.current}
           // todayBottomMargin={16}
@@ -135,7 +133,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             // markedDates={marked.current}
             // leftArrowImageSource={leftArrowIcon}
             // rightArrowImageSource={rightArrowIcon}
-            //  animateScroll
+             animateScroll
             // closeOnDayPress={false}
           />
           <AgendaList
@@ -260,7 +258,7 @@ const $viewRow: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   paddingHorizontal: 16,
-  marginTop: 12,
+  marginTop: 16,
 }
 const $viewShadow: ViewStyle = {
   flex: 1,

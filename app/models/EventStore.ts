@@ -4,6 +4,17 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 /**
  * Model description here for TypeScript hints.
  */
+const EventItemModel = types.model({
+  id: types.maybeNull(types.string),
+  content: types.maybeNull(types.string),
+  time: types.maybeNull(types.string),
+  emoji: types.maybeNull(types.string),
+  isPin: types.maybeNull(types.boolean),
+  color: types.maybeNull(types.string),
+  location: types.maybeNull(types.string),
+  url: types.maybeNull(types.string),
+  images: types.maybeNull(types.optional(types.frozen(), []))
+})
 export const EventStoreModel = types
   .model("EventStore")
   .props({})

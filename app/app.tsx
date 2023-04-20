@@ -11,7 +11,7 @@
  */
 import "./i18n"
 import "./utils/ignoreWarnings"
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
@@ -19,10 +19,18 @@ import * as storage from "./utils/storage"
 import { setupReactotron } from "./services/reactotron"
 import RNBootSplash from "react-native-bootsplash"
 import { Animated, Easing } from "react-native"
-import Lottie from 'lottie-react-native';
+import Lottie from "lottie-react-native"
 import { toastConfig } from "./utils/toastConfigs"
 import Toast from "react-native-toast-message"
-
+import { getPermission, requestPermissionsAsync } from "./notifications"
+import * as Notifications from "expo-notifications"
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+})
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
 setupReactotron({
@@ -40,10 +48,7 @@ setupReactotron({
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
-
-interface AppProps {
-  
-}
+interface AppProps {}
 
 /**
  * This is the root component of our app.
@@ -65,15 +70,23 @@ function App(props: AppProps) {
     setTimeout(() => {
       RNBootSplash.hide()
     }, 100)
-    // Animated.timing(animationProgress.current, {
-    //   toValue: 1,
-    //   duration: 5000,
-    //   easing: Easing.linear,
-    //   useNativeDriver: false
-    // }).start();
+    requestPermissionsAsync()
+   
   })
 
-  
+  const responseListener = useRef(null)
+  useEffect(() => {
+    // nhấn vào sẽ gọi khi kill app
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log("remove", response)
+    })
+    getPermission()
+
+    return () => {
+      Notifications.removeNotificationSubscription(responseListener.current)
+    }
+  }, [])
+
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.
@@ -85,11 +98,8 @@ function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <AppNavigator
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-        <Toast position="top" config={toastConfig} />
+      <AppNavigator initialState={initialNavigationState} onStateChange={onNavigationStateChange} />
+      <Toast position="top" config={toastConfig} />
     </SafeAreaProvider>
   )
 }

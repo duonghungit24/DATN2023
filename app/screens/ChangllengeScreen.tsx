@@ -12,13 +12,6 @@ import { utils } from "../utils"
 // import { useStores } from "../models"
 import * as Notifications from "expo-notifications"
 import { useStores } from "../models"
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-})
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -86,29 +79,6 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
   console.log("moment", moment().format())
   console.log("test",moment(moment().format()).add(5, 'm').toDate())
 
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState({});
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-  useEffect(() => {
-  
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      console.log("notification", notification)
-      setNotification(notification);
-    });
-
-    // nhấn vào sẽ gọi khi kill app
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log("remove",response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
   async function schedulePushNotification() {
     const id = await  Notifications.scheduleNotificationAsync({
         content: {
@@ -127,31 +97,8 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       // xoá hết list thông báo
   //  await  Notifications.cancelAllScheduledNotificationsAsync()
     }
-    async function getPermission() {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync()
-      let finalStatus = existingStatus
-      console.log("status",finalStatus)
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync()
-        finalStatus = status
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!")
-        return
-      }
-    }
 
-    const requestPermissionsAsync = async() => {
-    //  console.log("ok")
-       await Notifications.requestPermissionsAsync({
-        ios: {
-          allowAlert: true,
-          allowBadge: true,
-          allowSound: true,
-          allowAnnouncements: true,
-        },
-      });
-    }
+
 
     const getAllNotification = async() => {
       const result = await Notifications.getAllScheduledNotificationsAsync()
@@ -166,11 +113,6 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       <Text style={{fontFamily: "Merriweather-Black"}} >Calendar Module Example</Text>
       <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
-    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification?.request?.content.title} </Text>
-        <Text>Body: {notification && notification?.request?.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification?.request?.content.data)}</Text>
-      </View>
       <Button
           title="get list"
           onPress={getDefaultCalendarSource}
@@ -180,10 +122,6 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
           onPress={async () => {
             await schedulePushNotification()
           }}
-        />
-        <Button
-          title="Press to schedule a notification"
-          onPress={requestPermissionsAsync}
         />
       <TouchableOpacity onPress={() => navigation.navigate("eventScreen")}>
           <Text>Go event</Text>

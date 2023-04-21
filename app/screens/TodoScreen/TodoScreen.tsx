@@ -2,8 +2,9 @@ import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../navigators"
-import { Screen, Text } from "../components"
+import { AppStackScreenProps } from "../../navigators"
+import { AgendaCalendar, Header, Screen, Text } from "../../components"
+import { colors } from "../../theme"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -16,18 +17,21 @@ import { Screen, Text } from "../components"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = observer(function TodoScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
+export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = observer(
+  function TodoScreen() {
+    // Pull in one of our MST stores
+    // const { someStore, anotherStore } = useStores()
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
-  return (
-    <Screen style={$root} preset="scroll">
-      <Text text="todo" />
-    </Screen>
-  )
-})
+    // Pull in navigation via hook
+    // const navigation = useNavigation()
+    return (
+      <Screen style={$root} preset="fixed">
+        <Header backgroundColor={colors.neutral000} title="24/12/2001" />
+        <AgendaCalendar />
+      </Screen>
+    )
+  },
+)
 
 const $root: ViewStyle = {
   flex: 1,

@@ -37,6 +37,7 @@ const vi = {
   ambao: "Âm báo",
   chonambao: "Chọn âm báo",
   luu: "Lưu",
+  tongquan: "Tổng quan",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {  VectorsIcon, Text, ModalChoosePlan } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
-import { WelcomeScreen, SettingScreen, SecurityScreen, MemoScreen, ChangllengeScreen } from "../screens"
+import { WelcomeScreen, SettingScreen, TodoScreen, MemoScreen, ChangllengeScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
 
@@ -83,7 +83,7 @@ export function BottomTabNavigator() {
     >
       <Tab.Screen
         name="homeScreen"
-        component={WelcomeScreen}
+        component={TodoScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom

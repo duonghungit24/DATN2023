@@ -4,11 +4,7 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from "@react-navigation/native"
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
@@ -24,7 +20,8 @@ import {
   TodoScreen,
   MemoScreen,
   DiaryScreen,
-  EventScreen
+  EventScreen,
+  StatisticsScreen,
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -50,11 +47,12 @@ export type AppStackParamList = {
   changeLanguageScreen: undefined
   chooseLanguageScreen: undefined
   bottomTab: undefined
-  onboardingScreen : undefined
+  onboardingScreen: undefined
   todoScreen: undefined
   memoScreen: undefined
-  diaryScreen:  undefined
+  diaryScreen: undefined
   eventScreen: undefined
+  statisticsScreen: undefined
 }
 
 /**
@@ -73,19 +71,17 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="splashScreen"
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="splashScreen">
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="onboardingScreen" component={OnboardingScreen} />
-      <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen}/>
-      <Stack.Screen name="bottomTab" component={BottomTabNavigator} /> 
+      <Stack.Screen name="chooseLanguageScreen" component={ChooseLanguageScreen} />
+      <Stack.Screen name="bottomTab" component={BottomTabNavigator} />
       <Stack.Screen name="memoScreen" component={MemoScreen} />
       <Stack.Screen name="securityScreen" component={SecurityScreen} />
       <Stack.Screen name="changeLanguageScreen" component={ChangeLanguageScreen} />
       <Stack.Screen name="eventScreen" component={EventScreen} />
       <Stack.Screen name="diaryScreen" component={DiaryScreen} />
+      <Stack.Screen name="statisticsScreen" component={StatisticsScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

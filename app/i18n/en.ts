@@ -36,6 +36,7 @@ const en = {
   ambao: "Sound",
   chonambao: "Choose sound",
   luu: "Save",
+  tongquan: "Overview",
   common: {
     ok: "OK!",
     cancel: "Cancel",

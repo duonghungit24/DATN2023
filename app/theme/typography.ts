@@ -51,11 +51,11 @@ export const typography = {
   textRegular: {
     ...Platform.select({
       ios: {
-        fontFamily: "GoogleSans-Regular",
+        fontFamily: "NotoSans-Regular",
         fontWeight: "400",
       },
       android: {
-        fontFamily: "GoogleSans-Regular",
+        fontFamily: "NotoSans-Regular",
         fontWeight: "400",
       },
     }),
@@ -63,11 +63,11 @@ export const typography = {
   textLight: {
     ...Platform.select({
       ios: {
-        fontFamily: "GoogleSans-Light",
+        fontFamily: "NotoSans-Light",
         fontWeight: "400",
       },
       android: {
-        fontFamily: "GoogleSans-Light",
+        fontFamily: "NotoSans-Light",
         fontWeight: "400",
       },
     }),
@@ -75,11 +75,11 @@ export const typography = {
   textMedium: {
     ...Platform.select({
       ios: {
-        fontFamily: "GoogleSans-Medium",
+        fontFamily: "NotoSans-Medium",
         fontWeight: "500",
       },
       android: {
-        fontFamily: "GoogleSans-Medium",
+        fontFamily: "NotoSans-Medium",
         fontWeight: "500",
       },
     }),

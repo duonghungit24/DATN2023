@@ -37,6 +37,12 @@ const en = {
   chonambao: "Choose sound",
   luu: "Save",
   tongquan: "Overview",
+  dahoanthanh: "Hoàn thành",
+  trongquatrinh: "Trong quá trình",
+  chuabatdau: "Chưa bắt đầu",
+  tatca: 'Tất cả nhiệm vụ',
+  homnay: "Hôm nay",
+  placeholderTask: "Tìm kiếm nhiệm vụ",
   common: {
     ok: "OK!",
     cancel: "Cancel",

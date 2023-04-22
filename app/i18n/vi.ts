@@ -45,6 +45,8 @@ const vi = {
   soluongnv: '%{num} nhiệm vụ',
   homnay: "Hôm nay",
   placeholderTask: "Tìm kiếm nhiệm vụ",
+  taoghichu: "Tạo ghi chú thành công!",
+  taonhatky: "Tạo nhật ký thành công!",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

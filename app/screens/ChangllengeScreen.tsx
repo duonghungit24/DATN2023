@@ -135,7 +135,7 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       })}>
           <Text>show toast</Text>
       </TouchableOpacity>
-      <TopTabAnimated />
+     
     </Screen>
   )
 })

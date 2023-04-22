@@ -243,7 +243,6 @@ const $inputWrapperStyle: ViewStyle = {
   backgroundColor: colors.neutral000,
   borderColor: colors.neutral300,
   overflow: "hidden",
-  height: 44
 }
 
 const $inputStyle: TextStyle = {

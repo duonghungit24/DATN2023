@@ -76,6 +76,7 @@ const $btnToast: ViewStyle = {
   padding: 6,
   flexDirection: "row",
   ...configs.shadow,
+  zIndex: 100
 }
 const $btnAddGoods: ViewStyle = {
   minHeight: 40,

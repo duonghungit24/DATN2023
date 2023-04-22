@@ -25,6 +25,8 @@ import { translate } from "../i18n"
 import ImagePicker from "react-native-image-crop-picker"
 import ImageView from "react-native-image-viewing"
 import uuid from "react-native-uuid"
+import { toastConfig } from "../utils/toastConfigs"
+import Toast from "react-native-toast-message"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -45,7 +47,7 @@ interface TypeTime {
  */
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore, memoStore , diaryStore} = useStores()
+  const { languageStore, memoStore, diaryStore } = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -113,7 +115,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           clearButtonMode="while-editing"
           editable={false}
           onPressIn={() => setIsvisibleDate(true)}
-         
         />
       </>
     )
@@ -149,12 +150,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       </>
     )
   }, [type, title, content])
- // console.log("date",utils.displayDateHour(date))
+  // console.log("date",utils.displayDateHour(date))
 
   // tạo ghi chú hoặc nhật ký
   const onCreate = () => {
-    if(type == "diary")
-    {
+    if (type == "diary") {
       const item = {
         id: uuid.v4(),
         content: content,
@@ -164,27 +164,34 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         color: "#5d6700",
         location: location,
         url: url,
-        images: images
+        images: images,
       }
-      diaryStore.addDiray(utils.displayDateCalendar(date),item)
-      console.log("ok")
-      return
+      diaryStore.addDiray(utils.displayDateCalendar(date), item)
+      Toast.show({
+        type: "success",
+        text1: translate("taonhatky"),
+      })
+    } else {
+      const item = {
+        id: uuid.v4(),
+        title: title,
+        content: content,
+        time: date.toString(),
+        emoji: "",
+        isPin: togglePin,
+        color: "#5d6700",
+        location: location,
+        url: url,
+        listImg: images,
+      }
+      console.log("item", item)
+      memoStore.addMemo(item)
+      Toast.show({
+        type: "success",
+        text1: translate("taoghichu"),
+      })
     }
-    const item = {
-      id: uuid.v4(),
-      title: title,
-      content: content,
-      time: date.toString(),
-      emoji: "",
-      isPin: togglePin,
-      color: "#5d6700",
-      location: location,
-      url: url,
-      listImg: images
-    }
-    console.log("item", item)
-    memoStore.addMemo(item)
-
+    //  onBackDropPress()
   }
 
   return (
@@ -201,6 +208,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       // useNativeDriver={true}
     >
       <View style={$viewContainer}>
+        <Toast position="top" config={toastConfig} />
         <ImageView
           images={images}
           imageIndex={indexImg}
@@ -217,6 +225,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
+
         <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={onCreate} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -383,6 +392,7 @@ const $viewContainer: ViewStyle = {
   flex: 1,
   borderTopLeftRadius: 12,
   borderTopRightRadius: 12,
+  zIndex: 1,
 }
 const $viewTitleContent: ViewStyle = {
   backgroundColor: colors.neutral000,

@@ -99,7 +99,6 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
 
     return (
       <Screen style={$root} preset="fixed">
-        <Header titleTx="diary" backgroundColor={colors.neutral000} />
         <CalendarProvider
           date={dateNow}
           // onDateChanged={(date) => console.log("date", date)}

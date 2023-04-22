@@ -59,7 +59,6 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header backgroundColor="red" titleTx="note" />
         <Animatable.View animation="slideInUp" duration={1000} style={{ flex: 1 }}>
           <FlatList
             data={listMemo.slice()}
@@ -110,7 +109,7 @@ const $root: ViewStyle = {
 const $viewItem: ViewStyle = {
   borderRadius: 10,
   width: (configs.windowWidth - 48) / 2,
-  height: configs.windowHeight / 3.5,
+  height: configs.windowHeight / 4,
   marginHorizontal: 8,
   backgroundColor: colors.neutral000,
   ...configs.shadow,

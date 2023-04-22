@@ -107,10 +107,6 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header leftIcon="arrowleft" typeIconLeft="AntDesign" />
-        {/* <ScrollView >
-          <ListEvent />
-        </ScrollView> */}
         <CalendarProvider
           date={getDate()}
           // onDateChanged={this.onDateChanged}

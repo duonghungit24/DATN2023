@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {  VectorsIcon, Text, ModalChoosePlan } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
-import { WelcomeScreen, SettingScreen, TodoScreen, MemoScreen, ChangllengeScreen } from "../screens"
+import { ManagementScreen, SettingScreen, TodoScreen, MemoScreen, ChangllengeScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
 
@@ -25,6 +25,7 @@ export type DemoTabParamList = {
   settingScreen: undefined
   changllengeScreen: undefined
   addEmty: undefined
+  
 }
 
 /**
@@ -97,7 +98,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="notificationScreen"
-        component={MemoScreen}
+        component={ManagementScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom

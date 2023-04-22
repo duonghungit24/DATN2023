@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useReducer, useState } from "react"
 import { ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
@@ -14,8 +14,10 @@ import { HeaderSwitch } from "./HeaderSwitch"
 import { CustomColor } from "./CustomColor"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { useStores } from "../models"
+import { utils } from "../utils"
+import uuid from "react-native-uuid"
 import { Button } from "./Button"
-import { CreateTaskChild } from "./CreateTaskChild"
+import { t } from "i18n-js"
 
 export interface ModalCreatePlanProps {
   /**
@@ -34,41 +36,48 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   const { style, isVisible, onBackDropPress, type } = props
   const { languageStore } = useStores()
   const $styles = [$container, style]
+
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
+  const [date, setDate] = useState(new Date())
+  const [listTaskChild, setListTaskChild] = useState([])
 
   const [toggleReminder, setToggleReminder] = useState(false)
   const [toggleCountDown, setToggleCountDown] = useState(false)
   const [toggleTime, setToggleTime] = useState(false)
   const [toggleTask, setToggleTask] = useState(false)
-  const [isVisibleDate, setIsvisibleDate] = useState({ type: "", show: false })
+  const [isVisibleDate, setIsvisibleDate] = useState(false)
 
   const onConfirmDate = (value) => {
-    console.log(value)
+    console.log("value", value)
+    setDate(value)
+    setIsvisibleDate(false)
+    console.log("date", date)
   }
 
   const showStartEndDate = useMemo(() => {
     return (
       <View style={$viewChild}>
         <TextField
+          value={utils.displayDateHour(date)}
           LeftAccessory={() => (
-            <LeftAccesstory typeIcon="AntDesign" nameIcon="arrowright" colorIcon="red" />
+            <LeftAccesstory
+              typeIcon="AntDesign"
+              nameIcon="calendar"
+              colorIcon={colors.primary500}
+            />
           )}
-          placeholderTx="vitri"
+          placeholderTx="batdau"
           inputWrapperStyle={$wrapInput}
           clearButtonMode="while-editing"
-        />
-        <TextField
-          LeftAccessory={() => (
-            <LeftAccesstory typeIcon="AntDesign" nameIcon="arrowleft" colorIcon="red" />
-          )}
-          placeholderTx="vitri"
-          inputWrapperStyle={$wrapInput}
-          clearButtonMode="while-editing"
+          editable={false}
+          onPressIn={() => setIsvisibleDate(true)}
         />
       </View>
     )
-  }, [toggleTime])
+  }, [toggleTime, date])
 
   const showReminder = useMemo(() => {
     return (
@@ -82,21 +91,89 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           inputWrapperStyle={$wrapInput}
           clearButtonMode="while-editing"
           editable={false}
-          onPressIn={() => {
-            setIsvisibleDate({ type: "start", show: true })
-          }}
+          onPressIn={() => {}}
         />
       </>
     )
   }, [toggleReminder])
 
+  const onCreateTask = () => {
+    const obj = {
+      id: uuid.v4(),
+      nameTaskChild: "",
+      isDone: false,
+    }
+    const dt = []
+    dt.push(obj)
+    setListTaskChild([...listTaskChild, ...dt])
+  }
+
+  const onRemoveItem = (indexTask) => {
+    const dt = listTaskChild.filter((_, index) => index != indexTask)
+    setListTaskChild(dt)
+  }
+
+  const onChangeTask = (value, indexTask) => {
+    const dt = listTaskChild.map((el, index) => {
+      if (index == indexTask) {
+        return {
+          ...el,
+          nameTaskChild: value,
+        }
+      }
+      return {
+        ...el,
+      }
+    })
+    setListTaskChild(dt)
+  }
+
   const showTaskChild = useMemo(() => {
     return (
       <View style={$viewChild}>
-        <CreateTaskChild />
+        {listTaskChild.map((item, index) => {
+          return (
+            <View style={$viewTask} key={index}>
+              <TextField
+                value={item.nameTaskChild}
+                LeftAccessory={() => (
+                  <LeftAccesstory
+                    typeIcon="Octicons"
+                    nameIcon="dot-fill"
+                    colorIcon={colors.primary500}
+                  />
+                )}
+                onChangeText={(text) => onChangeTask(text, index)}
+                inputWrapperStyle={$wrapInput}
+                RightAccessory={() => {
+                  if (item.nameTaskChild) {
+                    return (
+                      <TouchableOpacity onPress={() => onRemoveItem(index)}>
+                        <LeftAccesstory
+                          typeIcon="Feather"
+                          nameIcon="x"
+                          colorIcon={colors.primary500}
+                        />
+                      </TouchableOpacity>
+                    )
+                  } else {
+                    return null
+                  }
+                }}
+              />
+            </View>
+          )
+        })}
+        <TouchableOpacity style={$viewBtn} onPress={onCreateTask}>
+          <Text preset="regular" style={$textBtn}>
+            Thêm nhiệm vụ nhỏ
+          </Text>
+        </TouchableOpacity>
       </View>
     )
-  }, [toggleTask])
+  }, [toggleTask, listTaskChild])
+
+  console.log("list", listTaskChild)
 
   return (
     <Modal
@@ -112,22 +189,28 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     >
       <View style={$viewContainer}>
         <DateTimePickerModal
+          date={date}
           locale={languageStore.language}
-          isVisible={isVisibleDate.show}
+          isVisible={isVisibleDate}
           mode="datetime"
           onConfirm={onConfirmDate}
-          onCancel={() => setIsvisibleDate({ type: "date", show: false })}
+          onCancel={() => setIsvisibleDate(false)}
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
         <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
         <ScrollView keyboardShouldPersistTaps="handled">
-          <TitleAndContent />
+          <TitleAndContent
+            title={title}
+            content={content}
+            onChangeTitle={setTitle}
+            onChangeContent={setContent}
+          />
           <View style={[$viewTitleContent, { height: null }]}>
             <HeaderSwitch
               titleTx="thoigian"
-              typeIcon="AntDesign"
-              nameIcon="calendar"
+              typeIcon="Ionicons"
+              nameIcon="ios-today"
               activeToggle={toggleTime}
               onChangeToggle={() => setToggleTime(!toggleTime)}
             />
@@ -173,7 +256,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
               onChangeText={setUrl}
               clearButtonMode="while-editing"
             />
-            {type == "event" ? (
+            {/* {type == "event" ? (
               <HeaderSwitch
                 titleTx="demnguoc"
                 typeIcon="Ionicons"
@@ -181,9 +264,12 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
                 activeToggle={toggleCountDown}
                 onChangeToggle={() => setToggleCountDown(!toggleCountDown)}
               />
-            ) : null}
+            ) : null} */}
           </View>
         </ScrollView>
+        <View style={$viewButton}>
+          <Button tx="taocongviec" textStyle={{...typography.textBold, fontSize: 14, color: colors.neutral000}}/>
+        </View>
       </View>
     </Modal>
   )
@@ -209,7 +295,7 @@ export const HeaderCreate = (props: HeaderCreateProps) => {
   )
 }
 
-export const TitleAndContent = ({title, content, onChangeTitle, onChangeContent}) => {
+export const TitleAndContent = ({ title, content, onChangeTitle, onChangeContent }) => {
   return (
     <View style={$viewTitleContent}>
       <TextField
@@ -219,7 +305,7 @@ export const TitleAndContent = ({title, content, onChangeTitle, onChangeContent}
         inputWrapperStyle={$wrapInput}
         autoFocus
         clearButtonMode="while-editing"
-        placeholderTextColor={colors.neutral900}
+        placeholderTextColor={colors.neutral700}
         style={{ fontSize: 18, ...typography.textBold, color: colors.neutral900 }}
       />
       <TextField
@@ -265,7 +351,7 @@ const $viewTitleContent: ViewStyle = {
   ...configs.shadow,
   marginHorizontal: 16,
   marginVertical: 16,
-  zIndex: 1
+  zIndex: 1,
 }
 const $wrapInput: ViewStyle = {
   borderWidth: 0,
@@ -275,3 +361,19 @@ const $wrapInput: ViewStyle = {
 const $viewChild: ViewStyle = {
   paddingHorizontal: 16,
 }
+const $viewTask: ViewStyle = {
+  marginTop: 8,
+}
+const $viewBtn: ViewStyle = {
+  backgroundColor: colors.primary500,
+  padding: 8,
+  marginTop: 8,
+  borderRadius: 4,
+  width: "60%",
+}
+const $textBtn: TextStyle = {
+  color: colors.neutral000,
+  textAlign: "center",
+  fontSize: 14,
+}
+const $viewButton : ViewStyle = {padding: 16,backgroundColor: colors.neutral000, ...configs.shadow}

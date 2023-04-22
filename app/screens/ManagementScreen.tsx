@@ -89,7 +89,7 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
               <Text
                 preset="medium"
                 style={{
-                  color: active === 0 ? "#fff" : "#007aff",
+                  color: active === 0 ? colors.neutral000: colors.primary500,
                 }}
                 tx="event"
               />
@@ -115,7 +115,7 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
               <Text
                 preset="medium"
                 style={{
-                  color: active === 1 ? "#fff" : "#007aff",
+                  color: active === 1 ? colors.neutral000: colors.primary500,
                 }}
                 tx="note"
               />
@@ -141,7 +141,7 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
                 preset="medium"
                 style={{
                   fontSize: 14,
-                  color: active === 2 ? colors.neutral000 : "#007aff",
+                  color: active === 2 ? colors.neutral000: colors.primary500,
                 }}
                 tx="diary"
               />
@@ -176,7 +176,7 @@ const $viewActiveTab: ViewStyle = {
   height: "100%",
   top: 0,
   left: 0,
-  backgroundColor: "#007aff",
+  backgroundColor: colors.primary500,
   borderRadius: 8,
 }
 const $viewItemTab: ViewStyle = {
@@ -184,5 +184,5 @@ const $viewItemTab: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   borderWidth: 1,
-  borderColor: "#007aff",
+  borderColor: colors.primary500,
 }

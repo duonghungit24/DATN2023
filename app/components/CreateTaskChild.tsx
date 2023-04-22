@@ -27,15 +27,17 @@ export interface CreateTaskChildProps extends TextInputProps {
  * Describe your component here
  */
 export const CreateTaskChild = observer(function CreateTaskChild(props: CreateTaskChildProps) {
-  const { style, ...rest } = props
+  const { style,listTask, onCreateTask, onRemoveItem, ...rest } = props
   const $styles = [$container, style]
 
   return (
     <View style={$styles}>
-      <TouchableOpacity style={$viewBtn}>
-        <Text preset="regular" style={$textBtn}>Thêm nhiệm vụ nhỏ</Text>
+      <TouchableOpacity style={$viewBtn} onPress={onCreateTask}>
+        <Text preset="regular" style={$textBtn}>
+          Thêm nhiệm vụ nhỏ
+        </Text>
       </TouchableOpacity>
-      {[1, 2, 3, 4, 5].map((item, index) => {
+      {listTask.map((item, index) => {
         return (
           <View style={$viewTask} key={index}>
             <TextField
@@ -49,11 +51,13 @@ export const CreateTaskChild = observer(function CreateTaskChild(props: CreateTa
               )}
               // onChangeText={setLocation}
               inputWrapperStyle={$wrapInput}
-              RightAccessory={() => (
-                <TouchableOpacity>
-                  <LeftAccesstory typeIcon="Feather" nameIcon="x" colorIcon={colors.primary500} />
-                </TouchableOpacity>
-              )}
+              RightAccessory={() => {
+                rest.value ? (
+                  <TouchableOpacity onPress={onRemoveItem}>
+                    <LeftAccesstory typeIcon="Feather" nameIcon="x" colorIcon={colors.primary500} />
+                  </TouchableOpacity>
+                ) : null
+              }}
               {...rest}
             />
           </View>
@@ -79,10 +83,10 @@ const $viewBtn: ViewStyle = {
   padding: 8,
   marginTop: 8,
   borderRadius: 4,
-  width: "60%"
+  width: "60%",
 }
 const $textBtn: TextStyle = {
-  color:colors.neutral000,
-  textAlign: 'center',
-  fontSize: 14
+  color: colors.neutral000,
+  textAlign: "center",
+  fontSize: 14,
 }

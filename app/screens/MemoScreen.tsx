@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text, VectorsIcon } from "../components"
+import { Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../components"
 import { colorRandomItem, colors } from "../theme"
 import * as Animatable from "react-native-animatable"
 import { configs } from "../utils/configs"
@@ -36,6 +36,8 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
     const { memoStore } = useStores()
     const viewRef = useRef(null)
     const [listMemo, setListMemo] = useState([])
+    const [isVisible, setIsVisible] = useState(false)
+    const [memoItemId, setMemoItemId] = useState("")
 
     useLayoutEffect(() => {
       setListMemo(memoStore.listMemo)
@@ -52,13 +54,21 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
         item={item}
         index={index}
         navigation={navigation}
-        onDelete={() => memoStore.deleteMemo(item.id)}
+        onDelete={() => {
+          setMemoItemId(item.id)
+          setIsVisible(true)
+        }}
       />
     )
     // // Pull in navigation via hook
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
+        <ModalConfirmDelete
+          isVisible={isVisible}
+          onBackDropPress={() => setIsVisible(false)}
+          onPressRemove={() => memoStore.deleteMemo(memoItemId)}
+        />
         <Animatable.View animation="slideInUp" duration={1000} style={{ flex: 1 }}>
           <FlatList
             data={listMemo.slice()}
@@ -78,26 +88,28 @@ const ListItem = ({ item, index, animation, navigation, onDelete }: any) => {
   // const bgColor = (i) => colorRandomItem[i % colorRandomItem.length]
   return (
     // <Animatable.View animation={animation} duration={1000} delay={index * 300}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Screen")}>
-        <View style={$viewItem}>
-          <View style={{ flexDirection: "row", flex: 1 }}>
-            <View style={{ flex: 1 }}>
-              <Text preset="bold" style={$textTitle}>
-                {item.title}
-              </Text>
-              <Text preset="medium" style={$textContent}>
-                {item.content}
-              </Text>
-            </View>
-            <TouchableOpacity onPress={onDelete}>
-              <VectorsIcon type="MaterialIcons" name="delete" size={20} color={colors.accent500} />
-            </TouchableOpacity>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Screen")}>
+      <View style={$viewItem}>
+        <View style={{ flexDirection: "row", flex: 1 }}>
+          <View style={{ flex: 1 }}>
+            <Text preset="bold" style={$textTitle}>
+              {item.title}
+            </Text>
+            <Text preset="medium" style={$textContent}>
+              {item.content}
+            </Text>
           </View>
-          <View style={$viewDate}>
-            <Text preset="medium" style={$textDate}>{utils.displayDateHour(item.time)}</Text>
-          </View>
+          <TouchableOpacity onPress={onDelete}>
+            <VectorsIcon type="MaterialIcons" name="delete" size={20} color={colors.accent500} />
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+        <View style={$viewDate}>
+          <Text preset="medium" style={$textDate}>
+            {utils.displayDateHour(item.time)}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
     // </Animatable.View>
   )
 }
@@ -124,12 +136,13 @@ const $textContent: TextStyle = {
   color: colors.neutral700,
   marginTop: 4,
 }
-const $viewDate : ViewStyle = {
-    bottom: 0,
-    backgroundColor: "#FEE1E9",
-    padding: 4, borderRadius: 4,
-    alignItems:'center'
+const $viewDate: ViewStyle = {
+  bottom: 0,
+  backgroundColor: "#FEE1E9",
+  padding: 4,
+  borderRadius: 4,
+  alignItems: "center",
 }
 const $textDate: TextStyle = {
-  color: colors.primary500
+  color: colors.primary500,
 }

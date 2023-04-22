@@ -23,6 +23,7 @@ const data = {
       name: "Live: notJust.Hack Kickstart",
       height: 50,
       day: "2022-11-24",
+      content: "okk",
     },
   ],
   "2023-03-20": [
@@ -31,6 +32,7 @@ const data = {
       name: "Workshop: Build any mobile application with React Native",
       height: 50,
       day: "2022-11-25",
+      content: "okk",
     },
     {
       id: "3",
@@ -69,6 +71,7 @@ const data = {
     {
       id: "7",
       name: "Q&A session",
+      content: "okk",
       height: 50,
       day: "2022-11-27",
     },
@@ -132,6 +135,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
   const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
     const fontSize = isFirst ? 16 : 14
     const color = isFirst ? "black" : "#43515c"
+    console.log("re", reservation)
     return (
       <Pressable style={$item} onPress={() => navigate("statisticsScreen")}>
         <Text preset="semibold" style={$title}>

@@ -23,18 +23,24 @@ export interface ModalChoosePlanProps {
  * Describe your component here
  */
 type typeModal = {
-  type: "note" | "diary",
+  type: "note" | "diary"
   show: boolean
 }
 type typeModalEvent = {
-  type: "event" | "work",
+  type: "event" | "work"
   show: boolean
 }
 export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalChoosePlanProps) {
   const { style, isVisible, onBackDropPress } = props
   const $styles = [$container, style]
-  const [isVisibleEventWork, setIsvisibleEventWork] = React.useState<typeModalEvent>({ type: "event", show: false })
-  const [isVisibleNoteDiary, setIsvisibleNoteDiary] = React.useState<typeModal>({ type: "note", show: false })
+  const [isVisibleEventWork, setIsvisibleEventWork] = React.useState<typeModalEvent>({
+    type: "event",
+    show: false,
+  })
+  const [isVisibleNoteDiary, setIsvisibleNoteDiary] = React.useState<typeModal>({
+    type: "note",
+    show: false,
+  })
 
   return (
     <Modal
@@ -67,27 +73,27 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
           <Text style={$textPlan} tx="kehoach" />
           <View style={$viewBtn}>
             <ItemPlan
-              textPlan="event"
-              typeIcon="FontAwesome"
-              nameIcon="calendar"
-              colorIcon={colors.event}
-              onPress={() => setIsvisibleEventWork({type: "event", show:  true})}
-              bgColor="#E0FEF4"
-            />
-            <ItemPlan
               textPlan="work"
               typeIcon="FontAwesome5"
               nameIcon="check"
               colorIcon={colors.todo}
-              onPress={() => setIsvisibleEventWork({type: "work", show:  true})}
+              onPress={() => setIsvisibleEventWork({ type: "work", show: true })}
               bgColor="#FEE1E9"
+            />
+            <ItemPlan
+              textPlan="event"
+              typeIcon="FontAwesome"
+              nameIcon="calendar"
+              colorIcon={colors.event}
+              onPress={() => setIsvisibleEventWork({ type: "event", show: true })}
+              bgColor="#E0FEF4"
             />
             <ItemPlan
               textPlan="note"
               typeIcon="FontAwesome"
               nameIcon="pencil"
               colorIcon={colors.memo}
-              onPress={() => setIsvisibleNoteDiary({type: "note", show: true})}
+              onPress={() => setIsvisibleNoteDiary({ type: "note", show: true })}
               bgColor="#FFF4E7"
             />
             <ItemPlan
@@ -95,7 +101,7 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
               typeIcon="FontAwesome"
               nameIcon="file-text"
               colorIcon={colors.diary}
-              onPress={() => setIsvisibleNoteDiary({type: "diary", show: true})}
+              onPress={() => setIsvisibleNoteDiary({ type: "diary", show: true })}
               bgColor="#EEF0FE"
             />
           </View>
@@ -177,7 +183,7 @@ const $circlePlan: ViewStyle = {
 const $textPlanItem: TextStyle = {
   fontSize: 14,
   ...typography.textBoldMedium,
-  marginTop: 4
+  marginTop: 4,
 }
 const $viewButton: ViewStyle = {
   flexDirection: "row",

@@ -108,7 +108,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       <>
         <TextField
           LeftAccessory={() => (
-            <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon="red" />
+            <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon={colors.primary500} />
           )}
           value={utils.displayDate(date)}
           inputWrapperStyle={$wrapInput}
@@ -240,7 +240,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             <View style={$viewToggle}>
               <TextField
                 LeftAccessory={() => (
-                  <LeftAccesstory typeIcon="Ionicons" nameIcon="ios-today" colorIcon="red" />
+                  <LeftAccesstory typeIcon="Ionicons" nameIcon="ios-today" colorIcon={colors.primary500} />
                 )}
                 placeholderTx="thoigian"
                 inputWrapperStyle={$wrapInput}

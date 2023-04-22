@@ -47,6 +47,10 @@ const vi = {
   placeholderTask: "Tìm kiếm nhiệm vụ",
   taoghichu: "Tạo ghi chú thành công!",
   taonhatky: "Tạo nhật ký thành công!",
+  taocongviec: "Tạo công việc",
+  ketthuc: "Kết thúc",
+  xoa: "Xoá",
+  banCoChanXoa: "Bạn có chắc chắn muốn xoá?",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

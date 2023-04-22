@@ -265,6 +265,7 @@ const $viewTitleContent: ViewStyle = {
   ...configs.shadow,
   marginHorizontal: 16,
   marginVertical: 16,
+  zIndex: 1
 }
 const $wrapInput: ViewStyle = {
   borderWidth: 0,

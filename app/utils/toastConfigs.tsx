@@ -56,14 +56,6 @@ export const toastConfig = {
       </View>
     </TouchableOpacity>
   ),
-  addGoods: ({ text1, text2, onPress }: ToastProps) => (
-    <TouchableOpacity activeOpacity={0.2} onPress={onPress} style={$btnAddGoods}>
-      <View style={$content}>
-        {text1 ? <Text preset="bold" style={[$text1, { fontSize: 14 }]}>{text1}</Text> : null}
-        {text2 ? <Text preset="regular" style={$text2}>{text2}</Text> : null}
-      </View>
-    </TouchableOpacity>
-  ),
 } as any
 
 const $btnToast: ViewStyle = {
@@ -77,17 +69,6 @@ const $btnToast: ViewStyle = {
   flexDirection: "row",
   ...configs.shadow,
   zIndex: 100
-}
-const $btnAddGoods: ViewStyle = {
-  minHeight: 40,
-  width: "50%",
-  paddingHorizontal: 12,
-  alignItems: "center",
-  backgroundColor: colors.neutral300,
-  borderRadius: 4,
-  padding: 6,
-  flexDirection: "row",
-  ...configs.shadow,
 }
 const $text1: TextStyle = {
   fontSize: 18,

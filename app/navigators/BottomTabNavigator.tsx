@@ -157,7 +157,7 @@ export function BottomTabNavigator() {
       <Animated.View style={{
         width: (configs.windowWidth - 60) / 4,
         height: 2,
-        backgroundColor: 'red',
+        backgroundColor: colors.primary500,
         position: 'absolute',
         bottom: configs.windowHeight / 11,
         left: 0,
@@ -221,7 +221,7 @@ const $tabBarLabel: TextStyle = {
 const $btnAdd: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "red",
+  backgroundColor: colors.primary500,
   top: -42,
   width: 60,
   height: 60,

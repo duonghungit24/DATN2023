@@ -58,7 +58,7 @@ export function Text(props: TextProps) {
 
   const preset: Presets = $presets[props.preset] ? props.preset : "default"
   const $styles = [
-    $rtlStyle,
+   // $rtlStyle,
     $presets[preset],
     $fontWeightStyles[weight],
     $sizeStyles[size],
@@ -88,7 +88,7 @@ const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weigh
 
 const $baseStyle: StyleProp<TextStyle> = [
 
-    { color: colors.text, fontSize: 14 },
+    { color: colors.neutral900, fontSize: 14 },
 ]
 
 const $presets = {

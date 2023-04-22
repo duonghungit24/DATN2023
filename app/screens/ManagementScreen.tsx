@@ -10,6 +10,7 @@ import { TodoScreen } from "./TodoScreen/TodoScreen"
 import { MemoScreen } from "./MemoScreen"
 import { EventScreen } from "./EventScreen/EventScreen"
 import { DiaryScreen } from "./DiaryScreen"
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -25,7 +26,7 @@ import { DiaryScreen } from "./DiaryScreen"
 export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Management">> = observer(
   function ManagementScreen() {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+    const { languageStore } = useStores()
     const {
       setActive,
       setTabOne,
@@ -49,7 +50,7 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
         default:
           return null
       }
-    }, [active])
+    }, [active, languageStore.language])
     // Pull in navigation via hook
     // const navigation = useNavigation()
 

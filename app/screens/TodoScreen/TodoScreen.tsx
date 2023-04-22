@@ -1,10 +1,10 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { TextStyle, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../../navigators"
 import { AgendaCalendar, Header, Screen, Text } from "../../components"
-import { colors } from "../../theme"
+import { colors, typography } from "../../theme"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -21,13 +21,14 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
   function TodoScreen() {
     // Pull in one of our MST stores
     // const { someStore, anotherStore } = useStores()
+    const [dateSelect, setDateSelect] = useState(null)
 
     // Pull in navigation via hook
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <Header backgroundColor={colors.neutral000} title="24/12/2001" />
-        <AgendaCalendar />
+        <Header backgroundColor={colors.neutral000} title={dateSelect} titleStyle={$titleStyle} />
+        <AgendaCalendar onPressDate={(date) => setDateSelect(date)} />
       </Screen>
     )
   },
@@ -35,4 +36,9 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
 
 const $root: ViewStyle = {
   flex: 1,
+}
+const $titleStyle : TextStyle = {
+  fontSize: 16,
+  ...typography.textBold,
+  color: colors.primary500
 }

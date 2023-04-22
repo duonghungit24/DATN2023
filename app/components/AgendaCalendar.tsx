@@ -8,145 +8,148 @@ import { useStores } from "../models"
 import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
 
-
 export interface AgendaCalendarProps {
   /**
    * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
+  onPressDate: (value) => void
 }
 const data = {
   "2022-11-23": [],
   "2023-03-19": [
     {
-      "id": "1",
-      "name": "Live: notJust.Hack Kickstart",
-      "height": 50,
-      "day": "2022-11-24"
-    }
+      id: "1",
+      name: "Live: notJust.Hack Kickstart",
+      height: 50,
+      day: "2022-11-24",
+    },
   ],
   "2023-03-20": [
     {
-      "id": "2",
-      "name": "Workshop: Build any mobile application with React Native",
-      "height": 50,
-      "day": "2022-11-25"
+      id: "2",
+      name: "Workshop: Build any mobile application with React Native",
+      height: 50,
+      day: "2022-11-25",
     },
     {
-      "id": "3",
-      "name": "Q&A session",
-      "height": 50,
-      "day": "2022-11-25"
-    }
+      id: "3",
+      name: "Q&A session",
+      height: 50,
+      day: "2022-11-25",
+    },
+    {
+      id: "5",
+      name: "Q&A session",
+      height: 50,
+      day: "2022-11-26",
+    },
   ],
   "2023-03-24": [
     {
-      "id": "4",
-      "name": "Workshop: Build a Chat application in hours using Stream",
-      "height": 50,
-      "day": "2022-11-26"
+      id: "4",
+      name: "Workshop: Build a Chat application in hours using Stream",
+      height: 50,
+      day: "2022-11-26",
     },
     {
-      "id": "5",
-      "name": "Q&A session",
-      "height": 50,
-      "day": "2022-11-26"
-    }
+      id: "5",
+      name: "Q&A session",
+      height: 50,
+      day: "2022-11-26",
+    },
   ],
-  "2023-03-22": [
+  "2023-04-22": [
     {
-      "id": "6",
-      "name": "Workshop: Build Full-Stack applications with Nhost",
-      "height": 50,
-      "day": "2022-11-27"
+      id: "6",
+      name: "Workshop: Build Full-Stack applications with Nhost",
+      height: 50,
+      day: "2022-11-27",
     },
     {
-      "id": "7",
-      "name": "Q&A session",
-      "height": 50,
-      "day": "2022-11-27"
-    }
+      id: "7",
+      name: "Q&A session",
+      height: 50,
+      day: "2022-11-27",
+    },
   ],
   "2023-03-23": [
     {
-      "id": "8",
-      "name": "Demo Day",
-      "height": 50,
-      "day": "2022-11-28"
-    }
-  ]
+      id: "8",
+      name: "Demo Day",
+      height: 50,
+      day: "2022-11-28",
+    },
+  ],
 }
 /**
  * Describe your component here
  */
-LocaleConfig.locales['vi'] = hourPickerLocales['vi'];
-LocaleConfig.locales['en'] = hourPickerLocales['en'];
-LocaleConfig.locales['ja'] = hourPickerLocales['ja'];
-LocaleConfig.locales['ko'] = hourPickerLocales['ko'];
+LocaleConfig.locales["vi"] = hourPickerLocales["vi"]
+LocaleConfig.locales["en"] = hourPickerLocales["en"]
+LocaleConfig.locales["ja"] = hourPickerLocales["ja"]
+LocaleConfig.locales["ko"] = hourPickerLocales["ko"]
 export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCalendarProps) {
-  const { style } = props
-  const {languageStore }  = useStores()
+  const { style , onPressDate} = props
+  const { languageStore } = useStores()
   const $styles = [$container, style]
   LocaleConfig.defaultLocale = languageStore.language
 
- 
-//   const timeToString = (time) => {
-//     const date = new Date(time);
-//     return date.toISOString().split('T')[0];
-// }
+  //   const timeToString = (time) => {
+  //     const date = new Date(time);
+  //     return date.toISOString().split('T')[0];
+  // }
 
-//     const [items, setItems] = React.useState({});
+  //     const [items, setItems] = React.useState({});
 
-//     const loadItems = (day) => {
+  //     const loadItems = (day) => {
 
-//         setTimeout(() => {
-//             for (let i = -15; i < 85; i++) {
-//                 const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-//                 const strTime = timeToString(time);
+  //         setTimeout(() => {
+  //             for (let i = -15; i < 85; i++) {
+  //                 const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+  //                 const strTime = timeToString(time);
 
-//                 if (!items[strTime]) {
-//                     items[strTime] = [];
+  //                 if (!items[strTime]) {
+  //                     items[strTime] = [];
 
-//                     const numItems = Math.floor(Math.random() * 1 + 1);
-//                     for (let j = 0; j < numItems; j++) {
-//                         items[strTime].push({
-//                             name: 'Add your Agenda',
-//                             height: Math.max(10, Math.floor(Math.random() * 150)),
-//                             day: strTime
-//                         });
-//                     }
-//                 }
-//             }
-//             const newItems = {};
-//             Object.keys(items).forEach(key => {
-//                 newItems[key] = items[key];
-//             });
-//             setItems(newItems);
-//         }, 1000);
-//     }
-const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
-  const fontSize = isFirst ? 16 : 14;
-  const color = isFirst ? "black" : "#43515c";
-  return (
-    <Pressable
-      style={[$item, { height: reservation.height }]}
-      onPress={() => navigate("statisticsScreen") }
-    >
-      <Text style={{ fontSize, color }}>{reservation.name}</Text>
-    </Pressable>
-  );
-};
+  //                     const numItems = Math.floor(Math.random() * 1 + 1);
+  //                     for (let j = 0; j < numItems; j++) {
+  //                         items[strTime].push({
+  //                             name: 'Add your Agenda',
+  //                             height: Math.max(10, Math.floor(Math.random() * 150)),
+  //                             day: strTime
+  //                         });
+  //                     }
+  //                 }
+  //             }
+  //             const newItems = {};
+  //             Object.keys(items).forEach(key => {
+  //                 newItems[key] = items[key];
+  //             });
+  //             setItems(newItems);
+  //         }, 1000);
+  //     }
+  const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
+    const fontSize = isFirst ? 16 : 14
+    const color = isFirst ? "black" : "#43515c"
+    return (
+      <Pressable style={$item} onPress={() => navigate("statisticsScreen")}>
+        <Text preset="semibold" style={$title}>
+          {reservation.name}
+        </Text>
+        <Text preset="regular" style={$text}>
+          chilllll
+        </Text>
+      </Pressable>
+    )
+  }
   return (
     <View style={$styles}>
       <Agenda
-       key={languageStore.language}
-        // The list of items that have to be displayed in agenda. If you want to render item as empty date
-        // the value of date key has to be an empty array []. If there exists no value for date key it is
-        // considered that the date in question is not yet loaded
+        key={languageStore.language}
         items={data}
         renderItem={renderItem}
         selected="2023-03-20"
-      
         // Callback that gets called when items for a certain month should be loaded (month became visible)
         // loadItemsForMonth={(month) => {
         //   console.log("trigger items loading")
@@ -156,9 +159,12 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         //   console.log(calendarOpened)
         // }}
         // // Callback that gets called on day press
-        // onDayPress={(day) => {
-        //   console.log("day pressed")
-        // }}
+        onDayPress={(day) => {
+          onPressDate(day.dateString)
+        }}
+        onDayChange={(day) => {
+          onPressDate(day.dateString)
+        }}
         // // Callback that gets called when day changes while scrolling agenda list
         // onDayChange={(day) => {
         //   console.log("day changed")
@@ -184,7 +190,7 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         // }}
         // // Specify how each date should be rendered. day can be undefined if the item is not first in that day
         // renderDay={(day, item) => {
-        //   return <View />
+        //   return <View style={{height: 50,w , backgroundColor: "red"}}/>
         // }}
         // // Specify how empty date content with no items should be rendered
         // renderEmptyDate={() => {
@@ -195,16 +201,10 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         //   return <View />
         // }}
         // // Override inner list with a custom implemented component
-        // renderList={(listProps) => {
-          
-        //   return  <TouchableOpacity style={{height: 20}}>
-        //   <Text style={{color: "red"}}>{1}</Text>
-        // </TouchableOpacity>
-        // }}
         // // Specify what should be rendered instead of ActivityIndicator
-        // renderEmptyData={() => {
-        //   return <View />
-        // }}
+        renderEmptyData={() => {
+          return <View />
+        }}
         // // Specify your item comparison function for increased performance
         // rowHasChanged={(r1, r2) => {
         //   console.log(console.log("r1", r1))
@@ -229,13 +229,16 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         // // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView
         // refreshControl={null}
         // // Agenda theme
-        // theme={{
-        //   agendaDayTextColor: "yellow",
-        //   agendaDayNumColor: "green",
-        //   agendaTodayColor: "red",
-        //   agendaKnobColor: "blue",
-        // }}
- 
+        theme={{
+          agendaDayTextColor: colors.secondary400,
+          agendaDayNumColor: colors.secondary500,
+          // agendaTodayColor: "red",
+          todayTextColor: colors.primary500,
+          agendaKnobColor: colors.primary500,
+          selectedDayBackgroundColor: colors.primary500,
+          dotColor: colors.primary500,
+        }}
+
         // // Agenda container style
         // style={{ }}
         // theme={{
@@ -263,7 +266,6 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
         //   agendaTodayColor: 'red',
         //   agendaKnobColor: 'red',
         // }}
-        
       />
     </View>
   )
@@ -272,11 +274,14 @@ const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
 const $container: ViewStyle = {
   flex: 1,
 }
-const $item:ViewStyle = {
-  backgroundColor: "white",
-  flex: 1,
+const $item: ViewStyle = {
+  backgroundColor: colors.neutral000,
   borderRadius: 5,
   padding: 10,
   marginRight: 10,
-  marginTop: 17,
+  marginTop: 16,
+  borderLeftWidth: 3,
+  borderLeftColor: "#2d4150",
 }
+const $title: TextStyle = { fontSize: 14, color: colors.neutral900 }
+const $text: TextStyle = { fontSize: 14, color: colors.neutral700, marginTop: 4 }

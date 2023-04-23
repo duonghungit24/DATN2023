@@ -1,4 +1,4 @@
-import * as React from "react"
+import  React , {useEffect, useState} from "react"
 import { Pressable, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
@@ -7,6 +7,7 @@ import { Agenda, AgendaEntry, AgendaSchedule, LocaleConfig } from "react-native-
 import { useStores } from "../models"
 import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
+import { utils } from "../utils"
 
 export interface AgendaCalendarProps {
   /**
@@ -16,7 +17,14 @@ export interface AgendaCalendarProps {
   onPressDate: (value) => void
 }
 const data = {
-  "2022-11-23": [],
+  "2023-04-24": [
+    {
+      id: "1",
+      title: "Live: notJust.Hack Kickstart",
+      time: "2023-04-24",
+      content: "okk",
+    },
+  ],
   "2023-03-19": [
     {
       id: "1",
@@ -26,64 +34,64 @@ const data = {
       content: "okk",
     },
   ],
-  "2023-03-20": [
-    {
-      id: "2",
-      name: "Workshop: Build any mobile application with React Native",
-      height: 50,
-      day: "2022-11-25",
-      content: "okk",
-    },
-    {
-      id: "3",
-      name: "Q&A session",
-      height: 50,
-      day: "2022-11-25",
-    },
-    {
-      id: "5",
-      name: "Q&A session",
-      height: 50,
-      day: "2022-11-26",
-    },
-  ],
-  "2023-03-24": [
-    {
-      id: "4",
-      name: "Workshop: Build a Chat application in hours using Stream",
-      height: 50,
-      day: "2022-11-26",
-    },
-    {
-      id: "5",
-      name: "Q&A session",
-      height: 50,
-      day: "2022-11-26",
-    },
-  ],
-  "2023-04-22": [
-    {
-      id: "6",
-      name: "Workshop: Build Full-Stack applications with Nhost",
-      height: 50,
-      day: "2022-11-27",
-    },
-    {
-      id: "7",
-      name: "Q&A session",
-      content: "okk",
-      height: 50,
-      day: "2022-11-27",
-    },
-  ],
-  "2023-03-23": [
-    {
-      id: "8",
-      name: "Demo Day",
-      height: 50,
-      day: "2022-11-28",
-    },
-  ],
+  // "2023-03-20": [
+  //   {
+  //     id: "2",
+  //     name: "Workshop: Build any mobile application with React Native",
+  //     height: 50,
+  //     day: "2022-11-25",
+  //     content: "okk",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Q&A session",
+  //     height: 50,
+  //     day: "2022-11-25",
+  //   },
+  //   {
+  //     id: "5",
+  //     name: "Q&A session",
+  //     height: 50,
+  //     day: "2022-11-26",
+  //   },
+  // ],
+  // "2023-03-24": [
+  //   {
+  //     id: "4",
+  //     name: "Workshop: Build a Chat application in hours using Stream",
+  //     height: 50,
+  //     day: "2022-11-26",
+  //   },
+  //   {
+  //     id: "5",
+  //     name: "Q&A session",
+  //     height: 50,
+  //     day: "2022-11-26",
+  //   },
+  // ],
+  // "2023-04-22": [
+  //   {
+  //     id: "6",
+  //     name: "Workshop: Build Full-Stack applications with Nhost",
+  //     height: 50,
+  //     day: "2022-11-27",
+  //   },
+  //   {
+  //     id: "7",
+  //     name: "Q&A session",
+  //     content: "okk",
+  //     height: 50,
+  //     day: "2022-11-27",
+  //   },
+  // ],
+  // "2023-03-23": [
+  //   {
+  //     id: "8",
+  //     name: "Demo Day",
+  //     height: 50,
+  //     day: "2022-11-28",
+  //   },
+  // ],
 }
 /**
  * Describe your component here
@@ -94,55 +102,23 @@ LocaleConfig.locales["ja"] = hourPickerLocales["ja"]
 LocaleConfig.locales["ko"] = hourPickerLocales["ko"]
 export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCalendarProps) {
   const { style , onPressDate} = props
-  const { languageStore } = useStores()
+  const { languageStore , todoStore} = useStores()
   const $styles = [$container, style]
   LocaleConfig.defaultLocale = languageStore.language
+  const [listTask, setListTask] = useState({})
 
-  //   const timeToString = (time) => {
-  //     const date = new Date(time);
-  //     return date.toISOString().split('T')[0];
-  // }
+  useEffect(() => {
+      setListTask(todoStore.getListTodo())
+  }, [todoStore.isRefreshTodo])
 
-  //     const [items, setItems] = React.useState({});
-
-  //     const loadItems = (day) => {
-
-  //         setTimeout(() => {
-  //             for (let i = -15; i < 85; i++) {
-  //                 const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-  //                 const strTime = timeToString(time);
-
-  //                 if (!items[strTime]) {
-  //                     items[strTime] = [];
-
-  //                     const numItems = Math.floor(Math.random() * 1 + 1);
-  //                     for (let j = 0; j < numItems; j++) {
-  //                         items[strTime].push({
-  //                             name: 'Add your Agenda',
-  //                             height: Math.max(10, Math.floor(Math.random() * 150)),
-  //                             day: strTime
-  //                         });
-  //                     }
-  //                 }
-  //             }
-  //             const newItems = {};
-  //             Object.keys(items).forEach(key => {
-  //                 newItems[key] = items[key];
-  //             });
-  //             setItems(newItems);
-  //         }, 1000);
-  //     }
-  const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
-    const fontSize = isFirst ? 16 : 14
-    const color = isFirst ? "black" : "#43515c"
-    console.log("re", reservation)
+  const renderItem = (reservation: any, isFirst: boolean) => {
     return (
-      <Pressable style={$item} onPress={() => navigate("statisticsScreen")}>
+      <Pressable style={[$viewItem, {borderLeftColor: reservation.color} ]} onPress={() => navigate("statisticsScreen")}>
         <Text preset="semibold" style={$title}>
-          {reservation.name}
+          {reservation.title}
         </Text>
         <Text preset="regular" style={$text}>
-          chilllll
+          {reservation.content}
         </Text>
       </Pressable>
     )
@@ -151,9 +127,9 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
     <View style={$styles}>
       <Agenda
         key={languageStore.language}
-        items={data}
+        items={listTask}
         renderItem={renderItem}
-        selected="2023-03-20"
+        selected={utils.displayDateCalendar(new Date())}
         // Callback that gets called when items for a certain month should be loaded (month became visible)
         // loadItemsForMonth={(month) => {
         //   console.log("trigger items loading")
@@ -164,10 +140,10 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         // }}
         // // Callback that gets called on day press
         onDayPress={(day) => {
-          onPressDate(day.dateString)
+          onPressDate(utils.convertDigitInDate(day.dateString))
         }}
         onDayChange={(day) => {
-          onPressDate(day.dateString)
+          onPressDate(utils.convertDigitInDate(day.dateString))
         }}
         // // Callback that gets called when day changes while scrolling agenda list
         // onDayChange={(day) => {
@@ -220,9 +196,9 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         // showClosingKnob={false}
         // // By default, agenda dates are marked if they have at least one item, but you can override this if needed
         // markedDates={{
-        //   "2012-05-16": { marked: true },
-        //   "2012-05-17": { marked: true },
-        //   "2012-05-18": { disabled: false },
+        //   "2023-05-20": { marked: true },
+        //   "2023-05-17": { marked: true },
+        //   "2023-05-18": { disabled: false },
         // }}
         // // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
         // disabledByDefault={false}
@@ -236,7 +212,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         theme={{
           agendaDayTextColor: colors.secondary400,
           agendaDayNumColor: colors.secondary500,
-          // agendaTodayColor: "red",
+          agendaTodayColor: colors.primary500,
           todayTextColor: colors.primary500,
           agendaKnobColor: colors.primary500,
           selectedDayBackgroundColor: colors.primary500,
@@ -278,7 +254,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
 const $container: ViewStyle = {
   flex: 1,
 }
-const $item: ViewStyle = {
+const $viewItem: ViewStyle = {
   backgroundColor: colors.neutral000,
   borderRadius: 5,
   padding: 10,

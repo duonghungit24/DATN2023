@@ -11,8 +11,14 @@ export const DiaryModel = types
   .model("Diary")
   .props({
     diaryMap: types.map(types.optional(ListDiaryStoreModel, {})),
+    isRefreshDiary: types.optional(types.number, 0)
   })
   .actions(withSetPropAction)
+  .actions((self) => ({
+    setRefreshDiary: () => {
+      self.isRefreshDiary += 1
+    }
+  }))
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     addDiray: (key, data) => {
@@ -23,6 +29,7 @@ export const DiaryModel = types
         dt.push(data)
         self.diaryMap.set(key, { listDiary: dt })
       }
+      self.setRefreshDiary()
     },
     getListDiary: () => {
       const data = []
@@ -39,11 +46,6 @@ export const DiaryModel = types
         })
       })
       return data
-      // const sortedArray = _.orderBy(data, (o: any) => {
-      //   console.log("okk", o)
-      //  // return moment(o.data.time.format('YYYYMMDD'));
-      // }, ['asc']);
-      // return sortedArray
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

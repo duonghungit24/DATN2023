@@ -1,33 +1,16 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
+import { ListTodoStoreModel } from "./ListTodoStore"
+import moment from "moment"
 
 /**
  * Model description here for TypeScript hints.
  */
-const TaskChild = types.model({
-  id: types.maybeNull(types.string),
-  nameTaskChild: types.maybeNull(types.string),
-  isDone: types.optional(types.maybeNull(types.boolean), false),
-})
-
-const TodoItemModel = types.model({
-  id: types.maybeNull(types.string),
-  idNotification: types.maybeNull(types.string),
-  title: types.maybeNull(types.string),
-  content: types.maybeNull(types.string),
-  time: types.maybeNull(types.string),
-  color: types.maybeNull(types.string),
-  location: types.maybeNull(types.string),
-  url: types.maybeNull(types.string),
-  listTaskChild: types.optional(types.array(TaskChild), []),
-  isDone: types.optional(types.maybeNull(types.boolean), false),
-})
-
 
 export const TodoStoreModel = types
   .model("TodoStore")
   .props({
-    listTodo : types.optional(types.array(TodoItemModel), []),
+    todoMap: types.map(types.array(ListTodoStoreModel)),
     isRefreshTodo: types.optional(types.number, 0)
   })
   .actions(withSetPropAction)
@@ -38,7 +21,28 @@ export const TodoStoreModel = types
     }
   }))
   .actions((self) => ({
-
+    addTodo: (key, data) => {
+      if (self.todoMap.has(key)) {
+        self.todoMap.get(key).push(data)
+      } else {
+        const dt = []
+        dt.push(data)
+        self.todoMap.set(key, dt)
+      }
+      self.setRefreshTodo()
+    },
+    getListTodo : () => {
+      const data = {}
+      self.todoMap.forEach((value, key) => {
+        const sortData = value.sort((a, b) => {
+          const momena = moment(a.time)
+          const momentb = moment(b.time)
+          return momena.diff(momentb)
+        })
+        data[key] = sortData.slice()
+      })
+      return data
+    }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface TodoStore extends Instance<typeof TodoStoreModel> {}

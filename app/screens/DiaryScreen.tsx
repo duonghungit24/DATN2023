@@ -87,7 +87,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     // Pull in navigation via hook
     useLayoutEffect(() => {
       setListDiray(diaryStore.getListDiary())
-    }, [diaryStore.diaryMap])
+    }, [diaryStore.isRefreshDiary])
     // const navigation = useNavigation()
 
     console.log("setlist", listDiary[2]?.data)
@@ -104,18 +104,8 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
           // onDateChanged={(date) => console.log("date", date)}
           // onMonthChange={onMonthChange}
           // disabledOpacity={0.6}
-          // theme={todayBtnTheme.current}
+
           // todayBottomMargin={16}
-          theme={{
-            "stylesheet.calendar.header": {
-              header: {
-                height: 0,
-              },
-              // week: {
-              //       height: 0
-              // }
-            },
-          }}
         >
           <ExpandableCalendar
             // horizontal={false}
@@ -132,8 +122,9 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             // markedDates={marked.current}
             // leftArrowImageSource={leftArrowIcon}
             // rightArrowImageSource={rightArrowIcon}
-             animateScroll
+            animateScroll
             // closeOnDayPress={false}
+            theme={configs.THEME}
           />
           <AgendaList
             sections={listDiary}
@@ -149,7 +140,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             //  sectionStyle={$viewSection}
             dayFormat={"dd/MM/yyyy"}
             markToday={false}
-            contentContainerStyle={{paddingBottom: 16}}
+            contentContainerStyle={{ paddingBottom: 16 }}
           />
         </CalendarProvider>
         {/* <FlatList
@@ -174,12 +165,12 @@ const ItemDiary = ({ item }) => {
 
   return (
     <>
-     <ImageView
-          images={item.images}
-          imageIndex={indexImg}
-          visible={isVisible}
-          onRequestClose={() => setIsvisible(false)}
-        />
+      <ImageView
+        images={item.images}
+        imageIndex={indexImg}
+        visible={isVisible}
+        onRequestClose={() => setIsvisible(false)}
+      />
       <TouchableWithoutFeedback onPress={() => console.log("opk")}>
         <View style={$viewRow}>
           <Text preset="bold" style={$time}>
@@ -269,7 +260,7 @@ const $viewShadow: ViewStyle = {
   borderRadius: 12,
   ...configs.shadow,
   marginLeft: 16,
-  minHeight: 80
+  minHeight: 80,
 }
 const $container: ViewStyle = {}
 const $time: TextStyle = {
@@ -278,7 +269,7 @@ const $time: TextStyle = {
 const $textItem: TextStyle = {
   color: colors.neutral900,
   fontSize: 14,
-  paddingVertical: 4
+  paddingVertical: 4,
 }
 const $viewTitle: ViewStyle = {
   paddingHorizontal: 12,

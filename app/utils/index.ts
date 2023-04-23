@@ -39,5 +39,10 @@ export const utils = {
   hoursAndMinutes: (date) => {
     const now = new Date(date);
     return  utils.zeroPad(now.getHours(),2) + ':' + utils.zeroPad(now.getMinutes(),2);
-  }
+  },
+  convertDigitInDate: (str) => {
+    if (!str || str == null) return ""
+    return str.split("-").reverse().join("/")
+  },
+
 }

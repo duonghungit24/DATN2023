@@ -110,7 +110,7 @@ export function Button(props: ButtonProps) {
         <>
           {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+          <Text preset="bold" tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
             {children}
           </Text>
 

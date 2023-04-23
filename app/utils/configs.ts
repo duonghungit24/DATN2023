@@ -1,3 +1,4 @@
+import { colors } from "../theme"
 import { iconLanguage } from "./../theme/image"
 import { Dimensions, Platform } from "react-native"
 // Size Iphone 11 pro
@@ -80,4 +81,13 @@ export const configs = {
     NOTE: "note",
     DIARY: "diary",
   },
+  THEME : {
+    agendaDayTextColor: colors.secondary400,
+    agendaDayNumColor: colors.secondary500,
+    // agendaTodayColor: "red",
+    todayTextColor: colors.primary500,
+    agendaKnobColor: colors.primary500,
+    selectedDayBackgroundColor: colors.primary500,
+    dotColor: colors.primary500,
+  }
 }

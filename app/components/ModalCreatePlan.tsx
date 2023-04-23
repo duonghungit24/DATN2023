@@ -34,7 +34,7 @@ export interface ModalCreatePlanProps {
  */
 export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCreatePlanProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore } = useStores()
+  const { languageStore , todoStore} = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -174,6 +174,21 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   }, [toggleTask, listTaskChild])
 
   console.log("list", listTaskChild)
+  const onCreate = () => {
+    const params = {
+      id:  uuid.v4(),
+      idNotification:  uuid.v4(),
+      title: title,
+      content: content,
+      time: date.toString(),
+      color: "#ff2",
+      location: location,
+      url: url,
+      listTaskChild: listTaskChild,
+      isDone: false
+    }
+    todoStore.addTodo(utils.displayDateCalendar(date), params)
+  }
 
   return (
     <Modal
@@ -268,7 +283,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           </View>
         </ScrollView>
         <View style={$viewButton}>
-          <Button tx="taocongviec" textStyle={{...typography.textBold, fontSize: 14, color: colors.neutral000}}/>
+          <Button tx="taocongviec" textStyle={$textButton} onPress={onCreate}/>
         </View>
       </View>
     </Modal>
@@ -377,3 +392,4 @@ const $textBtn: TextStyle = {
   fontSize: 14,
 }
 const $viewButton : ViewStyle = {padding: 16,backgroundColor: colors.neutral000, ...configs.shadow}
+const $textButton : TextStyle = {...typography.textBold, fontSize: 14, color: colors.neutral000}

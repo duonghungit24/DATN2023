@@ -53,12 +53,18 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
       <ModalCreatePlan
         type={isVisibleEventWork.type}
         isVisible={isVisibleEventWork.show}
-        onBackDropPress={() => setIsvisibleEventWork({ type: "", show: false })}
+        onBackDropPress={() => {
+          setIsvisibleEventWork({ type: "", show: false })
+          onBackDropPress()
+        }}
       />
       <ModalCreateDiary
         type={isVisibleNoteDiary.type}
         isVisible={isVisibleNoteDiary.show}
-        onBackDropPress={() => setIsvisibleNoteDiary({ type: "", show: false })}
+        onBackDropPress={() => {
+          setIsvisibleNoteDiary({ type: "", show: false })
+          onBackDropPress()
+        }}
       />
       <Header
         leftIcon="arrowleft"

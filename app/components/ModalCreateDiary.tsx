@@ -191,7 +191,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         text1: translate("taoghichu"),
       })
     }
-  //  onBackDropPress()
+  onBackDropPress()
   }
 
   return (

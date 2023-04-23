@@ -89,5 +89,6 @@ export const configs = {
     agendaKnobColor: colors.primary500,
     selectedDayBackgroundColor: colors.primary500,
     dotColor: colors.primary500,
+    arrowColor:  colors.primary500,
   }
 }

@@ -181,13 +181,14 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       title: title,
       content: content,
       time: date.toString(),
-      color: "#ff2",
+      color: "red",
       location: location,
       url: url,
       listTaskChild: listTaskChild,
       isDone: false
     }
     todoStore.addTodo(utils.displayDateCalendar(date), params)
+    onBackDropPress()
   }
 
   return (

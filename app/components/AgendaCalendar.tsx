@@ -113,7 +113,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
 
   const renderItem = (reservation: any, isFirst: boolean) => {
     return (
-      <Pressable style={[$viewItem, {borderLeftColor: reservation.color} ]} onPress={() => navigate("statisticsScreen")}>
+      <Pressable style={[$viewItem, {borderLeftColor: reservation.color} ]} onPress={() => console.log("item", reservation)}>
         <Text preset="semibold" style={$title}>
           {reservation.title}
         </Text>

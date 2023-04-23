@@ -6,7 +6,6 @@ import { AppStackScreenProps } from "../navigators"
 import { Header, ModalChoosePlan, Screen, Text } from "../components"
 import * as Calendar from 'expo-calendar';
 import moment from "moment"
-import { TopTabAnimated } from "../hooks/useTabAnimated"
 import { utils } from "../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
@@ -75,9 +74,18 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
     })();
   }, []);
 
+  console.log("data",new Date( new Date().getTime() - 60 * 60 * 1000).getMinutes() )
+  console.log("menute", new Date().getTime() - 60 * 60 * 1000)
+  console.log("dateee", new Date("2023-04-24").getTime(), new Date().getTime())
+
   console.log("gio",  moment("11:30").add(0, 'm').toDate())
   console.log("moment", moment().format())
   console.log("test",moment(moment().format()).add(5, 'm').toDate())
+  console.log("test nofi", moment("2023-04-23").format("dddd"))
+
+  const time = new Date(2023, 1, 21, 16, 0, 0)
+const fiveMinutesBefore = new Date(time.getTime() - 5 * 60 * 1000)
+console.log("five", fiveMinutesBefore, time)
 
   async function schedulePushNotification() {
     const id = await  Notifications.scheduleNotificationAsync({
@@ -97,7 +105,6 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
       // xoá hết list thông báo
   //  await  Notifications.cancelAllScheduledNotificationsAsync()
     }
-
 
 
     const getAllNotification = async() => {
@@ -134,6 +141,9 @@ export const ChangllengeScreen: FC<StackScreenProps<AppStackScreenProps, "Changl
         text1:"ok"
       })}>
           <Text>show toast</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={getAllNotification}>
+          <Text>Get all noti</Text>
       </TouchableOpacity>
      
     </Screen>

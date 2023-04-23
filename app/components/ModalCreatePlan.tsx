@@ -17,7 +17,9 @@ import { useStores } from "../models"
 import { utils } from "../utils"
 import uuid from "react-native-uuid"
 import { Button } from "./Button"
-import { t } from "i18n-js"
+import * as Notifications from "expo-notifications"
+import { toastConfig } from "../utils/toastConfigs"
+import Toast from "react-native-toast-message"
 
 export interface ModalCreatePlanProps {
   /**
@@ -34,7 +36,7 @@ export interface ModalCreatePlanProps {
  */
 export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCreatePlanProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore , todoStore} = useStores()
+  const { languageStore, todoStore, authStore } = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -174,21 +176,46 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   }, [toggleTask, listTaskChild])
 
   console.log("list", listTaskChild)
-  const onCreate = () => {
-    const params = {
-      id:  uuid.v4(),
-      idNotification:  uuid.v4(),
-      title: title,
-      content: content,
-      time: date.toString(),
-      color: "red",
-      location: location,
-      url: url,
-      listTaskChild: listTaskChild,
-      isDone: false
+  console.log("time",new Date(date.getTime() - 5 * 60 * 1000).getMinutes())
+  console.log("hour",new Date(date.getTime() - 5 * 60 * 1000).getHours())
+  console.log("date",new Date(date.getTime() - 5 * 60 * 1000))
+  const onCreate = async () => {
+    if (type == "work") {
+      const idNotification = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: title,
+          body: content,
+          sound: authStore.sound.nameSound || "",
+        },
+        trigger: {
+          // lấy time trước 5 phút
+        // date: new Date(date.getTime() - 5 * 60 * 1000),
+         date: new Date(date.getTime() - 0),
+         hour:  new Date(date.getTime() - 5 * 60 * 1000).getHours(),
+         minute: new Date(date.getTime() - 5 * 60 * 1000).getMinutes(),
+     //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
+          //  repeats: true,
+        },
+      })
+      const params = {
+        id: uuid.v4(),
+        idNotification: idNotification,
+        title: title,
+        content: content,
+        time: date.toString(),
+        color: "red",
+        location: location,
+        url: url,
+        listTaskChild: listTaskChild,
+        isDone: false,
+      }
+     todoStore.addTodo(utils.displayDateCalendar(date), params)
     }
-    todoStore.addTodo(utils.displayDateCalendar(date), params)
-    onBackDropPress()
+    utils.showToast({
+      type: "success",
+      text1: translate("taonhatky"),
+    })
+   onBackDropPress()
   }
 
   return (
@@ -215,7 +242,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           confirmTextIOS={translate("xacnhan")}
         />
         <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{zIndex: 1}}>
           <TitleAndContent
             title={title}
             content={content}
@@ -284,9 +311,10 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           </View>
         </ScrollView>
         <View style={$viewButton}>
-          <Button tx="taocongviec" textStyle={$textButton} onPress={onCreate}/>
+          <Button tx="taocongviec" textStyle={$textButton} onPress={onCreate} />
         </View>
       </View>
+      <Toast position="top" config={toastConfig} />
     </Modal>
   )
 })
@@ -340,6 +368,7 @@ export const TitleAndContent = ({ title, content, onChangeTitle, onChangeContent
 const $container: ViewStyle = {
   margin: 0,
   justifyContent: "flex-start",
+  zIndex: 1
 }
 const $viewContainer: ViewStyle = {
   marginTop: 56,
@@ -367,7 +396,6 @@ const $viewTitleContent: ViewStyle = {
   ...configs.shadow,
   marginHorizontal: 16,
   marginVertical: 16,
-  zIndex: 1,
 }
 const $wrapInput: ViewStyle = {
   borderWidth: 0,
@@ -392,5 +420,9 @@ const $textBtn: TextStyle = {
   textAlign: "center",
   fontSize: 14,
 }
-const $viewButton : ViewStyle = {padding: 16,backgroundColor: colors.neutral000, ...configs.shadow}
-const $textButton : TextStyle = {...typography.textBold, fontSize: 14, color: colors.neutral000}
+const $viewButton: ViewStyle = {
+  padding: 16,
+  backgroundColor: colors.neutral000,
+  ...configs.shadow,
+}
+const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }

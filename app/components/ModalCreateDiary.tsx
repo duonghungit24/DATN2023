@@ -207,9 +207,8 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       avoidKeyboard
       // useNativeDriver={true}
     >
-    
       <View style={$viewContainer}>
-        <Toast position="top" config={toastConfig} />
+       
         <ImageView
           images={images}
           imageIndex={indexImg}
@@ -293,6 +292,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           </View>
         </ScrollView>
       </View>
+      <Toast position="top" config={toastConfig} />
     </Modal>
   )
 })

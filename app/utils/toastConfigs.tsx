@@ -68,7 +68,7 @@ const $btnToast: ViewStyle = {
   padding: 6,
   flexDirection: "row",
   ...configs.shadow,
-  zIndex: 100
+  zIndex: 10
 }
 const $text1: TextStyle = {
   fontSize: 18,

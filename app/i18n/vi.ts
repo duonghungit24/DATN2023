@@ -51,6 +51,13 @@ const vi = {
   ketthuc: "Kết thúc",
   xoa: "Xoá",
   banCoChanXoa: "Bạn có chắc chắn muốn xoá?",
+
+  onboarding1: "Quản lý công việc, sự kiện",
+  onboarding2: "Quản lý ghi chú và nhật ký",
+  onboarding3: "Thông báo và chọn ngôn ngữ",
+  onboardingtext1: "Tạo mới, cập nhật các công việc, sự kiện, đặt thời gian nhắc nhở",
+  onboardingtext2: "Tạo ghi chú và nhật ký, viết ra những kỉ niệm và  ý tưởng của bạn",
+  onboardingtext3: "Thông báo nhắc nhở người dùng về các công việc, sự kiện sắp đến. Lựa chọn ngôn ngữ thích hợp.",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

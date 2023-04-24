@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   FlatList,
@@ -11,9 +11,8 @@ import {
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Button, Screen, Text } from "../components"
+import { Button, Header, Screen, Text } from "../components"
 import { colors } from "../theme"
-import { JumpingTransition } from "react-native-reanimated"
 import { configs } from "../utils/configs"
 import { onboarding } from "../theme/image"
 import { useStores } from "../models"
@@ -29,21 +28,21 @@ import { useStores } from "../models"
 const listOnboarding = [
   {
     id: 1,
-    title: "Manage Goals",
-    text: "Set your business strategy and achieve the goals you are aiming for",
-    image: onboarding.onboarding1
+    titleTx: "onboarding1",
+    textTx: "onboardingtext1",
+    image: onboarding.onboarding2,
   },
   {
     id: 2,
-    title: "Manage Goals2",
-    text: "Set your business strategy and achieve the goals you are aiming for",
-    image: onboarding.onboarding2
+    titleTx: "onboarding2",
+    textTx: "onboardingtext2",
+    image: onboarding.onboarding1,
   },
   {
     id: 3,
-    title: "Manage Goals3",
-    text: "Set your business strategy and achieve the goals you are aiming for",
-    image: onboarding.onboarding3
+    titleTx: "onboarding3",
+    textTx: "onboardingtext3",
+    image: onboarding.onboarding3,
   },
 ]
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
@@ -51,7 +50,7 @@ const listOnboarding = [
 export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboarding">> = observer(
   function OnboardingScreen({ navigation }) {
     // Pull in one of our MST stores
-     const { authStore } = useStores()
+    const { authStore } = useStores()
     const imgRef = useRef(null)
     const [activeIndex, setActiveIndex] = useState(0)
 
@@ -82,35 +81,52 @@ export const OnboardingScreen: FC<StackScreenProps<AppStackScreenProps, "Onboard
         setActiveIndex(activeIndex + 1)
       }
     }
+
+    const onFlatlistUpdate = useCallback(({ viewableItems }: any) => {
+      if (viewableItems.length > 0) {
+        setActiveIndex(viewableItems[0].index)
+      }
+    }, [])
+
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
+        <Header backgroundColor="transparent" />
         <FlatList
           ref={imgRef}
-          data={listOnboarding}
-          scrollEventThrottle={16}
-          keyExtractor={(_, index) => `${index}`}
-          scrollEnabled={false}
-          // onMomentumScrollEnd ={(e) => scrollToActive(Math.floor(e.nativeEvent.contentOffset.x/configs.windowWidth))}
-          renderItem={({ item, index }) => {
-            return <Image source={item.image} style={$image} />
-          }}
-          horizontal
           showsHorizontalScrollIndicator={false}
-          style={{marginHorizontal: 24}}
+          data={listOnboarding}
+          keyExtractor={(item, index) => `${index}`}
+          horizontal
+          renderItem={({ item, index }) => (
+            <View style={$itemIntro}>
+              <Image source={item.image} style={$logo} />
+              <Text preset="bold" style={$title} tx={item.titleTx} />
+
+              <Text preset="medium" style={$text} tx={item.textTx} />
+            </View>
+          )}
+          snapToAlignment={"start"}
+          snapToInterval={configs.windowWidth}
+          decelerationRate={"fast"}
+          pagingEnabled
+          viewabilityConfig={{
+            viewAreaCoveragePercentThreshold: 50,
+          }}
+          onViewableItemsChanged={onFlatlistUpdate}
         />
-         <View style={{bottom: configs.windowHeight / 3}}>
-            <Text preset="bold"  style={$title}>{listOnboarding[activeIndex].title}</Text>
-            <Text preset="medium" style={$text}>{listOnboarding[activeIndex].text}</Text>
-          </View>
         <View style={$viewBtn}>
-          <View style={{ flexDirection: "row"}}>
+          <View style={{ flexDirection: "row" }}>
             {listOnboarding.map((_, index) => {
               return <View key={index} style={index == activeIndex ? $activeDot : $nonActiveDot} />
             })}
           </View>
           <TouchableOpacity onPress={onPressActiveIndex} style={$btn} activeOpacity={0.8}>
-            <Text tx={activeIndex == listOnboarding.length - 1 ? "batdau" : "tieptuc"} style={$textBtn}/>
+            <Text
+              preset="bold"
+              tx={activeIndex == listOnboarding.length - 1 ? "batdau" : "tieptuc"}
+              style={$textBtn}
+            />
           </TouchableOpacity>
         </View>
       </Screen>
@@ -123,6 +139,16 @@ const $root: ViewStyle = {
   backgroundColor: colors.neutral000,
   alignItems: "flex-start",
 }
+const $itemIntro: ViewStyle = {
+  width: configs.windowWidth,
+  alignItems: "center",
+}
+const $logo: ImageStyle = {
+  width: "100%",
+  height: 280,
+  resizeMode: "contain",
+}
+
 const $image: ImageStyle = {
   width: configs.windowWidth - 48,
   height: configs.windowHeight / 2.5,
@@ -133,7 +159,7 @@ const $title: TextStyle = {
   fontSize: 20,
   color: colors.neutral900,
   marginTop: 20,
-  textAlign: 'center'
+  textAlign: "center",
 }
 const $viewBtn: ViewStyle = {
   position: "absolute",
@@ -170,10 +196,10 @@ const $text: TextStyle = {
   color: colors.neutral600,
   fontSize: 14,
   paddingHorizontal: 24,
-  textAlign: 'center',
-  marginTop: 4
+  textAlign: "center",
+  marginTop: 4,
 }
-const $textBtn : TextStyle = {
-  color : colors.neutral000,
+const $textBtn: TextStyle = {
+  color: colors.neutral000,
   fontSize: 14,
 }

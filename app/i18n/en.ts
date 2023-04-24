@@ -43,6 +43,13 @@ const en = {
   tatca: 'Tất cả nhiệm vụ',
   homnay: "Hôm nay",
   placeholderTask: "Tìm kiếm nhiệm vụ",
+
+  onboarding1: "Manage Tasks, Events",
+  onboarding2: "Manage Notes and Diaries",
+  onboarding3:"Notification and choose language",
+  onboardingtext1:"Create new, update Tasks, Events, set reminder time",
+  onboardingtext2: "Make Notes and Diaries, write down your memories and ideas",
+  onboardingtext3: "Notifications remind users of upcoming Task and Events. Select the appropriate language.",
   common: {
     ok: "OK!",
     cancel: "Cancel",

@@ -5,6 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../../navigators"
 import { AgendaCalendar, Header, Screen, Text } from "../../components"
 import { colors, typography } from "../../theme"
+import { utils } from "../../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -21,7 +22,7 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
   function TodoScreen() {
     // Pull in one of our MST stores
     // const { someStore, anotherStore } = useStores()
-    const [dateSelect, setDateSelect] = useState(null)
+    const [dateSelect, setDateSelect] = useState(utils.displayDate(new Date()))
 
     // Pull in navigation via hook
     // const navigation = useNavigation()

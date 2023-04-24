@@ -15,6 +15,7 @@ import {
   CalendarUtils,
 } from "react-native-calendars"
 import groupBy from "lodash/groupBy"
+import { configs } from "../../utils/configs"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -98,7 +99,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
         eventTitle: { color: "white" },
         eventSummary: { color: "white", paddingTop: 4 },
         calendarBackground: colors.neutral100,
-      
+        agendaKnobColor: "red"
       },
       //  renderEvent: (event) => <View style={{height: event.height, top: 0, width: event.width, backgroundColor: "red", padding: 0}}><Text>okk</Text></View>
     }
@@ -111,8 +112,10 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
           date={getDate()}
           // onDateChanged={this.onDateChanged}
           // onMonthChange={this.onMonthChange}
-          disabledOpacity={0.6}
+        //  disabledOpacity={0.6}
           // numberOfDays={3}
+        theme={{agendaKnobColor:"red" }}
+        
         >
           <ExpandableCalendar
             firstDay={1}
@@ -128,6 +131,8 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
               },
             }}
             markingType="multi-dot"
+            theme={configs.THEME}  
+            hideKnob={false}
           />
           <TimelineList
             events={eventsByDate}

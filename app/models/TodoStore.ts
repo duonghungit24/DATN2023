@@ -2,6 +2,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListTodoStoreModel } from "./ListTodoStore"
 import moment from "moment"
+import { utils } from "../utils"
 
 /**
  * Model description here for TypeScript hints.
@@ -42,6 +43,25 @@ export const TodoStoreModel = types
         data[key] = sortData.slice()
       })
       return data
+    },
+    getCountAllTask : () => {
+
+    },
+    getCountTaskNow: () => {
+      let countNow = 0
+      let countAll = 0
+      const date = utils.displayDateCalendar(new Date())
+      self.todoMap.forEach((value, key) => {
+          countAll += value.length
+      })
+      if(self.todoMap.has(date))
+      {
+        countNow = self.todoMap.get(date).length
+      }
+      return {
+        numberTaskAll: countAll,
+        numberTaskNow: countNow
+      }
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

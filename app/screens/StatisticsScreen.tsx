@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -8,6 +8,7 @@ import { colors } from "../theme"
 import { BarChart, PieChart } from "react-native-chart-kit"
 import { configs } from "../utils/configs"
 import { translate } from "../i18n"
+import { useStores } from "../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -23,10 +24,14 @@ import { translate } from "../i18n"
 export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statistics">> = observer(
   function StatisticsScreen() {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+    const { todoStore } = useStores()
+    const [countTask, setCountTask] = useState<any>({})
 
-    // Pull in navigation via hook
-    // const navigation = useNavigation()
+    useEffect(() => {
+      setCountTask(todoStore.getCountTaskNow())
+      console.log("ok", todoStore.getCountTaskNow())
+    },[todoStore.isRefreshTodo])
+    
     return (
       <Screen style={$root} preset="fixed">
         <Header
@@ -89,9 +94,9 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
               />
             </View>
             <View style={{ flexDirection: "row", marginTop: 16 }}>
-              <ItemOverview labelTx="tatca" numTx="soluongnv" num={10} />
+              <ItemOverview labelTx="tatca" numTx="soluongnv" num={countTask.numberTaskAll} />
               <View style={{ width: 16 }} />
-              <ItemOverview labelTx="homnay" numTx="soluongnv" num={20} />
+              <ItemOverview labelTx="homnay" numTx="soluongnv" num={countTask.numberTaskNow} />
             </View>
           </View>
         </ScrollView>

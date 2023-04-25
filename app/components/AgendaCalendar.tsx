@@ -1,4 +1,4 @@
-import  React , {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import { Pressable, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
@@ -101,19 +101,27 @@ LocaleConfig.locales["en"] = hourPickerLocales["en"]
 LocaleConfig.locales["ja"] = hourPickerLocales["ja"]
 LocaleConfig.locales["ko"] = hourPickerLocales["ko"]
 export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCalendarProps) {
-  const { style , onPressDate} = props
-  const { languageStore , todoStore} = useStores()
+  const { style, onPressDate } = props
+  const { languageStore, todoStore } = useStores()
   const $styles = [$container, style]
   LocaleConfig.defaultLocale = languageStore.language
   const [listTask, setListTask] = useState({})
 
   useEffect(() => {
-      setListTask(todoStore.getListTodo())
+    setListTask(todoStore.getListTodo())
   }, [todoStore.isRefreshTodo])
+
+  console.log("lít", todoStore.todoMap)
 
   const renderItem = (reservation: any, isFirst: boolean) => {
     return (
-      <Pressable style={[$viewItem, {borderLeftColor: reservation.color} ]} onPress={() => console.log("item", reservation)}>
+      <Pressable
+        style={[$viewItem, { borderLeftColor: reservation.color }]}
+        onPress={() => {
+          console.log("item", reservation)
+          navigate("statisticsScreen")
+        }}
+      >
         <Text preset="semibold" style={$title}>
           {reservation.title}
         </Text>

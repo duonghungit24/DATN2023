@@ -36,7 +36,7 @@ export interface ModalCreatePlanProps {
  */
 export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCreatePlanProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore, todoStore, authStore } = useStores()
+  const { languageStore, todoStore, authStore , eventStore} = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -44,42 +44,88 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
   const [date, setDate] = useState(new Date())
+  const [dateStart, setDateStart] = useState(new Date())
+  const [dateEnd, setDateEnd] = useState(new Date())
   const [listTaskChild, setListTaskChild] = useState([])
 
   const [toggleReminder, setToggleReminder] = useState(false)
   const [toggleCountDown, setToggleCountDown] = useState(false)
   const [toggleTime, setToggleTime] = useState(false)
   const [toggleTask, setToggleTask] = useState(false)
-  const [isVisibleDate, setIsvisibleDate] = useState(false)
+  const [isVisibleDate, setIsvisibleDate] = useState({ type: "", show: false })
 
   const onConfirmDate = (value) => {
     console.log("value", value)
-    setDate(value)
-    setIsvisibleDate(false)
-    console.log("date", date)
+    if (isVisibleDate.type) {
+      if (isVisibleDate.type == "start") {
+        setDateStart(value)
+      } else if (isVisibleDate.type == "end") {
+        setDateEnd(value)
+      }
+    } else {
+      setDate(value)
+    }
+    setIsvisibleDate({ type: "", show: false })
   }
+
+  console.log("dateend", dateEnd)
 
   const showStartEndDate = useMemo(() => {
     return (
       <View style={$viewChild}>
-        <TextField
-          value={utils.displayDateHour(date)}
-          LeftAccessory={() => (
-            <LeftAccesstory
-              typeIcon="AntDesign"
-              nameIcon="calendar"
-              colorIcon={colors.primary500}
+        {type == "work" ? (
+          <TextField
+            value={utils.displayDateHour(date)}
+            LeftAccessory={() => (
+              <LeftAccesstory
+                typeIcon="AntDesign"
+                nameIcon="calendar"
+                colorIcon={colors.primary500}
+              />
+            )}
+            placeholderTx="batdau"
+            inputWrapperStyle={$wrapInput}
+            clearButtonMode="while-editing"
+            editable={false}
+            onPressIn={() => setIsvisibleDate({ type: "", show: true })}
+          />
+        ) : (
+          <>
+            <TextField
+              value={utils.displayDateHour(dateStart)}
+              LeftAccessory={() => (
+                <LeftAccesstory
+                  typeIcon="AntDesign"
+                  nameIcon="arrowright"
+                  colorIcon={colors.primary500}
+                />
+              )}
+              placeholderTx="batdau"
+              inputWrapperStyle={$wrapInput}
+              clearButtonMode="while-editing"
+              onPressIn={() => setIsvisibleDate({ type: "start", show: true })}
+              editable={false}
             />
-          )}
-          placeholderTx="batdau"
-          inputWrapperStyle={$wrapInput}
-          clearButtonMode="while-editing"
-          editable={false}
-          onPressIn={() => setIsvisibleDate(true)}
-        />
+            <TextField
+              value={utils.displayDateHour(dateEnd)}
+              LeftAccessory={() => (
+                <LeftAccesstory
+                  typeIcon="AntDesign"
+                  nameIcon="arrowleft"
+                  colorIcon={colors.primary500}
+                />
+              )}
+              placeholderTx="ketthuc"
+              inputWrapperStyle={$wrapInput}
+              clearButtonMode="while-editing"
+              onPressIn={() => setIsvisibleDate({ type: "end", show: true })}
+              editable={false}
+            />
+          </>
+        )}
       </View>
     )
-  }, [toggleTime, date])
+  }, [toggleTime, date, dateStart, dateEnd])
 
   const showReminder = useMemo(() => {
     return (
@@ -176,9 +222,9 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   }, [toggleTask, listTaskChild])
 
   console.log("list", listTaskChild)
-  console.log("time",new Date(date.getTime() - 5 * 60 * 1000).getMinutes())
-  console.log("hour",new Date(date.getTime() - 5 * 60 * 1000).getHours())
-  console.log("date",new Date(date.getTime() - 5 * 60 * 1000))
+  console.log("time", new Date(date.getTime() - 5 * 60 * 1000).getMinutes())
+  console.log("hour", new Date(date.getTime() - 5 * 60 * 1000).getHours())
+  console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
   const onCreate = async () => {
     if (type == "work") {
       const idNotification = await Notifications.scheduleNotificationAsync({
@@ -189,11 +235,11 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         },
         trigger: {
           // lấy time trước 5 phút
-        // date: new Date(date.getTime() - 5 * 60 * 1000),
-         date: new Date(date.getTime() - 0),
-         hour:  new Date(date.getTime() - 5 * 60 * 1000).getHours(),
-         minute: new Date(date.getTime() - 5 * 60 * 1000).getMinutes(),
-     //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
+          // date: new Date(date.getTime() - 5 * 60 * 1000),
+          date: new Date(date.getTime() - 0),
+          hour: new Date(date.getTime() - 5 * 60 * 1000).getHours(),
+          minute: new Date(date.getTime() - 5 * 60 * 1000).getMinutes(),
+          //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
           //  repeats: true,
         },
       })
@@ -209,13 +255,44 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         listTaskChild: listTaskChild,
         isDone: false,
       }
-     todoStore.addTodo(utils.displayDateCalendar(date), params)
+      todoStore.addTodo(utils.displayDateCalendar(date), params)
     }
-    utils.showToast({
-      type: "success",
-      text1: translate("taonhatky"),
-    })
-   onBackDropPress()
+    else if(type == "event")
+    {
+      const idNotification = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: title,
+          body: content,
+          sound: authStore.sound.nameSound || "",
+        },
+        trigger: {
+          // lấy time trước 5 phút
+          // date: new Date(date.getTime() - 5 * 60 * 1000),
+          date: new Date(dateStart.getTime() - 0),
+          hour: new Date(dateStart.getTime() - 5 * 60 * 1000).getHours(),
+          minute: new Date(dateStart.getTime() - 5 * 60 * 1000).getMinutes(),
+          //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
+          //  repeats: true,
+        },
+      })
+      const params = {
+        id: uuid.v4(),
+        idNotification: idNotification,
+        title: title,
+        content: content,
+        timeStart: dateStart.toString(),
+        timeEnd: dateEnd.toString(),
+        color: "blue" ,
+        location: location,
+        url: url,
+      }
+      eventStore.addEvent(params)
+    }
+    // utils.showToast({
+    //   type: "success",
+    //   text1: translate("taonhatky"),
+    // })
+    onBackDropPress()
   }
 
   return (
@@ -234,15 +311,15 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         <DateTimePickerModal
           date={date}
           locale={languageStore.language}
-          isVisible={isVisibleDate}
+          isVisible={isVisibleDate.show}
           mode="datetime"
           onConfirm={onConfirmDate}
-          onCancel={() => setIsvisibleDate(false)}
+          onCancel={() => setIsvisibleDate({ type: "", show: false })}
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
         <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{zIndex: 1}}>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ zIndex: 1 }}>
           <TitleAndContent
             title={title}
             content={content}
@@ -311,7 +388,11 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           </View>
         </ScrollView>
         <View style={$viewButton}>
-          <Button tx="taocongviec" textStyle={$textButton} onPress={onCreate} />
+          <Button
+            tx={type == "work" ? "taocongviec" : "taosukienbtn"}
+            textStyle={$textButton}
+            onPress={onCreate}
+          />
         </View>
       </View>
       <Toast position="top" config={toastConfig} />
@@ -368,7 +449,7 @@ export const TitleAndContent = ({ title, content, onChangeTitle, onChangeContent
 const $container: ViewStyle = {
   margin: 0,
   justifyContent: "flex-start",
-  zIndex: 1
+  zIndex: 1,
 }
 const $viewContainer: ViewStyle = {
   marginTop: 56,

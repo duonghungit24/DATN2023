@@ -58,6 +58,9 @@ const vi = {
   onboardingtext1: "Tạo mới, cập nhật các công việc, sự kiện, đặt thời gian nhắc nhở",
   onboardingtext2: "Tạo ghi chú và nhật ký, viết ra những kỉ niệm và  ý tưởng của bạn",
   onboardingtext3: "Thông báo nhắc nhở người dùng về các công việc, sự kiện sắp đến. Lựa chọn ngôn ngữ thích hợp.",
+  taosukienbtn: "Tạo sự kiện",
+  taoghichubtn: "Tạo ghi chú",
+  taonhatkybtn: "Tạo nhật ký",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

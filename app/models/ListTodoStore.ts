@@ -10,19 +10,6 @@ const TaskChild = types.model({
   isDone: types.optional(types.maybeNull(types.boolean), false),
 })
 
-const TodoItemModel = types.model({
-  id: types.maybeNull(types.string),
-  idNotification: types.maybeNull(types.string),
-  title: types.maybeNull(types.string),
-  content: types.maybeNull(types.string),
-  time: types.maybeNull(types.string),
-  color: types.maybeNull(types.string),
-  location: types.maybeNull(types.string),
-  url: types.maybeNull(types.string),
-  listTaskChild: types.optional(types.array(TaskChild), []),
-  isDone: types.optional(types.maybeNull(types.boolean), false),
-})
-
 export const ListTodoStoreModel = types
   .model("ListTodoStore")
   .props({

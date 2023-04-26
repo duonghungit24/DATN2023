@@ -27,6 +27,7 @@ import ImageView from "react-native-image-viewing"
 import uuid from "react-native-uuid"
 import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
+import { Button } from "./Button"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -108,7 +109,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       <>
         <TextField
           LeftAccessory={() => (
-            <LeftAccesstory typeIcon="AntDesign" nameIcon="calendar" colorIcon={colors.primary500} />
+            <LeftAccesstory
+              typeIcon="AntDesign"
+              nameIcon="calendar"
+              colorIcon={colors.primary500}
+            />
           )}
           value={utils.displayDate(date)}
           inputWrapperStyle={$wrapInput}
@@ -191,7 +196,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         text1: translate("taoghichu"),
       })
     }
-  onBackDropPress()
+    onBackDropPress()
   }
 
   return (
@@ -208,7 +213,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       // useNativeDriver={true}
     >
       <View style={$viewContainer}>
-       
         <ImageView
           images={images}
           imageIndex={indexImg}
@@ -225,7 +229,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
-       
+
         <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={onCreate} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -239,7 +243,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             <View style={$viewToggle}>
               <TextField
                 LeftAccessory={() => (
-                  <LeftAccesstory typeIcon="Ionicons" nameIcon="ios-today" colorIcon={colors.primary500} />
+                  <LeftAccesstory
+                    typeIcon="Ionicons"
+                    nameIcon="ios-today"
+                    colorIcon={colors.primary500}
+                  />
                 )}
                 placeholderTx="thoigian"
                 inputWrapperStyle={$wrapInput}
@@ -291,6 +299,9 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             {DisplayImage}
           </View>
         </ScrollView>
+        <View style={$viewButton}>
+          <Button tx={type == "note" ? "taoghichubtn" : "taonhatkybtn"} textStyle={$textButton} onPress={onCreate} />
+        </View>
       </View>
       <Toast position="top" config={toastConfig} />
     </Modal>
@@ -393,7 +404,7 @@ const $viewContainer: ViewStyle = {
   flex: 1,
   borderTopLeftRadius: 12,
   borderTopRightRadius: 12,
-  zIndex: 1
+  zIndex: 1,
 }
 const $viewTitleContent: ViewStyle = {
   backgroundColor: colors.neutral000,
@@ -404,7 +415,7 @@ const $viewTitleContent: ViewStyle = {
   marginHorizontal: 16,
   marginTop: 16,
   height: configs.windowHeight / 3,
-  zIndex:1
+  zIndex: 1,
 }
 const $wrapInput: ViewStyle = {
   borderWidth: 0,
@@ -477,3 +488,9 @@ const $viewCircleAtive: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
 }
+const $viewButton: ViewStyle = {
+  padding: 16,
+  backgroundColor: colors.neutral000,
+  ...configs.shadow,
+}
+const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }

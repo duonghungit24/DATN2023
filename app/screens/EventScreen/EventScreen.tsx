@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ScrollView, ViewStyle, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -16,6 +16,8 @@ import {
 } from "react-native-calendars"
 import groupBy from "lodash/groupBy"
 import { configs } from "../../utils/configs"
+import { useStores } from "../../models"
+import { utils } from "../../utils"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -31,16 +33,25 @@ import { configs } from "../../utils/configs"
 export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = observer(
   function EventScreen() {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+     const { eventStore } = useStores()
+    const [listEvents, setListEvents] = useState([])
+
     const INITIAL_TIME = { hour: 9, minutes: 0 }
     const EVENT_COLOR = "#e6add8"
     const getDate = (offset = 0) =>
       CalendarUtils.getCalendarDateString(new Date().setDate(new Date().getDate() + offset))
     console.log("date", getDate(1))
+    console.log("new date", new Date().toISOString())
+
+    useEffect(() => {
+      console.log("listeve", eventStore.getListEvents())
+      setListEvents(eventStore.listEvents)
+    },[eventStore.refreshEvent])
+
     const EVENTS = [
       {
-        start: `${getDate(-1)} 09:20`,
-        end: `${getDate(-1)} 09:50`,
+        start: `${new Date().toISOString()}`,
+        end: `${new Date().toISOString()}`,
         title: "Merge Request to React Native Calendars",
         summary: "Merge Timeline Calendar to React Native Calendars",
         hello: true,
@@ -75,11 +86,12 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
         color: EVENT_COLOR,
       },
     ]
-    const eventsByDate = groupBy(EVENTS, (e) => CalendarUtils.getCalendarDateString(e.start)) as {
+    const eventsByDate = groupBy(listEvents, (e) => utils.displayDateCalendar(e.start)) as {
       [key: string]: TimelineEventProps[]
     }
 
     console.log("group", CalendarUtils.getCalendarDateString(new Date()))
+    console.log("even", eventsByDate)
     const timelineProps: Partial<TimelineProps> = {
       format24h: true,
       // onBackgroundLongPress: this.createNewEvent,

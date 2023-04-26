@@ -44,7 +44,7 @@ export const TodoStoreModel = types
       })
       return data
     },
-    getCountAllTask : () => {
+    getOverview: () => {
 
     },
     getCountTaskNow: () => {

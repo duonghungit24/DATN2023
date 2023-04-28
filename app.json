@@ -54,7 +54,7 @@
       [
         "expo-notifications",
         {
-          "sounds": ["./assets/sounds/clockAlarm.wav"]
+          "sounds": ["./assets/sounds/bipbip.wav"]
         }
       ]
     ]

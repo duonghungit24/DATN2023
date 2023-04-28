@@ -88,19 +88,27 @@ const fiveMinutesBefore = new Date(time.getTime() - 5 * 60 * 1000)
 console.log("five", fiveMinutesBefore, time)
 
   async function schedulePushNotification() {
-    const id = await  Notifications.scheduleNotificationAsync({
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+      sound: "bipbip.wav"
+    });
+   await Notifications.scheduleNotificationAsync({
         content: {
           title: "Time's up!",
           body: "Change sides!",
-          sound: authStore.sound.nameSound || ""
+          sound:  authStore.sound.nameSound || ""
         },
         trigger: {
           seconds: 2,
         //  repeats: true,
+        channelId: 'default',
         },
       })
 
-      console.log("id", id)
+     // console.log("id", id)
 
       // xoá hết list thông báo
   //  await  Notifications.cancelAllScheduledNotificationsAsync()

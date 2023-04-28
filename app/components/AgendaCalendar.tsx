@@ -137,6 +137,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         key={languageStore.language}
         items={listTask}
         renderItem={renderItem}
+        date={new Date().toISOString()}
         selected={utils.displayDateCalendar(new Date())}
         // Callback that gets called when items for a certain month should be loaded (month became visible)
         // loadItemsForMonth={(month) => {

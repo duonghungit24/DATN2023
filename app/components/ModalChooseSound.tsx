@@ -37,13 +37,13 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "Clock Alarm",
-    source: require("../../assets/sounds/clockAlarm.wav"),
-    nameSound: "clockAlarm.wav",
+    source: require("../../assets/sounds/clockalarm.wav"),
+    nameSound: "clockalarm.wav",
   },
   {
     nameDisplay: "Quân đội",
-    source: require("../../assets/sounds/quanDoi.wav"),
-    nameSound: "quanDoi.wav",
+    source: require("../../assets/sounds/quandoi.wav"),
+    nameSound: "quandoi.wav",
   },
   {
     nameDisplay: "Bip bip",
@@ -52,8 +52,8 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "End hour",
-    source: require("../../assets/sounds/endHour.wav"),
-    nameSound: "endHour.wav",
+    source: require("../../assets/sounds/endhour.wav"),
+    nameSound: "endhour.wav",
   },
   {
     nameDisplay: "Chiu chiu",
@@ -62,7 +62,7 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "Ring tone",
-    source: require("../../assets/sounds/ringTone.wav"),
+    source: require("../../assets/sounds/ringtone.wav"),
     nameSound: "ringTone.wav",
   },
   {
@@ -77,8 +77,8 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "Alarm reo",
-    source: require("../../assets/sounds/alarmReo.wav"),
-    nameSound: "alarmReo.wav",
+    source: require("../../assets/sounds/alarmreo.wav"),
+    nameSound: "alarmreo.wav",
   },
   {
     nameDisplay: "Error",

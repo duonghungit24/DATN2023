@@ -231,7 +231,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         content: {
           title: title,
           body: content,
-          sound: authStore.sound.nameSound || "",
+          sound: authStore.sound.nameSound ||  "",
         },
         trigger: {
           // lấy time trước 5 phút
@@ -240,7 +240,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           hour: new Date(date.getTime() - 5 * 60 * 1000).getHours(),
           minute: new Date(date.getTime() - 5 * 60 * 1000).getMinutes(),
           //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
-          //  repeats: true,
+          //  repeats: true,,
         },
       })
       const params = {

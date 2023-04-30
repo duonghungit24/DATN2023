@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from "react-native"
 import { observer } from "mobx-react-lite"
-import { colors, typography } from "../theme"
+import { colors, colorsDefault, typography } from "../theme"
 import { Text } from "./Text"
 import Modal from "react-native-modal"
 import { HeaderCreate, TitleAndContent } from "./ModalCreatePlan"
@@ -28,6 +28,7 @@ import uuid from "react-native-uuid"
 import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { Button } from "./Button"
+import { CustomColor } from "./CustomColor"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -56,6 +57,9 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
   const [date, setDate] = useState(new Date())
+
+  const [color, setColor] = useState(colorsDefault[0])
+  const [listColor, setListColor] = useState(colorsDefault)
 
   const [toggleDate, setToggleDate] = useState(false)
   const [togglePin, setTogglePin] = useState(false)
@@ -166,7 +170,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         time: date.toString(),
         emoji: "",
         isPin: togglePin,
-        color: "#5d6700",
+        color: color,
         location: location,
         url: url,
         images: images,
@@ -184,7 +188,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         time: date.toString(),
         emoji: "",
         isPin: togglePin,
-        color: "#5d6700",
+        color: color,
         location: location,
         url: url,
         listImg: images,
@@ -236,9 +240,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           contentContainerStyle={{ paddingBottom: 20 }}
         >
           {showHeaderCreate}
-          <View style={[$viewTitleContent, { height: 100 }]}>
-            <Text preset="bold" tx="bieutuongcamxuc" style={$textEmoji} />
-          </View>
+          {type == "diary" ? (
+            <View style={[$viewTitleContent, { height: 100 }]}>
+              <Text preset="bold" tx="bieutuongcamxuc" style={$textEmoji} />
+            </View>
+          ) : null}
           <View style={[$viewTitleContent, { height: null }]}>
             <View style={$viewToggle}>
               <TextField
@@ -263,10 +269,10 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               />
             </View>
             {toggleDate && showToggleDate}
-            <View style={$viewToggle}>
+            {/* <View style={$viewToggle}>
               <TextField
                 LeftAccessory={() => (
-                  <LeftAccesstory typeIcon="Entypo" nameIcon="pin" colorIcon="red" />
+                  <LeftAccesstory typeIcon="Entypo" nameIcon="pin" colorIcon={colors.primary500} />
                 )}
                 placeholderTx="ghim"
                 inputWrapperStyle={$wrapInput}
@@ -274,12 +280,16 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
                 editable={false}
               />
               <Toggle variant="switch" value={togglePin} onPress={() => setTogglePin(!togglePin)} />
-            </View>
-            <CustomColor />
+            </View> */}
+            <CustomColor color={color} listColor={listColor} onPressColor={setColor} onPressCustom={() => {}} />
             <TextField
               value={location}
               LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Ionicons" nameIcon="location-sharp" colorIcon="red" />
+                <LeftAccesstory
+                  typeIcon="Ionicons"
+                  nameIcon="location-sharp"
+                  colorIcon={colors.primary500}
+                />
               )}
               placeholderTx="vitri"
               onChangeText={setLocation}
@@ -289,7 +299,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
             <TextField
               value={url}
               LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Entypo" nameIcon="link" colorIcon="red" />
+                <LeftAccesstory typeIcon="Entypo" nameIcon="link" colorIcon={colors.primary500} />
               )}
               placeholder="URL"
               inputWrapperStyle={$wrapInput}
@@ -300,7 +310,11 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           </View>
         </ScrollView>
         <View style={$viewButton}>
-          <Button tx={type == "note" ? "taoghichubtn" : "taonhatkybtn"} textStyle={$textButton} onPress={onCreate} />
+          <Button
+            tx={type == "note" ? "taoghichubtn" : "taonhatkybtn"}
+            textStyle={$textButton}
+            onPress={onCreate}
+          />
         </View>
       </View>
       <Toast position="top" config={toastConfig} />
@@ -315,7 +329,13 @@ export const LeftAccesstory = ({ typeIcon, nameIcon, colorIcon }: any) => {
 const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }: any) => {
   return (
     <View style={$viewRowImg}>
-      <VectorsIcon type="Feather" name="image" color="red" size={20} style={{ marginRight: 12 }} />
+      <VectorsIcon
+        type="Feather"
+        name="image"
+        color={colors.primary500}
+        size={20}
+        style={{ marginRight: 12 }}
+      />
       {dataImages.length > 0
         ? dataImages.map((el, index) => {
             return (
@@ -341,55 +361,6 @@ const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }
       <TouchableOpacity style={[$viewBtnImg, $viewAddImg]} onPress={onPressAdd}>
         <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
       </TouchableOpacity>
-    </View>
-  )
-}
-
-const CustomColor = ({ colorIcon, onPressSelectCustom, onPressColor }) => {
-  const [color, setColor] = useState(1)
-
-  return (
-    <View>
-      <TextField
-        LeftAccessory={() => (
-          <LeftAccesstory typeIcon="MaterialIcons" nameIcon="color-lens" colorIcon="red" />
-        )}
-        placeholderTx="tuychon"
-        inputWrapperStyle={$wrapInput}
-        containerStyle={{ flex: 1 }}
-        style={{ ...typography.textBold }}
-        placeholderTextColor={colors.neutral900}
-        editable={false}
-        onPressIn={onPressSelectCustom}
-        RightAccessory={() => (
-          <LeftAccesstory
-            typeIcon="Feather"
-            nameIcon="chevron-right"
-            colorIcon={colors.neutral500}
-          />
-        )}
-      />
-      <View style={$viewRowColor}>
-        {[1, 2, 3, 4, 5, 6].map((el, index) => {
-          const $colorSelect =
-            color == el
-              ? [$viewCircleAtive, { borderColor: "red", borderWidth: 2 }]
-              : $viewCircleAtive
-          return (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={1}
-              onPress={() => {
-                onPressColor
-                setColor(el)
-              }}
-              style={$colorSelect}
-            >
-              <View style={[$viewColor, { backgroundColor: "blue" }]} />
-            </TouchableOpacity>
-          )
-        })}
-      </View>
     </View>
   )
 }

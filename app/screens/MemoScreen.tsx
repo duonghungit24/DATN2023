@@ -105,7 +105,7 @@ const ListItem = ({ item, index, animation, navigation, onDelete }: any) => {
             <VectorsIcon type="MaterialIcons" name="delete" size={20} color={colors.accent500} />
           </TouchableOpacity>
         </View>
-        <View style={$viewDate}>
+        <View style={[$viewDate, {backgroundColor : item.color}]}>
           <Text preset="medium" style={$textDate}>
             {utils.displayDateHour(item.time)}
           </Text>
@@ -146,5 +146,5 @@ const $viewDate: ViewStyle = {
   alignItems: "center",
 }
 const $textDate: TextStyle = {
-  color: colors.primary500,
+  color: colors.neutral000,
 }

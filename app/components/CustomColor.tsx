@@ -13,20 +13,21 @@ export interface CustomColorProps {
   style?: StyleProp<ViewStyle>
   onPressCustom: () => void
   onPressColor: (value) => void
+  listColor:  any
+  color: string
 }
 
 /**
  * Describe your component here
  */
 export const CustomColor = observer(function CustomColor(props: CustomColorProps) {
-  const { style, onPressCustom, onPressColor } = props
+  const { style, onPressCustom, onPressColor , listColor = [], color} = props
   const $styles = [$container, style]
-  const [color, setColor] = useState(1)
   return (
     <View style={$styles}>
       <TextField
         LeftAccessory={() => (
-          <LeftAccesstory typeIcon="MaterialIcons" nameIcon="color-lens" colorIcon="red" />
+          <LeftAccesstory typeIcon="MaterialIcons" nameIcon="color-lens" colorIcon={colors.primary500} />
         )}
         placeholderTx="tuychon"
         inputWrapperStyle={$wrapInput}
@@ -44,22 +45,21 @@ export const CustomColor = observer(function CustomColor(props: CustomColorProps
         )}
       />
       <View style={$viewRowColor}>
-        {[1, 2, 3, 4, 5, 6].map((el, index) => {
+        {listColor.map((el, index) => {
           const $colorSelect =
             color == el
-              ? [$viewCircleAtive, { borderColor: "red", borderWidth: 2 }]
+              ? [$viewCircleAtive, { borderColor: colors.primary500, borderWidth: 2 }]
               : $viewCircleAtive
           return (
             <TouchableOpacity
               key={index}
               activeOpacity={1}
               onPress={() => {
-                onPressColor
-                setColor(el)
+                onPressColor(el)
               }}
               style={$colorSelect}
             >
-              <View style={[$viewColor, { backgroundColor: "blue" }]} />
+              <View style={[$viewColor, { backgroundColor: el }]} />
             </TouchableOpacity>
           )
         })}

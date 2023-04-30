@@ -1,7 +1,7 @@
 import React, { useMemo, useReducer, useState } from "react"
 import { ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { colors, typography } from "../theme"
+import { colors, colorsDefault, typography } from "../theme"
 import { Text } from "./Text"
 import Modal from "react-native-modal"
 import { VectorsIcon } from "./Vectoricon"
@@ -47,6 +47,9 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   const [dateStart, setDateStart] = useState(new Date())
   const [dateEnd, setDateEnd] = useState(new Date())
   const [listTaskChild, setListTaskChild] = useState([])
+
+  const [color, setColor] = useState(colorsDefault[0])
+  const [listColor, setListColor] = useState(colorsDefault)
 
   const [toggleReminder, setToggleReminder] = useState(false)
   const [toggleCountDown, setToggleCountDown] = useState(false)
@@ -249,7 +252,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         title: title,
         content: content,
         time: date.toString(),
-        color: "red",
+        color: color,
         location: location,
         url: url,
         listTaskChild: listTaskChild,
@@ -282,7 +285,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         content: content,
         timeStart: dateStart.toString(),
         timeEnd: dateEnd.toString(),
-        color: "blue" ,
+        color: color,
         location: location,
         url: url,
       }
@@ -343,7 +346,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
               onChangeToggle={() => setToggleReminder(!toggleReminder)}
             />
             {toggleReminder && showReminder}
-            <CustomColor onPressColor={() => {}} onPressCustom={() => {}} />
+            <CustomColor color={color} listColor={listColor} onPressColor={setColor} onPressCustom={() => {}} />
             {type == "work" ? (
               <>
                 <HeaderSwitch
@@ -359,7 +362,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
             <TextField
               value={location}
               LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Ionicons" nameIcon="location-sharp" colorIcon="red" />
+                <LeftAccesstory typeIcon="Ionicons" nameIcon="location-sharp" colorIcon={colors.primary500} />
               )}
               placeholderTx="vitri"
               onChangeText={setLocation}
@@ -369,7 +372,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
             <TextField
               value={url}
               LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Entypo" nameIcon="link" colorIcon="red" />
+                <LeftAccesstory typeIcon="Entypo" nameIcon="link" colorIcon={colors.primary500} />
               )}
               placeholder="URL"
               inputWrapperStyle={$wrapInput}

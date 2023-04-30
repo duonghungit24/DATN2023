@@ -104,6 +104,12 @@ export const colorRandomItem = [
   'skyblue',
   '#ff4c98',
 ]
-export const listColor = [
-  
+
+export const  colorsDefault = [
+  '#F97B22',
+  '#F2B6A0',
+  '#9CA777',
+  '#088395',
+  '#FF6969',
+  '#6DA9E4'
 ]

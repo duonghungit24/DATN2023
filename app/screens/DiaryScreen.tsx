@@ -145,12 +145,6 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             ListEmptyComponent={<ListEmpty />}
           />
         </CalendarProvider>
-        {/* <FlatList
-          data={[1, 2, 3, 4]}
-          renderItem={({ item }) => {
-            return <ItemDiary />
-          }}
-        /> */}
       </Screen>
     )
   },
@@ -177,8 +171,8 @@ const ItemDiary = ({ item }) => {
         <View style={$viewRow}>
           <Text preset="bold" style={$time}>
             {utils.hoursAndMinutes(item.time)}
-          </Text>
-          <View style={$viewShadow}>
+          </Text>  
+          <View style={[$viewShadow, {borderLeftColor: item.color, borderLeftWidth:3}]}>
             <View style={{ flex: 1 }}>
               <Text preset="medium" style={$textItem}>
                 {item.content}

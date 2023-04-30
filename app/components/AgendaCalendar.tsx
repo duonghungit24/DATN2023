@@ -8,6 +8,7 @@ import { useStores } from "../models"
 import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
 import { utils } from "../utils"
+import { ListEmpty } from "./ListEmty"
 
 export interface AgendaCalendarProps {
   /**
@@ -191,9 +192,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         // }}
         // // Override inner list with a custom implemented component
         // // Specify what should be rendered instead of ActivityIndicator
-        renderEmptyData={() => {
-          return <View />
-        }}
+        renderEmptyData={() => <ListEmpty />}
         // // Specify your item comparison function for increased performance
         // rowHasChanged={(r1, r2) => {
         //   console.log(console.log("r1", r1))
@@ -227,7 +226,6 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
           selectedDayBackgroundColor: colors.primary500,
           dotColor: colors.primary500,
         }}
-
         // // Agenda container style
         // style={{ }}
         // theme={{

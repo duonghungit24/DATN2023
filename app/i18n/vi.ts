@@ -61,6 +61,7 @@ const vi = {
   taosukienbtn: "Tạo sự kiện",
   taoghichubtn: "Tạo ghi chú",
   taonhatkybtn: "Tạo nhật ký",
+  trong: "Trống",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

@@ -20,6 +20,7 @@ import { configs } from "../utils/configs"
 import * as Notifications from "expo-notifications"
 import { useStores } from "../models"
 import { utils } from "../utils"
+import { ListEmpty } from "../components/ListEmty"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -76,7 +77,8 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
             numColumns={2}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 8 }}
+            contentContainerStyle={{ paddingHorizontal: 8, flexGrow: 1 }}
+            ListEmptyComponent={<ListEmpty />}
           />
         </Animatable.View>
       </Screen>

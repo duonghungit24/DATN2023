@@ -28,6 +28,7 @@ import DateRangePicker from "../utils/DateRangeConfigs.js"
 import { useStores } from "../models"
 import { utils } from "../utils"
 import ImageView from "react-native-image-viewing"
+import { ListEmpty } from "../components/ListEmty"
 
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
@@ -140,7 +141,8 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
             //  sectionStyle={$viewSection}
             dayFormat={"dd/MM/yyyy"}
             markToday={false}
-            contentContainerStyle={{ paddingBottom: 16 }}
+            contentContainerStyle={{ paddingBottom: 16, flexGrow: 1 }}
+            ListEmptyComponent={<ListEmpty />}
           />
         </CalendarProvider>
         {/* <FlatList

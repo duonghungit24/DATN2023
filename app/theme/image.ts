@@ -10,3 +10,7 @@ export const onboarding = {
     onboarding2: require("./image/onboarding2.jpg"),
     onboarding3: require("./image/onboarding3.jpg"),
 }
+
+export const ImageConstant = {
+    emty: require("./image/emty.png")
+}

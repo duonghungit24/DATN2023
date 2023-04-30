@@ -171,8 +171,8 @@ const ItemDiary = ({ item }) => {
         <View style={$viewRow}>
           <Text preset="bold" style={$time}>
             {utils.hoursAndMinutes(item.time)}
-          </Text>  
-          <View style={[$viewShadow, {borderLeftColor: item.color, borderLeftWidth:3}]}>
+          </Text>
+          <View style={[$viewShadow, { borderLeftColor: item.color, borderLeftWidth: 3 }]}>
             <View style={{ flex: 1 }}>
               <Text preset="medium" style={$textItem}>
                 {item.content}
@@ -199,7 +199,9 @@ const ItemDiary = ({ item }) => {
                 style={{ flexDirection: "row" }}
               />
             </View>
-            <Icon icon="bell" />
+            {
+              item.emoji ?  <Image source={item.emoji} style={$emoji} /> : null
+            }
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -282,4 +284,9 @@ const $image: ImageStyle = {
   width: 35,
   margin: 4,
   borderRadius: 4,
+}
+const $emoji: ImageStyle = {
+  height: 60,
+  width: 60,
+  resizeMode: "contain",
 }

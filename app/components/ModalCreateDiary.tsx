@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Image,
   TextStyle,
+  FlatList,
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, colorsDefault, typography } from "../theme"
@@ -29,6 +30,7 @@ import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { Button } from "./Button"
 import { CustomColor } from "./CustomColor"
+import { listEmoji } from "../theme/image"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -57,7 +59,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const [url, setUrl] = useState("")
   const [location, setLocation] = useState("")
   const [date, setDate] = useState(new Date())
-
+  const [emojiItem, setItemEmoji] = useState<any>(listEmoji[0])
   const [color, setColor] = useState(colorsDefault[0])
   const [listColor, setListColor] = useState(colorsDefault)
 
@@ -161,6 +163,41 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   }, [type, title, content])
   // console.log("date",utils.displayDateHour(date))
 
+  const showListEmoji = useMemo(() => {
+    return (
+      <FlatList
+        data={listEmoji}
+        keyExtractor={(_, index) => `${index}`}
+        scrollEventThrottle={16}
+        renderItem={({ item, index }) => {
+          return (
+            <View
+              onStartShouldSetResponder={() => true}
+              style={{ paddingHorizontal: 16, alignItems: "center" }}
+            >
+              <TouchableOpacity onPress={() => setItemEmoji(item)}>
+                <Image key={index} source={item.emoji} style={$imgEmoji} />
+              </TouchableOpacity>
+              {item.id == emojiItem.id ? (
+                <View
+                  style={{
+                    backgroundColor: colors.primary500,
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              ) : null}
+            </View>
+          )
+        }}
+        horizontal
+        //  style={{ flexDirection: "row" }}
+        showsHorizontalScrollIndicator={false}
+      />
+    )
+  }, [emojiItem])
+
   // tạo ghi chú hoặc nhật ký
   const onCreate = () => {
     if (type == "diary") {
@@ -168,7 +205,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         id: uuid.v4(),
         content: content,
         time: date.toString(),
-        emoji: "",
+        emoji: emojiItem.emoji.toString(),
         isPin: togglePin,
         color: color,
         location: location,
@@ -241,8 +278,9 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         >
           {showHeaderCreate}
           {type == "diary" ? (
-            <View style={[$viewTitleContent, { height: 100 }]}>
+            <View style={[$viewTitleContent, { height: null }]}>
               <Text preset="bold" tx="bieutuongcamxuc" style={$textEmoji} />
+              {showListEmoji}
             </View>
           ) : null}
           <View style={[$viewTitleContent, { height: null }]}>
@@ -281,7 +319,12 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               />
               <Toggle variant="switch" value={togglePin} onPress={() => setTogglePin(!togglePin)} />
             </View> */}
-            <CustomColor color={color} listColor={listColor} onPressColor={setColor} onPressCustom={() => {}} />
+            <CustomColor
+              color={color}
+              listColor={listColor}
+              onPressColor={setColor}
+              onPressCustom={() => {}}
+            />
             <TextField
               value={location}
               LeftAccessory={() => (
@@ -436,6 +479,7 @@ const $image: ImageStyle = {
 const $textEmoji: TextStyle = {
   fontSize: 18,
   textAlign: "center",
+  paddingBottom: 12,
 }
 const $textCustom: TextStyle = {
   fontSize: 14,
@@ -465,3 +509,8 @@ const $viewButton: ViewStyle = {
   ...configs.shadow,
 }
 const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }
+const $imgEmoji: ImageStyle = {
+  width: 60,
+  height: 60,
+  resizeMode: "contain",
+}

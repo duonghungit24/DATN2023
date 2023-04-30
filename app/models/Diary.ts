@@ -41,10 +41,10 @@ export const DiaryModel = types
         })
         data.push({
           title: key,
-          // data: value.listDiary.slice()
           data: sortData.slice()
         })
       })
+      data.sort((a, b) => new Date(a.title).getTime() -  new Date(b.title).getTime())
       return data
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

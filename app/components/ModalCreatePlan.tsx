@@ -1,5 +1,12 @@
 import React, { useMemo, useReducer, useState } from "react"
-import { ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  ScrollView,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, colorsDefault, typography } from "../theme"
 import { Text } from "./Text"
@@ -36,7 +43,7 @@ export interface ModalCreatePlanProps {
  */
 export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCreatePlanProps) {
   const { style, isVisible, onBackDropPress, type } = props
-  const { languageStore, todoStore, authStore , eventStore} = useStores()
+  const { languageStore, todoStore, authStore, eventStore } = useStores()
   const $styles = [$container, style]
 
   const [title, setTitle] = useState("")
@@ -148,6 +155,8 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     )
   }, [toggleReminder])
 
+
+
   const onCreateTask = () => {
     const obj = {
       id: uuid.v4(),
@@ -234,7 +243,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         content: {
           title: title,
           body: content,
-          sound: authStore.sound.nameSound ||  "",
+          sound: authStore.sound.nameSound || "",
         },
         trigger: {
           // lấy time trước 5 phút
@@ -259,9 +268,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         isDone: false,
       }
       todoStore.addTodo(utils.displayDateCalendar(date), params)
-    }
-    else if(type == "event")
-    {
+    } else if (type == "event") {
       const idNotification = await Notifications.scheduleNotificationAsync({
         content: {
           title: title,
@@ -289,7 +296,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         location: location,
         url: url,
       }
-      eventStore.addEvent(utils.displayDateCalendar(date),params)
+      eventStore.addEvent(utils.displayDateCalendar(date), params)
     }
     // utils.showToast({
     //   type: "success",
@@ -346,7 +353,12 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
               onChangeToggle={() => setToggleReminder(!toggleReminder)}
             />
             {toggleReminder && showReminder}
-            <CustomColor color={color} listColor={listColor} onPressColor={setColor} onPressCustom={() => {}} />
+            <CustomColor
+              color={color}
+              listColor={listColor}
+              onPressColor={setColor}
+              onPressCustom={() => {}}
+            />
             {type == "work" ? (
               <>
                 <HeaderSwitch
@@ -362,7 +374,11 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
             <TextField
               value={location}
               LeftAccessory={() => (
-                <LeftAccesstory typeIcon="Ionicons" nameIcon="location-sharp" colorIcon={colors.primary500} />
+                <LeftAccesstory
+                  typeIcon="Ionicons"
+                  nameIcon="location-sharp"
+                  colorIcon={colors.primary500}
+                />
               )}
               placeholderTx="vitri"
               onChangeText={setLocation}

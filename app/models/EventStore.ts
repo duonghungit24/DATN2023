@@ -1,24 +1,14 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
+import { ListEventsStoreModel } from "./ListEventsStore"
 
 /**
  * Model description here for TypeScript hints.
  */
-const EventItemModel = types.model({
-  id: types.maybeNull(types.string),
-  idNotification: types.maybeNull(types.string),
-  title: types.maybeNull(types.string),
-  content: types.maybeNull(types.string),
-  timeStart: types.maybeNull(types.string),
-  timeEnd: types.maybeNull(types.string),
-  color: types.maybeNull(types.string),
-  location: types.maybeNull(types.string),
-  url: types.maybeNull(types.string),
-})
 export const EventStoreModel = types
   .model("EventStore")
   .props({
-    listEvents: types.optional(types.array(EventItemModel), []),
+    eventsMap: types.map(types.array(ListEventsStoreModel)),
     refreshEvent: types.optional(types.number,0)
   })
   .actions(withSetPropAction)
@@ -29,21 +19,32 @@ export const EventStoreModel = types
   }))
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    addEvent: (objEvent) => {
-      self.listEvents.push(objEvent)
+    addEvent: (key,  data) => {
+      if (self.eventsMap.has(key)) {
+        self.eventsMap.get(key).push(data)
+      } else {
+        const dt = []
+        dt.push(data)
+        self.eventsMap.set(key, dt)
+      }
       self.setRefreshEvent()
     },
     getListEvents: () => {
-    const data =  self.listEvents.map((el) => {
-        return {
-          start: new Date(el.timeStart).toISOString(),
-          end: new Date(el.timeEnd).toISOString(),
-          summary: el.content,
-          ...el,
-        }
+      const data = {}
+      self.eventsMap.forEach((value, key) => {
+        const dt = value.map((el) => {
+          return {
+            ...el,
+            start: new Date(el.timeStart).toISOString(),
+            end: new Date(el.timeEnd).toISOString(),
+            summary: el.content
+          }
+        })
+        data[key] = dt.slice()
       })
-      return data.slice()
+      return data 
     },
+
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface EventStore extends Instance<typeof EventStoreModel> {}

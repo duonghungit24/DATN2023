@@ -34,7 +34,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
   function EventScreen() {
     // Pull in one of our MST stores
      const { eventStore } = useStores()
-    const [listEvents, setListEvents] = useState([])
+    const [listEvents, setListEvents] = useState({})
 
     const INITIAL_TIME = { hour: 9, minutes: 0 }
     const EVENT_COLOR = "#e6add8"
@@ -45,7 +45,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
 
     useEffect(() => {
       console.log("listeve", eventStore.getListEvents())
-      setListEvents(eventStore.listEvents)
+      setListEvents(eventStore.getListEvents())
     },[eventStore.refreshEvent])
 
     const EVENTS = [
@@ -107,7 +107,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
       rightEdgeSpacing: 24,
       onEventPress: (value) => console.log("value", value),
       styles: {
-        eventTimes: { color: "red" },
+        eventTimes: { color: "white" },
         eventTitle: { color: "white" },
         eventSummary: { color: "white", paddingTop: 4 },
         calendarBackground: colors.neutral100,
@@ -147,7 +147,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
             hideKnob={false}
           />
           <TimelineList
-            events={eventsByDate}
+            events={listEvents}
             timelineProps={timelineProps}
             showNowIndicator
             scrollToNow

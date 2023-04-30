@@ -286,7 +286,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         location: location,
         url: url,
       }
-      eventStore.addEvent(params)
+      eventStore.addEvent(utils.displayDateCalendar(date),params)
     }
     // utils.showToast({
     //   type: "success",

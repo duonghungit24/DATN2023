@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { ListEventsStoreModel } from "./ListEventsStore"
 import { ListTodoStoreModel } from "./ListTodoStore"
 import { TodoStoreModel } from "./TodoStore"
 import { EventStoreModel } from "./EventStore"
@@ -12,6 +13,7 @@ import { DiaryModel } from "./Diary"
  * A RootStore model.
  */
 export const RootStoreModel = types.model("RootStore").props({
+  listEventsStore: types.optional(ListEventsStoreModel, {} as any),
   listTodoStore: types.optional(ListTodoStoreModel, {} as any),
   todoStore: types.optional(TodoStoreModel, {} as any),
   eventStore: types.optional(EventStoreModel, {} as any),

@@ -9,6 +9,7 @@ import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
 import { utils } from "../utils"
 import { ListEmpty } from "./ListEmty"
+import { color } from "react-native-reanimated"
 
 export interface AgendaCalendarProps {
   /**
@@ -123,6 +124,9 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
           navigate("statisticsScreen")
         }}
       >
+        <Text preset="medium" style={$textTime}>
+          {utils.hoursAndMinutes(reservation.time)}
+        </Text>
         <Text preset="semibold" style={$title}>
           {reservation.title}
         </Text>
@@ -270,5 +274,6 @@ const $viewItem: ViewStyle = {
   borderLeftWidth: 3,
   borderLeftColor: "#2d4150",
 }
-const $title: TextStyle = { fontSize: 14, color: colors.neutral900 }
+const $title: TextStyle = { fontSize: 14, color: colors.neutral900,marginTop: 4 }
 const $text: TextStyle = { fontSize: 14, color: colors.neutral700, marginTop: 4 }
+const $textTime :TextStyle = {color: colors.neutral600, fontSize: 14}

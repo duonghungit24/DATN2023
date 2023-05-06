@@ -4,7 +4,7 @@ import { ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
 import { Header, Icon, Screen, Text, TextField, VectorsIcon } from "../components"
-import { colors } from "../theme"
+import { colors, colorsDefault } from "../theme"
 import { BarChart, PieChart } from "react-native-chart-kit"
 import { configs } from "../utils/configs"
 import { translate } from "../i18n"
@@ -107,6 +107,7 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 labelTx="tatca"
                 numTx="soluongnv"
                 num={countTask.numberTaskAll}
+                colorView={colorsDefault[3]}
               />
               <View style={{ width: 16 }} />
               <ItemOverview
@@ -115,12 +116,31 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 labelTx="homnay"
                 numTx="soluongnv"
                 num={countTask.numberTaskNow}
+                colorView={colorsDefault[0]}
               />
             </View>
             <View>
-                <ItemStatistic labelTx="dahoanthanh"/>
-                <ItemStatistic labelTx="trongquatrinh"/>
-                <ItemStatistic labelTx="chuabatdau"/>
+              <ItemStatistic
+                typeIcon="Ionicons"
+                nameIcon="checkmark-done-sharp"
+                labelTx="dahoanthanh"
+                num={3}
+                colorView={colorsDefault[4]}
+              />
+              <ItemStatistic
+                typeIcon="AntDesign"
+                nameIcon="solution1"
+                labelTx="trongquatrinh"
+                num={5}
+                colorView={colorsDefault[5]}
+              />
+              <ItemStatistic
+                typeIcon="Entypo"
+                nameIcon="sound-mute"
+                labelTx="chuabatdau"
+                num={3}
+                colorView={colorsDefault[2]}
+              />
             </View>
           </View>
         </ScrollView>
@@ -129,13 +149,17 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
   },
 )
 
-const ItemOverview = ({ labelTx, numTx, num, typeIcon, nameIcon }: any) => {
+const ItemOverview = ({ labelTx, numTx, num, typeIcon, nameIcon, colorView }: any) => {
   return (
     <TouchableOpacity style={$viewItemOverview}>
-      <View style={$viewIcon}>
-        <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.primary500} />
+      <View style={[$viewIcon, { backgroundColor: colorView }]}>
+        <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.neutral000} />
       </View>
-      <Text preset="medium" tx={labelTx} style={{ fontSize: 14, color: colors.neutral900 }} />
+      <Text
+        preset="medium"
+        tx={labelTx}
+        style={{ fontSize: 14, color: colors.neutral900, marginTop: 12 }}
+      />
       <Text
         preset="regular"
         tx={numTx}
@@ -146,10 +170,21 @@ const ItemOverview = ({ labelTx, numTx, num, typeIcon, nameIcon }: any) => {
   )
 }
 
-const ItemStatistic = ({labelTx}: any) => {
+const ItemStatistic = ({ labelTx, typeIcon, nameIcon, num, colorView }: any) => {
   return (
-    <TouchableOpacity style={$viewBtn}>
-      <Text preset="medium" tx={labelTx} />
+    <TouchableOpacity style={[$viewRow, $viewBtn]}>
+      <View style={[$viewIcon, { backgroundColor: colorView }]}>
+        <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.neutral000} />
+      </View>
+      <View style={{ marginLeft: 12 }}>
+        <Text preset="medium" tx={labelTx} />
+        <Text
+          preset="regular"
+          tx="soluongnv"
+          txOptions={{ num: num }}
+          style={{ fontSize: 12, color: colors.neutral700, marginTop: 4 }}
+        />
+      </View>
     </TouchableOpacity>
   )
 }
@@ -190,7 +225,6 @@ const $viewIcon: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: colors.angry100,
-  marginBottom: 12,
 }
 const $hitSlop: ViewStyle = {
   top: 10,
@@ -199,12 +233,10 @@ const $hitSlop: ViewStyle = {
   bottom: 10,
 }
 const $viewRow: ViewStyle = { flexDirection: "row", marginTop: 16 }
-const $viewBtn : ViewStyle = {
-  height: 48,
+const $viewBtn: ViewStyle = {
   backgroundColor: colors.neutral000,
   ...configs.shadow,
   borderRadius: 8,
-  marginTop: 16,
-  justifyContent: 'center',
-  paddingLeft: 16
+  alignItems: "center",
+  padding: 16,
 }

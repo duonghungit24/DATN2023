@@ -40,7 +40,7 @@ const vi = {
   tongquan: "Tổng quan",
   dahoanthanh: "Hoàn thành",
   trongquatrinh: "Trong quá trình",
-  chuabatdau: "Chưa bắt đầu",
+  chuabatdau: "Quá hạn",
   tatca: 'Tất cả nhiệm vụ',
   soluongnv: '%{num} nhiệm vụ',
   homnay: "Hôm nay",
@@ -67,6 +67,7 @@ const vi = {
   thongtinchitiet: "Thông tin chi tiết",
   boqua: "Bỏ qua",
   sua: "Sửa",
+  tao: "Tạo",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

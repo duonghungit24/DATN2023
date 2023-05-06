@@ -101,9 +101,9 @@ const ListItem = ({ item, index, animation, navigation, onDelete }: any) => {
               {item.content}
             </Text>
           </View>
-          <TouchableOpacity onPress={onDelete}>
+          {/* <TouchableOpacity onPress={onDelete}>
             <VectorsIcon type="MaterialIcons" name="delete" size={20} color={colors.accent500} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={[$viewDate, {backgroundColor : item.color}]}>
           <Text preset="medium" style={$textDate}>

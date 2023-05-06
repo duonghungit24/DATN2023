@@ -22,6 +22,8 @@ import {
   DiaryScreen,
   EventScreen,
   StatisticsScreen,
+  DetailTodoScreen,
+  DetailEventScreen
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -53,6 +55,8 @@ export type AppStackParamList = {
   diaryScreen: undefined
   eventScreen: undefined
   statisticsScreen: undefined
+  detailTodoScreen: undefined
+  detailEventScreen:  undefined
 }
 
 /**
@@ -82,6 +86,8 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="eventScreen" component={EventScreen} />
       <Stack.Screen name="diaryScreen" component={DiaryScreen} />
       <Stack.Screen name="statisticsScreen" component={StatisticsScreen} />
+      <Stack.Screen name="detailTodoScreen" component={DetailTodoScreen} />
+      <Stack.Screen name="detailEventScreen" component={DetailEventScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

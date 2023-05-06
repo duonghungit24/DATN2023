@@ -93,7 +93,7 @@ export interface HeaderProps {
    * Icon that should appear on the right.
    * Can be used with `onRightPress`.
    */
-  rightIcon?: IconTypes
+  rightIcon?: any
   /**
    * An optional tint color for the right icon
    */

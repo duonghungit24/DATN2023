@@ -121,7 +121,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         style={[$viewItem, { borderLeftColor: reservation.color }]}
         onPress={() => {
           console.log("item", reservation)
-          navigate("statisticsScreen")
+          navigate("detailTodoScreen")
         }}
       >
         <Text preset="medium" style={$textTime}>

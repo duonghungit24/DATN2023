@@ -8,6 +8,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
+    "notification":{
+      "icon":"./assets/images/splash-logo-all.png"
+   },
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
       "resizeMode": "contain",
@@ -54,6 +57,7 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/images/app-icon-all.png",
           "sounds": ["./assets/sounds/bipbip.wav"]
         }
       ]

@@ -62,6 +62,11 @@ const vi = {
   taoghichubtn: "Tạo ghi chú",
   taonhatkybtn: "Tạo nhật ký",
   trong: "Trống",
+  congviec: "Công việc",
+  thongke: "Thống kê",
+  thongtinchitiet: "Thông tin chi tiết",
+  boqua: "Bỏ qua",
+  sua: "Sửa",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

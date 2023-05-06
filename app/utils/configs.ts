@@ -1,6 +1,7 @@
 import { colors } from "../theme"
 import { iconLanguage } from "./../theme/image"
-import { Dimensions, Platform } from "react-native"
+import { Dimensions, Platform, TextStyle } from "react-native"
+import { Text } from "../components"
 // Size Iphone 11 pro
 const guidelineBaseWidth = 375
 const guidelineBaseHeight = 812
@@ -90,5 +91,5 @@ export const configs = {
     selectedDayBackgroundColor: colors.primary500,
     dotColor: colors.primary500,
     arrowColor:  colors.primary500,
-  }
+  },
 }

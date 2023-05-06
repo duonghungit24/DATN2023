@@ -11,7 +11,13 @@ import { utils } from "../utils"
 // import { useStores } from "../models"
 import * as Notifications from "expo-notifications"
 import { useStores } from "../models"
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
 // - Add `Changllenge: undefined` to AppStackParamList
@@ -88,23 +94,16 @@ const fiveMinutesBefore = new Date(time.getTime() - 5 * 60 * 1000)
 console.log("five", fiveMinutesBefore, time)
 
   async function schedulePushNotification() {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-      sound: "bipbip.wav"
-    });
    await Notifications.scheduleNotificationAsync({
         content: {
           title: "Time's up!",
           body: "Change sides!",
-          sound:  authStore.sound.nameSound || ""
+          sound:  "bipbip.wav"
         },
         trigger: {
           seconds: 2,
         //  repeats: true,
-        channelId: 'default',
+         channelId: 'default',
         },
       })
 

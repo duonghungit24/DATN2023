@@ -2,6 +2,7 @@ import moment from "moment"
 import Toast from "react-native-toast-message"
 import { configs } from "./configs"
 import { ToastProps } from "./toastConfigs"
+import { TextStyle } from "react-native"
 
 export const utils = {
   showToast(params: ToastProps) {
@@ -44,5 +45,4 @@ export const utils = {
     if (!str || str == null) return ""
     return str.split("-").reverse().join("/")
   },
-
 }

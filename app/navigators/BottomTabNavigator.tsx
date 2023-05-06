@@ -14,16 +14,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import {  VectorsIcon, Text, ModalChoosePlan } from "../components"
 import { translate } from "../i18n"
 import { useStores } from "../models"
-import { ManagementScreen, SettingScreen, TodoScreen, MemoScreen, ChangllengeScreen } from "../screens"
+import { ManagementScreen, SettingScreen, TodoScreen, MemoScreen, ChangllengeScreen, StatisticsScreen } from "../screens"
 import { colors, spacing, typography } from "../theme"
 import { configs } from "../utils/configs"
 
 export type DemoTabParamList = {
-  homeScreen: undefined
-  notificationScreen: undefined
-  accountScreen: undefined
+  manageScreen: undefined
+  workScreen: undefined
   settingScreen: undefined
-  changllengeScreen: undefined
+  statisticScreen: undefined
   addEmty: undefined
   
 }
@@ -54,7 +53,7 @@ export function BottomTabNavigator() {
 
  
   const getIndex = (route) => {
-   const dataRoute = ["homeScreen","notificationScreen","","changllengeScreen","settingScreen"]
+   const dataRoute = ["statisticScreen","workScreen","","manageScreen","settingScreen"]
    const index = dataRoute.findIndex((item) => item == route)
    return index
   }
@@ -83,29 +82,29 @@ export function BottomTabNavigator() {
      
     >
       <Tab.Screen
-        name="homeScreen"
-        component={TodoScreen}
+        name="statisticScreen"
+        component={StatisticsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom
               focused={focused}
               typeIcon="AntDesign"
               nameIcon="calendar"
-              labelTx="lich"
+              labelTx="thongke"
             />
           ),
         }}
       />
       <Tab.Screen
-        name="notificationScreen"
-        component={ManagementScreen}
+        name="workScreen"
+        component={TodoScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom
               focused={focused}
               typeIcon="AntDesign"
               nameIcon="exception1"
-              labelTx="quanly"
+              labelTx="congviec"
             />
           ),
         }}
@@ -126,15 +125,15 @@ export function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="changllengeScreen"
-        component={ChangllengeScreen}
+        name="manageScreen"
+        component={ManagementScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <ItemBottom
               focused={focused}
               typeIcon="FontAwesome5"
               nameIcon="cloudscale"
-              labelTx="thuthach"
+              labelTx="quanly"
             />
           ),
         }}
@@ -215,7 +214,6 @@ const $tabBarLabel: TextStyle = {
   fontSize: 12,
   fontFamily: typography.primary.medium,
   color: colors.neutral500,
-  lineHeight: 0,
   marginTop: 4
 }
 const $btnAdd: ViewStyle = {

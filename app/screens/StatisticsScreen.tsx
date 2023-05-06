@@ -3,12 +3,13 @@ import { observer } from "mobx-react-lite"
 import { ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../navigators"
-import { Header, Screen, Text, TextField, VectorsIcon } from "../components"
+import { Header, Icon, Screen, Text, TextField, VectorsIcon } from "../components"
 import { colors } from "../theme"
 import { BarChart, PieChart } from "react-native-chart-kit"
 import { configs } from "../utils/configs"
 import { translate } from "../i18n"
 import { useStores } from "../models"
+import { color } from "react-native-reanimated"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -30,8 +31,8 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
     useEffect(() => {
       setCountTask(todoStore.getCountTaskNow())
       console.log("ok", todoStore.getCountTaskNow())
-    },[todoStore.isRefreshTodo])
-    
+    }, [todoStore.isRefreshTodo])
+
     return (
       <Screen style={$root} preset="fixed">
         <Header
@@ -39,12 +40,18 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
           LeftActionComponent={
             <TextField
               placeholderTx="placeholderTask"
-              containerStyle={{ width: "100%", paddingHorizontal: 16,}}
-              inputWrapperStyle={{ alignItems: 'center', justifyContent: 'center' }}
+              containerStyle={{ width: "100%", paddingHorizontal: 16 }}
+              inputWrapperStyle={{ alignItems: "center", justifyContent: "center" }}
               RightAccessory={() => (
                 <TouchableOpacity hitSlop={$hitSlop}>
-                <VectorsIcon type="Feather" name="search" color={colors.neutral900} size={20} style={{marginRight: 12}}/>
-              </TouchableOpacity>
+                  <VectorsIcon
+                    type="Feather"
+                    name="search"
+                    color={colors.neutral900}
+                    size={20}
+                    style={{ marginRight: 12 }}
+                  />
+                </TouchableOpacity>
               )}
             />
           }
@@ -93,10 +100,27 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 center={[0, 0]}
               />
             </View>
-            <View style={{ flexDirection: "row", marginTop: 16 }}>
-              <ItemOverview labelTx="tatca" numTx="soluongnv" num={countTask.numberTaskAll} />
+            <View style={$viewRow}>
+              <ItemOverview
+                typeIcon="MaterialCommunityIcons"
+                nameIcon="ballot"
+                labelTx="tatca"
+                numTx="soluongnv"
+                num={countTask.numberTaskAll}
+              />
               <View style={{ width: 16 }} />
-              <ItemOverview labelTx="homnay" numTx="soluongnv" num={countTask.numberTaskNow} />
+              <ItemOverview
+                typeIcon="Ionicons"
+                nameIcon="md-today"
+                labelTx="homnay"
+                numTx="soluongnv"
+                num={countTask.numberTaskNow}
+              />
+            </View>
+            <View>
+                <ItemStatistic labelTx="dahoanthanh"/>
+                <ItemStatistic labelTx="trongquatrinh"/>
+                <ItemStatistic labelTx="chuabatdau"/>
             </View>
           </View>
         </ScrollView>
@@ -105,10 +129,12 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
   },
 )
 
-const ItemOverview = ({ labelTx, numTx, num }: any) => {
+const ItemOverview = ({ labelTx, numTx, num, typeIcon, nameIcon }: any) => {
   return (
     <TouchableOpacity style={$viewItemOverview}>
-      <View style={$viewIcon}></View>
+      <View style={$viewIcon}>
+        <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.primary500} />
+      </View>
       <Text preset="medium" tx={labelTx} style={{ fontSize: 14, color: colors.neutral900 }} />
       <Text
         preset="regular"
@@ -116,6 +142,14 @@ const ItemOverview = ({ labelTx, numTx, num }: any) => {
         txOptions={{ num: num }}
         style={{ fontSize: 12, color: colors.neutral700, marginTop: 4 }}
       />
+    </TouchableOpacity>
+  )
+}
+
+const ItemStatistic = ({labelTx}: any) => {
+  return (
+    <TouchableOpacity style={$viewBtn}>
+      <Text preset="medium" tx={labelTx} />
     </TouchableOpacity>
   )
 }
@@ -155,12 +189,22 @@ const $viewIcon: ViewStyle = {
   borderRadius: 30,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "red",
+  backgroundColor: colors.angry100,
   marginBottom: 12,
 }
-const $hitSlop : ViewStyle = {
-  top : 10,
+const $hitSlop: ViewStyle = {
+  top: 10,
   right: 10,
   left: 10,
-  bottom: 10
+  bottom: 10,
+}
+const $viewRow: ViewStyle = { flexDirection: "row", marginTop: 16 }
+const $viewBtn : ViewStyle = {
+  height: 48,
+  backgroundColor: colors.neutral000,
+  ...configs.shadow,
+  borderRadius: 8,
+  marginTop: 16,
+  justifyContent: 'center',
+  paddingLeft: 16
 }

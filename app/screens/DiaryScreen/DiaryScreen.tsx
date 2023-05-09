@@ -12,10 +12,10 @@ import {
   ImageStyle,
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../navigators"
-import { Header, Icon, Screen, Text } from "../components"
-import { colors } from "../theme"
-import { configs } from "../utils/configs"
+import { AppStackScreenProps, navigate } from "../../navigators"
+import { Header, Icon, Screen, Text } from "../../components"
+import { colors } from "../../theme"
+import { configs } from "../../utils/configs"
 import {
   ExpandableCalendar,
   AgendaList,
@@ -24,11 +24,11 @@ import {
   Calendar,
   CalendarList,
 } from "react-native-calendars"
-import DateRangePicker from "../utils/DateRangeConfigs.js"
-import { useStores } from "../models"
-import { utils } from "../utils"
+import DateRangePicker from "../../utils/DateRangeConfigs.js"
+import { useStores } from "../../models"
+import { utils } from "../../utils"
 import ImageView from "react-native-image-viewing"
-import { ListEmpty } from "../components/ListEmty"
+import { ListEmpty } from "../../components/ListEmty"
 
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
@@ -95,7 +95,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     console.log("Date", dateNow)
 
     const renderItem = useCallback(({ item }: any) => {
-      return <ItemDiary item={item} />
+      return <ItemDiary item={item} onPressDetail={() => navigate("detailDiaryScreen", {itemDetail: item})}/>
     }, [])
 
     return (
@@ -150,7 +150,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
   },
 )
 
-const ItemDiary = ({ item }) => {
+const ItemDiary = ({ item , onPressDetail}) => {
   const [indexImg, setIndexImg] = useState(0)
   const [isVisible, setIsvisible] = useState(false)
 
@@ -165,9 +165,9 @@ const ItemDiary = ({ item }) => {
         images={item.images}
         imageIndex={indexImg}
         visible={isVisible}
-        onRequestClose={() => setIsvisible(false)}
+        onRequestClose={onPressDetail}
       />
-      <TouchableWithoutFeedback onPress={() => console.log("opk")}>
+      <TouchableWithoutFeedback onPress={onPressDetail}>
         <View style={$viewRow}>
           <Text preset="bold" style={$time}>
             {utils.hoursAndMinutes(item.time)}

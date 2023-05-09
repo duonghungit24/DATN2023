@@ -69,6 +69,7 @@ const vi = {
   sua: "Sửa",
   tao: "Tạo",
   ketqua: "Kết quả",
+  noidungtieude: "Nội dung",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

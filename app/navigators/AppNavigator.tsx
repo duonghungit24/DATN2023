@@ -25,6 +25,8 @@ import {
   DetailTodoScreen,
   DetailEventScreen,
   ResultSearchScreen,
+  DetailDiaryScreen,
+  DetailMemoScreen
 } from "../screens"
 import { BottomTabNavigator } from "./BottomTabNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -59,6 +61,8 @@ export type AppStackParamList = {
   detailTodoScreen: undefined
   detailEventScreen: undefined
   resultSearchScreen: undefined
+  detailDiaryScreen : undefined
+  detailMemoScreen: undefined
 }
 
 /**
@@ -91,6 +95,8 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="detailTodoScreen" component={DetailTodoScreen} />
       <Stack.Screen name="detailEventScreen" component={DetailEventScreen} />
       <Stack.Screen name="resultSearchScreen" component={ResultSearchScreen} />
+      <Stack.Screen name="detailDiaryScreen" component={DetailDiaryScreen} />
+      <Stack.Screen name="detailMemoScreen" component={DetailMemoScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

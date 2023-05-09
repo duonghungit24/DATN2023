@@ -18,8 +18,6 @@ import { AppNavigator, useNavigationPersistence } from "./navigators"
 import * as storage from "./utils/storage"
 import { setupReactotron } from "./services/reactotron"
 import RNBootSplash from "react-native-bootsplash"
-import { Animated, Easing } from "react-native"
-import Lottie from "lottie-react-native"
 import { toastConfig } from "./utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { getPermission, requestPermissionsAsync } from "./notifications"
@@ -71,16 +69,16 @@ function App(props: AppProps) {
       RNBootSplash.hide()
     }, 100)
     requestPermissionsAsync()
-   
   })
 
   const responseListener = useRef(null)
   useEffect(() => {
+    getPermission()
+    requestPermissionsAsync()
     // nhấn vào sẽ gọi khi kill app
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       console.log("remove", response)
     })
-    getPermission()
 
     return () => {
       Notifications.removeNotificationSubscription(responseListener.current)

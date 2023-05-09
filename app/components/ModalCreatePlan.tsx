@@ -129,7 +129,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         )}
       </View>
     )
-  }, [toggleTime, date, dateStart, dateEnd])
+  }, [toggleTime, date, dateStart, dateEnd, type])
 
   const showReminder = useMemo(() => {
     return (

@@ -7,6 +7,7 @@ import { Header, Screen, Text, TextField, VectorsIcon } from "../../components"
 import { colors } from "../../theme"
 import { utils } from "../../utils"
 import { ListEmpty } from "../../components/ListEmty"
+import { useStores } from "../../models"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -20,22 +21,28 @@ import { ListEmpty } from "../../components/ListEmty"
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "ResultSearch">> =
-  observer(function ResultSearchScreen({ route }) {
+  observer(function ResultSearchScreen({ navigation, route }) {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+    const { todoStore } = useStores()
 
     const [textSearch, setTextSearch] = useState("")
+    const [listTodo, setListTodo] = useState([])
+
+    // useEffect(() => {
+    //   setTextSearch(route.params.textSearch)
+    // }, [])
 
     useEffect(() => {
-      setTextSearch(route.params.textSearch)
-    }, [])
+      setListTodo(todoStore.findTodoBySearch(route.params.textSearch))
+    }, [textSearch, todoStore.isRefreshTodo])
 
-    useEffect(() => {
-      console.log("text", textSearch)
-    }, [textSearch])
-
-    const renderItem = ({ item }) => {
-      return <ItemResult />
+    const renderItem = ({ item, index }) => {
+      return (
+        <ItemResult
+          item={item}
+          onPressDetail={() => navigation.navigate("detailTodoScreen", { itemTodo: item })}
+        />
+      )
     }
 
     return (
@@ -47,7 +54,7 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
           titleTx="ketqua"
           backgroundColor={colors.neutral000}
         />
-        <TextField
+        {/* <TextField
           LeftAccessory={() => (
             <VectorsIcon
               type="Feather"
@@ -57,38 +64,26 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
               style={{ marginLeft: 12 }}
             />
           )}
+          onChangeText={setTextSearch}
           placeholderTx="placeholderTask"
           containerStyle={{ width: "100%", paddingHorizontal: 16, marginVertical: 12 }}
           inputWrapperStyle={{ alignItems: "center", justifyContent: "center" }}
-          // RightAccessory={() => (
-          //   <TouchableOpacity
-          //     hitSlop={$hitSlop}
-          //     onPress={() => navigation.navigate("resultSearchScreen")}
-          //     activeOpacity={0.8}
-          //   >
-          //     <VectorsIcon
-          //       type="Feather"
-          //       name="search"
-          //       color={colors.neutral900}
-          //       size={20}
-          //       style={{ marginRight: 12 }}
-          //     />
-          //   </TouchableOpacity>
-          // )}
-        />
+        /> */}
+        <View style={$line} />
         <FlatList
-          data={[1, 2, 3, 4, 5]}
+          data={listTodo}
           keyExtractor={(_, index) => `${index}`}
           renderItem={renderItem}
           ListEmptyComponent={<ListEmpty />}
           contentContainerStyle={{ flexGrow: 1 }}
-          ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+          ItemSeparatorComponent={() => <View style={$line} />}
         />
       </Screen>
     )
   })
 
 const ItemResult = ({ item = {}, onPressDetail }: any) => {
+  console.log("item", item)
   return (
     <TouchableOpacity style={[$viewItem]} onPress={onPressDetail}>
       <Text preset="medium" style={$textTime}>
@@ -118,3 +113,4 @@ const $viewItem: ViewStyle = {
 const $title: TextStyle = { fontSize: 14, color: colors.neutral900, marginTop: 4 }
 const $text: TextStyle = { fontSize: 14, color: colors.neutral700, marginTop: 4 }
 const $textTime: TextStyle = { color: colors.neutral600, fontSize: 14 }
+const $line: ViewStyle = { height: 12 }

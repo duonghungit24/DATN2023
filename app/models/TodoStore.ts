@@ -15,7 +15,49 @@ export const TodoStoreModel = types
     isRefreshTodo: types.optional(types.number, 0),
   })
   .actions(withSetPropAction)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .views((self) => ({
+    findTodoBySearch: (textSearch: string) => {
+      let data = []
+      self.todoMap.forEach((value, key) => {
+        if (value.length > 0) {
+          value.forEach((el) => {
+            if (
+              textSearch &&
+              el.title.toLocaleLowerCase().includes(textSearch.toLocaleLowerCase())
+            ) {
+              data.push(el)
+            }
+          })
+        }
+      })
+      return data.slice()
+    },
+    getNumberStatusTask: () => {
+      let statusDone = 0
+      let statusDoing = 0
+      let statusExpired = 0
+      self.todoMap.forEach((value, _) => {
+        if (value.length > 0) {
+          const dateNow = moment(new Date())
+          value.map((el) => {
+            if (el.isDone) {
+              statusDone += 1
+            } else if (!el.isDone && dateNow.diff(moment(el.time))) {
+              statusDoing += 1
+            } else {
+              statusExpired += 1
+            }
+          })
+        }
+      })
+      return {
+        statusDone,
+        statusDoing,
+        statusExpired,
+      }
+    },
+    getListStatusTask: (type: string) => {},
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     setRefreshTodo: () => {
       self.isRefreshTodo += 1
@@ -53,7 +95,6 @@ export const TodoStoreModel = types
       })
       return data
     },
-    getOverview: () => {},
     getCountTaskNow: () => {
       let countNow = 0
       let countAll = 0

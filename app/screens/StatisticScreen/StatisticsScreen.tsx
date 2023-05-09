@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useEffect, useMemo, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Insets, ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -9,7 +9,6 @@ import { BarChart, PieChart } from "react-native-chart-kit"
 import { configs } from "../../utils/configs"
 import { translate } from "../../i18n"
 import { useStores } from "../../models"
-import { color } from "react-native-reanimated"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -27,10 +26,16 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
     // Pull in one of our MST stores
     const { todoStore } = useStores()
     const [countTask, setCountTask] = useState<any>({})
+    const [countStatus, setCountStatus] = useState<any>({
+      statusDone: 0,
+      statusDoing: 0,
+      statusExpired: 0,
+    })
     const [textSearch, setTextSearch] = useState("")
 
     useEffect(() => {
       setCountTask(todoStore.getCountTaskNow())
+      setCountStatus(todoStore.getNumberStatusTask())
     }, [todoStore.isRefreshTodo])
 
     return (
@@ -62,29 +67,30 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
             />
           }
         />
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={$container}>
             <Text preset="semibold" tx="tongquan" style={$textOverview} />
             <View style={$viewPie}>
               <PieChart
+                hasLegend={true}
                 data={[
                   {
                     name: translate("dahoanthanh"),
-                    population: 100,
+                    population: countStatus.statusDone,
                     color: "#60c5a8",
                     legendFontColor: colors.neutral900,
                     legendFontSize: 12,
                   },
                   {
                     name: translate("trongquatrinh"),
-                    population: 10,
+                    population: countStatus.statusDoing,
                     color: "#637aff",
                     legendFontColor: colors.neutral900,
                     legendFontSize: 12,
                   },
                   {
                     name: translate("chuabatdau"),
-                    population: 20,
+                    population: countStatus.statusExpired,
                     color: colors.angry100,
                     legendFontColor: colors.neutral900,
                     legendFontSize: 12,
@@ -97,13 +103,13 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                   backgroundGradientFrom: "#fb8c00",
                   backgroundGradientTo: "#ffa726",
                   decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `red`,
+                  color: (opacity = 1) => `rgba(54,64,81, ${opacity})`,
                 }}
+                center={[0, 0]}
                 accessor={"population"}
                 backgroundColor={"#FFF"}
                 paddingLeft={"0"}
                 style={{ justifyContent: "center", alignItems: "center" }}
-                center={[0, 0]}
               />
             </View>
             <View style={$viewRow}>
@@ -130,21 +136,21 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 typeIcon="Ionicons"
                 nameIcon="checkmark-done-sharp"
                 labelTx="dahoanthanh"
-                num={3}
+                num={countStatus.statusDone}
                 colorView={colorsDefault[4]}
               />
               <ItemStatistic
                 typeIcon="AntDesign"
                 nameIcon="solution1"
                 labelTx="trongquatrinh"
-                num={5}
+                num={countStatus.statusDoing}
                 colorView={colorsDefault[5]}
               />
               <ItemStatistic
                 typeIcon="Entypo"
                 nameIcon="sound-mute"
                 labelTx="chuabatdau"
-                num={3}
+                num={countStatus.statusExpired}
                 colorView={colorsDefault[2]}
               />
             </View>

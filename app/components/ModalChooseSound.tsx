@@ -37,12 +37,12 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "Clock Alarm",
-    source: require("../../assets/sounds/clockAlarm.wav"),
+    source: require("../../assets/sounds/clockalarm.wav"),
     nameSound: "clockalarm.wav",
   },
   {
     nameDisplay: "Quân đội",
-    source: require("../../assets/sounds/quanDoi.wav"),
+    source: require("../../assets/sounds/quandoi.wav"),
     nameSound: "quandoi.wav",
   },
   {

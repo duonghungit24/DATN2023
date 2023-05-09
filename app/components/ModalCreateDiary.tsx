@@ -40,6 +40,7 @@ export interface ModalCreateDiaryProps {
   isVisible: boolean
   onBackDropPress: () => void
   type: "note" | "diary"
+  onBackDone: () => void
 }
 
 interface TypeTime {
@@ -50,7 +51,7 @@ interface TypeTime {
  * Describe your component here
  */
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
-  const { style, isVisible, onBackDropPress, type } = props
+  const { style, isVisible, onBackDropPress, type, onBackDone } = props
   const { languageStore, memoStore, diaryStore } = useStores()
   const $styles = [$container, style]
 
@@ -237,7 +238,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         text1: translate("taoghichu"),
       })
     }
-    onBackDropPress()
+    onBackDone()
   }
 
   return (

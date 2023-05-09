@@ -1,12 +1,5 @@
 import React, { useMemo, useReducer, useState } from "react"
-import {
-  ScrollView,
-  StyleProp,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from "react-native"
+import { ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, colorsDefault, typography } from "../theme"
 import { Text } from "./Text"
@@ -36,13 +29,14 @@ export interface ModalCreatePlanProps {
   type: "event" | "work"
   isVisible: boolean
   onBackDropPress: () => void
+  onBackDone: () => void
 }
 
 /**
  * Describe your component here
  */
 export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCreatePlanProps) {
-  const { style, isVisible, onBackDropPress, type } = props
+  const { style, isVisible, onBackDropPress, type, onBackDone } = props
   const { languageStore, todoStore, authStore, eventStore } = useStores()
   const $styles = [$container, style]
 
@@ -154,8 +148,6 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       </>
     )
   }, [toggleReminder])
-
-
 
   const onCreateTask = () => {
     const obj = {
@@ -302,7 +294,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     //   type: "success",
     //   text1: translate("taonhatky"),
     // })
-    onBackDropPress()
+    onBackDone()
   }
 
   return (

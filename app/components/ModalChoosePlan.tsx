@@ -55,6 +55,9 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
         isVisible={isVisibleEventWork.show}
         onBackDropPress={() => {
           setIsvisibleEventWork({ type: "", show: false })
+        }}
+        onBackDone={() => {
+          setIsvisibleEventWork({ type: "", show: false })
           onBackDropPress()
         }}
       />
@@ -63,13 +66,16 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
         isVisible={isVisibleNoteDiary.show}
         onBackDropPress={() => {
           setIsvisibleNoteDiary({ type: "", show: false })
+        }}
+        onBackDone={() => {
+          setIsvisibleNoteDiary({ type: "", show: false })
           onBackDropPress()
         }}
       />
       <Header
         leftIcon="arrowleft"
         typeIconLeft="AntDesign"
-        title="Hôm nay"
+        titleTx="homnay"
         backgroundColor={colors.neutral100}
         onLeftPress={onBackDropPress}
       />

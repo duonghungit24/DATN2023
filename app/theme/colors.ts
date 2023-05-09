@@ -4,14 +4,13 @@ const palette = {
   neutral000: "#FFFFFF",
   neutral100: "#F9F9F9",
   neutral200: "#F4F2F1",
-  neutral300: "#D7CEC9",
+  neutral300: "#EFF1F4",
   neutral400: "#B6ACA6",
   neutral500: "#978F8A",
   neutral600: "#564E4A",
   neutral700: "#3C3836",
   neutral800: "#191015",
   neutral900: "#000000",
-  
 
   primary100: "#F4E0D9",
   primary200: "#E8C1B4",
@@ -40,7 +39,6 @@ const palette = {
 
   error: "#F55858",
   success: "#4AC256",
-
 } as const
 
 export const colors = {
@@ -88,28 +86,21 @@ export const colors = {
    */
   errorBackground: palette.angry100,
   event: "#039a83",
-  memo:   '#dcb834',
-  todo:  '#ff4c98',
-  diary: '#637aff',
+  memo: "#dcb834",
+  todo: "#ff4c98",
+  diary: "#637aff",
 }
 
 export const colorRandomItem = [
-  '#637aff',
-  '#60c5a8',
-  '#CCCCCC',
-  '#ff5454',
-  '#039a83',
-  '#dcb834',
-  '#8f06e4',
-  'skyblue',
-  '#ff4c98',
+  "#637aff",
+  "#60c5a8",
+  "#CCCCCC",
+  "#ff5454",
+  "#039a83",
+  "#dcb834",
+  "#8f06e4",
+  "skyblue",
+  "#ff4c98",
 ]
 
-export const  colorsDefault = [
-  '#F97B22',
-  '#F2B6A0',
-  '#9CA777',
-  '#088395',
-  '#FF6969',
-  '#6DA9E4'
-]
+export const colorsDefault = ["#F97B22", "#F2B6A0", "#9CA777", "#088395", "#FF6969", "#6DA9E4"]

@@ -31,14 +31,11 @@ export const ModalConfirmDelete = observer(function ModalConfirmDelete(
       <View style={$content}>
         <>
           <Text preset="semibold" tx="banCoChanXoa" style={$label} />
-          {/* <Text preset="semibold" style={$name}>
-          {nameEmployee} <Text preset="regular" style={{ color: colors.gray600 }} tx="nayKhong" />
-        </Text> */}
         </>
         <View style={$viewButton}>
           <Button
             tx="huy"
-            textStyle={{color: colors.neutral700}}
+            textStyle={{ color: colors.neutral700 }}
             style={[$btn, { backgroundColor: colors.neutral300 }]}
             onPress={onBackDropPress}
           />
@@ -65,7 +62,7 @@ const $container: ViewStyle = {
 const $content: ViewStyle = {
   marginHorizontal: 20,
   backgroundColor: colors.neutral100,
-  minHeight: configs.windowHeight * 0.3,
+  minHeight: configs.windowHeight * 0.25,
   alignItems: "center",
   borderRadius: 8,
 }
@@ -79,7 +76,7 @@ const $viewButton: ViewStyle = {
 const $label: TextStyle = {
   fontSize: 20,
   color: colors.neutral900,
-  padding: 16
+  padding: 16,
 }
 const $btn: ViewStyle = {
   flex: 1,

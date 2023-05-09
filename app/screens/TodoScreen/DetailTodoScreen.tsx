@@ -1,9 +1,9 @@
-import React, { FC, useRef } from "react"
+import React, { FC, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { TextStyle, TouchableOpacity, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../../navigators"
-import { Header, Screen, Text, VectorsIcon } from "../../components"
+import { Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../../components"
 import { colors } from "../../theme"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
 // import { useNavigation } from "@react-navigation/native"
@@ -29,8 +29,21 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
     // Pull in one of our MST stores
     // const { someStore, anotherStore } = useStores()
     const refAction = useRef(null)
-    // Pull in navigation via hook
-    // const navigation = useNavigation()
+    const [isVisible, setIsvisible] = useState(false)
+    const [edit, setEdit] = useState(false)
+
+    const onPressAction = (index) => {
+      switch (index) {
+        case 1:
+          setEdit(true)
+          break
+        case 2:
+          setIsvisible(true)
+        default:
+          break
+      }
+    }
+
     return (
       <Screen style={$root} preset="fixed">
         <Header
@@ -42,13 +55,17 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
           titleTx="thongtinchitiet"
           onRightPress={() => refAction.current.show()}
         />
+        <ModalConfirmDelete
+          isVisible={isVisible}
+          onBackDropPress={() => setIsvisible(false)}
+          onPressRemove={() => {}}
+        />
         <ActionSheet
           ref={refAction}
           options={options}
           cancelButtonIndex={0}
-        //  onPress={onPressAction}
+          onPress={onPressAction}
         />
-
       </Screen>
     )
   },

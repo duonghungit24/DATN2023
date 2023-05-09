@@ -404,14 +404,14 @@ function Switch(props: ToggleInputProps) {
         $detailStyleOverride?.backgroundColor,
         status === "error" && colors.error,
         disabled && colors.neutral600,
-        colors.neutral100,
+        colors.neutral000,
       ].filter(Boolean)[0]
     } else {
       return [
         $innerStyleOverride?.backgroundColor,
         disabled && colors.neutral600,
         status === "error" && colors.error,
-        colors.neutral200,
+        colors.neutral000,
       ].filter(Boolean)[0]
     }
   })()

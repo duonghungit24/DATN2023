@@ -26,7 +26,7 @@ export interface ModalChooseSoundProps {
   style?: StyleProp<ViewStyle>
   isVisible: boolean
   onBackDropPress: () => void
-  soundValue : any
+  soundValue: any
 }
 
 const LIST_SOUND = [
@@ -37,12 +37,12 @@ const LIST_SOUND = [
   },
   {
     nameDisplay: "Clock Alarm",
-    source: require("../../assets/sounds/clockalarm.wav"),
+    source: require("../../assets/sounds/clockAlarm.wav"),
     nameSound: "clockalarm.wav",
   },
   {
     nameDisplay: "Quân đội",
-    source: require("../../assets/sounds/quandoi.wav"),
+    source: require("../../assets/sounds/quanDoi.wav"),
     nameSound: "quandoi.wav",
   },
   {
@@ -91,14 +91,13 @@ const LIST_SOUND = [
  */
 export const ModalChooseSound = observer(function ModalChooseSound(props: ModalChooseSoundProps) {
   const { style, isVisible, onBackDropPress, soundValue } = props
-  const {authStore} = useStores()
+  const { authStore } = useStores()
   const $styles = [$container, style]
   const [sound, setSound] = React.useState<any>({})
   const soundCurrent = React.useRef(null)
 
   React.useEffect(() => {
-    if(soundValue)
-    {
+    if (soundValue) {
       setSound(soundValue)
     }
     Sound.setCategory("Playback", true) // true = mixWithOthers
@@ -165,7 +164,7 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
             }}
           />
           <View style={{ width: 16 }} />
-          <Button tx="luu" style={$viewBtn} onPress={onPressSound}/>
+          <Button tx="luu" style={$viewBtn} onPress={onPressSound} />
         </View>
       </View>
     </Modal>

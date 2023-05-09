@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, getParent, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
@@ -19,7 +19,11 @@ export const ListEventsStoreModel = types
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .actions((self) => ({
+    remove: () => {
+      getParent(self, 2).remove(self)
+    },
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface ListEventsStore extends Instance<typeof ListEventsStoreModel> {}
 export interface ListEventsStoreSnapshotOut extends SnapshotOut<typeof ListEventsStoreModel> {}

@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, getParent, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 
 /**
@@ -26,7 +26,11 @@ export const ListTodoStoreModel = types
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
-  .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .actions((self) => ({
+    remove: () => {
+      getParent(self, 2).remove(self)
+    },
+  })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface ListTodoStore extends Instance<typeof ListTodoStoreModel> {}
 export interface ListTodoStoreSnapshotOut extends SnapshotOut<typeof ListTodoStoreModel> {}

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ScrollView, ViewStyle, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../../navigators"
+import { AppStackScreenProps, navigate } from "../../navigators"
 import { Header, Screen, Text } from "../../components"
 import { colors } from "../../theme"
 import { ListEvent } from "./ListEvent"
@@ -18,8 +18,6 @@ import groupBy from "lodash/groupBy"
 import { configs } from "../../utils/configs"
 import { useStores } from "../../models"
 import { utils } from "../../utils"
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "../models"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -33,7 +31,7 @@ import { utils } from "../../utils"
 export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = observer(
   function EventScreen() {
     // Pull in one of our MST stores
-     const { eventStore } = useStores()
+    const { eventStore } = useStores()
     const [listEvents, setListEvents] = useState({})
 
     const INITIAL_TIME = { hour: 9, minutes: 0 }
@@ -46,52 +44,65 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     useEffect(() => {
       console.log("listeve", eventStore.getListEvents())
       setListEvents(eventStore.getListEvents())
-    },[eventStore.refreshEvent])
+    }, [eventStore.refreshEvent])
 
-    const EVENTS = [
-      {
-        start: `${new Date().toISOString()}`,
-        end: `${new Date().toISOString()}`,
-        title: "Merge Request to React Native Calendars",
-        summary: "Merge Timeline Calendar to React Native Calendars",
-        hello: true,
-      },
-      {
-        start: `${getDate(-2)} 10:20:00`,
-        end: `${getDate(-2)} 12:00:00`,
-        title: "Merge Request to React Native Calendars",
-        summary: "Merge Timeline Calendar to React Native Calendars",
-        hello: true,
-        key: "okeeeee",
-      },
-      {
-        start: `${getDate()} 01:15:00`,
-        end: `${getDate()} 02:30:00`,
-        title: "Meeting A",
-        summary: "Summary for meeting A",
-        color: EVENT_COLOR,
-      },
-      {
-        start: `${getDate()} 01:30:00`,
-        end: `${getDate()} 02:30:00`,
-        title: "Meeting B",
-        summary: "Summary for meeting B",
-        color: EVENT_COLOR,
-      },
-      {
-        start: `${getDate()} 01:45:00`,
-        end: `${getDate()} 02:45:00`,
-        title: "Meeting C",
-        summary: "Summary for meeting C",
-        color: EVENT_COLOR,
-      },
-    ]
-    const eventsByDate = groupBy(listEvents, (e) => utils.displayDateCalendar(e.start)) as {
-      [key: string]: TimelineEventProps[]
+    // const EVENTS = [
+    //   {
+    //     start: `${new Date().toISOString()}`,
+    //     end: `${new Date().toISOString()}`,
+    //     title: "Merge Request to React Native Calendars",
+    //     summary: "Merge Timeline Calendar to React Native Calendars",
+    //     hello: true,
+    //   },
+    //   {
+    //     start: `${getDate(-2)} 10:20:00`,
+    //     end: `${getDate(-2)} 12:00:00`,
+    //     title: "Merge Request to React Native Calendars",
+    //     summary: "Merge Timeline Calendar to React Native Calendars",
+    //     hello: true,
+    //     key: "okeeeee",
+    //   },
+    //   {
+    //     start: `${getDate()} 01:15:00`,
+    //     end: `${getDate()} 02:30:00`,
+    //     title: "Meeting A",
+    //     summary: "Summary for meeting A",
+    //     color: EVENT_COLOR,
+    //   },
+    //   {
+    //     start: `${getDate()} 01:30:00`,
+    //     end: `${getDate()} 02:30:00`,
+    //     title: "Meeting B",
+    //     summary: "Summary for meeting B",
+    //     color: EVENT_COLOR,
+    //   },
+    //   {
+    //     start: `${getDate()} 01:45:00`,
+    //     end: `${getDate()} 02:45:00`,
+    //     title: "Meeting C",
+    //     summary: "Summary for meeting C",
+    //     color: EVENT_COLOR,
+    //   },
+    // ]
+    // const eventsByDate = groupBy(listEvents, (e) => utils.displayDateCalendar(e.start)) as {
+    //   [key: string]: TimelineEventProps[]
+    // }
+
+    const handleNavigate = (value: any) => {
+      const params = {
+        id: value.id,
+        idNotification: value.idNotification,
+        title: value.title,
+        content: value.content,
+        timeStart: value.timeStart,
+        timeEnd: value.timeEnd,
+        color: value.color,
+        location: value.location,
+        url: value.url,
+      }
+      navigate("detailEventScreen", { itemEvent: params })
     }
 
-    console.log("group", CalendarUtils.getCalendarDateString(new Date()))
-    console.log("even", eventsByDate)
     const timelineProps: Partial<TimelineProps> = {
       format24h: true,
       // onBackgroundLongPress: this.createNewEvent,
@@ -105,29 +116,26 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
       ],
       overlapEventsSpacing: 8,
       rightEdgeSpacing: 24,
-      onEventPress: (value) => console.log("value", value),
+      onEventPress: handleNavigate,
       styles: {
         eventTimes: { color: "white" },
         eventTitle: { color: "white" },
         eventSummary: { color: "white", paddingTop: 4 },
         calendarBackground: colors.neutral100,
-        agendaKnobColor: "red"
+        agendaKnobColor: "red",
       },
       //  renderEvent: (event) => <View style={{height: event.height, top: 0, width: event.width, backgroundColor: "red", padding: 0}}><Text>okk</Text></View>
     }
     // console.log("event", eventsByDate)
-    // Pull in navigation via hook
-    // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
         <CalendarProvider
           date={getDate()}
           // onDateChanged={this.onDateChanged}
           // onMonthChange={this.onMonthChange}
-        //  disabledOpacity={0.6}
+          //  disabledOpacity={0.6}
           // numberOfDays={3}
-        theme={{agendaKnobColor:"red" }}
-        
+          theme={{ agendaKnobColor: "red" }}
         >
           <ExpandableCalendar
             firstDay={1}
@@ -143,7 +151,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
               },
             }}
             markingType="multi-dot"
-            theme={configs.THEME}  
+            theme={configs.THEME}
             hideKnob={false}
           />
           <TimelineList

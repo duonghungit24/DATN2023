@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Insets, ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../navigators"
-import { Header, Icon, Screen, Text, TextField, VectorsIcon } from "../components"
-import { colors, colorsDefault } from "../theme"
+import { AppStackScreenProps } from "../../navigators"
+import { Header, Icon, Screen, Text, TextField, VectorsIcon } from "../../components"
+import { colors, colorsDefault } from "../../theme"
 import { BarChart, PieChart } from "react-native-chart-kit"
-import { configs } from "../utils/configs"
-import { translate } from "../i18n"
-import { useStores } from "../models"
+import { configs } from "../../utils/configs"
+import { translate } from "../../i18n"
+import { useStores } from "../../models"
 import { color } from "react-native-reanimated"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
@@ -23,14 +23,14 @@ import { color } from "react-native-reanimated"
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statistics">> = observer(
-  function StatisticsScreen() {
+  function StatisticsScreen({ navigation }) {
     // Pull in one of our MST stores
     const { todoStore } = useStores()
     const [countTask, setCountTask] = useState<any>({})
+    const [textSearch, setTextSearch] = useState("")
 
     useEffect(() => {
       setCountTask(todoStore.getCountTaskNow())
-      console.log("ok", todoStore.getCountTaskNow())
     }, [todoStore.isRefreshTodo])
 
     return (
@@ -39,11 +39,17 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
           backgroundColor={colors.neutral000}
           LeftActionComponent={
             <TextField
+              value={textSearch}
+              onChangeText={setTextSearch}
               placeholderTx="placeholderTask"
               containerStyle={{ width: "100%", paddingHorizontal: 16 }}
               inputWrapperStyle={{ alignItems: "center", justifyContent: "center" }}
               RightAccessory={() => (
-                <TouchableOpacity hitSlop={$hitSlop}>
+                <TouchableOpacity
+                  hitSlop={$hitSlop}
+                  onPress={() => navigation.navigate("resultSearchScreen", { textSearch })}
+                  activeOpacity={0.8}
+                >
                   <VectorsIcon
                     type="Feather"
                     name="search"
@@ -200,20 +206,21 @@ const $container: ViewStyle = {
 const $textOverview: TextStyle = {
   marginTop: 12,
   fontSize: 20,
-  color: colors.neutral900,
+  color: colors.neutral700,
 }
 const $viewPie: ViewStyle = {
   borderRadius: 12,
   backgroundColor: colors.neutral000,
   alignItems: "center",
   padding: 12,
-  ...configs.shadow,
+  // ...configs.shadow,
   marginTop: 12,
 }
 const $viewItemOverview: ViewStyle = {
   flex: 1,
   backgroundColor: colors.neutral000,
-  ...configs.shadow,
+  // ...configs.shadow,
+
   height: configs.windowHeight * 0.2,
   borderRadius: 12,
   padding: 16,
@@ -226,7 +233,7 @@ const $viewIcon: ViewStyle = {
   alignItems: "center",
   backgroundColor: colors.angry100,
 }
-const $hitSlop: ViewStyle = {
+const $hitSlop: Insets = {
   top: 10,
   right: 10,
   left: 10,
@@ -235,7 +242,7 @@ const $hitSlop: ViewStyle = {
 const $viewRow: ViewStyle = { flexDirection: "row", marginTop: 16 }
 const $viewBtn: ViewStyle = {
   backgroundColor: colors.neutral000,
-  ...configs.shadow,
+  // ...configs.shadow,
   borderRadius: 8,
   alignItems: "center",
   padding: 16,

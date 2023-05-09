@@ -1,11 +1,15 @@
-import React, { FC, useRef, useState } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, TouchableOpacity, ViewStyle } from "react-native"
+import { TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../../navigators"
-import { Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../../components"
-import { colors } from "../../theme"
+import { AppStackScreenProps, goBack } from "../../navigators"
+import { Button, Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../../components"
+import { colors, typography } from "../../theme"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
+import { configs } from "../../utils/configs"
+import { useStores } from "../../models"
+import { utils } from "../../utils"
+import { removeNotificationById } from "../../notifications"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -15,8 +19,8 @@ import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-a
 // - Import your screen, and add it to the stack:
 //     `<Stack.Screen name="DetailTodo" component={DetailTodoScreen} />`
 // Hint: Look for the 🔥!
-const $colorText: TextStyle = { color: "#637aff", fontSize: 16 }
-const options = [
+const $colorText: TextStyle = { color: "#35ABFF", fontSize: 16 }
+export const options = [
   <Text preset="semibold" style={$colorText} tx="boqua" />,
   <Text preset="regular" style={$colorText} tx="sua" />,
   <Text preset="regular" style={[$colorText, { color: colors.error }]} tx="xoa" />,
@@ -25,12 +29,17 @@ const options = [
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailTodo">> = observer(
-  function DetailTodoScreen() {
+  function DetailTodoScreen({ route }) {
     // Pull in one of our MST stores
-    // const { someStore, anotherStore } = useStores()
+    const { todoStore } = useStores()
+    const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
     const [isVisible, setIsvisible] = useState(false)
     const [edit, setEdit] = useState(false)
+
+    useEffect(() => {
+      setItemDetail(route.params.itemTodo)
+    }, [])
 
     const onPressAction = (index) => {
       switch (index) {
@@ -42,6 +51,12 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
         default:
           break
       }
+    }
+
+    const onRemoveItem = async () => {
+      removeNotificationById(itemDetail.idNotification)
+      todoStore.removeTodo(utils.displayDateCalendar(itemDetail.time), itemDetail)
+      goBack()
     }
 
     return (
@@ -58,7 +73,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
         <ModalConfirmDelete
           isVisible={isVisible}
           onBackDropPress={() => setIsvisible(false)}
-          onPressRemove={() => {}}
+          onPressRemove={onRemoveItem}
         />
         <ActionSheet
           ref={refAction}
@@ -66,6 +81,11 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
           cancelButtonIndex={0}
           onPress={onPressAction}
         />
+        {edit ? (
+          <View style={$viewButton}>
+            <Button tx="luu" textStyle={$textButton} onPress={() => {}} />
+          </View>
+        ) : null}
       </Screen>
     )
   },
@@ -74,3 +94,12 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
 const $root: ViewStyle = {
   flex: 1,
 }
+const $viewButton: ViewStyle = {
+  position: "absolute",
+  width: "100%",
+  bottom: 0,
+  padding: 16,
+  backgroundColor: colors.neutral000,
+  ...configs.shadow,
+}
+const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }

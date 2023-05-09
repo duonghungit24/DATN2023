@@ -1,27 +1,25 @@
 import * as Notifications from "expo-notifications"
-import { Platform } from "react-native";
+import { Platform } from "react-native"
 
 export const requestPermissionsAsync = async () => {
- await  Notifications.setNotificationHandler({
+  await Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: true,
       shouldSetBadge: true,
     }),
-  });
+  })
   if (Platform.OS === "android") {
-  await Notifications.setNotificationChannelAsync("default", {
+    await Notifications.setNotificationChannelAsync("default", {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      sound: 'bipbip.wav',
+      sound: "bipbip.wav",
       lightColor: "#FF231F7C",
       lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
       bypassDnd: true,
-    });
-  }
-  else 
-  {
+    })
+  } else {
     await Notifications.requestPermissionsAsync({
       ios: {
         allowAlert: true,
@@ -39,4 +37,7 @@ export async function getPermission() {
   if (finalStatus == "denied") {
     await requestPermissionsAsync()
   }
+}
+export async function removeNotificationById(idNotification) {
+  await Notifications.cancelScheduledNotificationAsync(idNotification)
 }

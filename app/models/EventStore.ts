@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, destroy, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListEventsStoreModel } from "./ListEventsStore"
 
@@ -9,7 +9,7 @@ export const EventStoreModel = types
   .model("EventStore")
   .props({
     eventsMap: types.map(types.array(ListEventsStoreModel)),
-    refreshEvent: types.optional(types.number,0)
+    refreshEvent: types.optional(types.number, 0),
   })
   .actions(withSetPropAction)
   .actions((self) => ({
@@ -19,7 +19,7 @@ export const EventStoreModel = types
   }))
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    addEvent: (key,  data) => {
+    addEvent: (key, data) => {
       if (self.eventsMap.has(key)) {
         self.eventsMap.get(key).push(data)
       } else {
@@ -29,22 +29,31 @@ export const EventStoreModel = types
       }
       self.setRefreshEvent()
     },
+    removeEvent: (key, item) => {
+      if (self.eventsMap.has(key)) {
+        console.log("ok")
+        self.eventsMap.get(key).splice(self.eventsMap.get(key).indexOf(item), 1)
+        // destroy(item)
+        self.setRefreshEvent()
+      }
+    },
     getListEvents: () => {
       const data = {}
       self.eventsMap.forEach((value, key) => {
-        const dt = value.map((el) => {
-          return {
-            ...el,
-            start: new Date(el.timeStart).toISOString(),
-            end: new Date(el.timeEnd).toISOString(),
-            summary: el.content
-          }
-        })
-        data[key] = dt.slice()
+        if (value.length > 0) {
+          const dt = value.map((el) => {
+            return {
+              ...el,
+              start: new Date(el.timeStart).toISOString(),
+              end: new Date(el.timeEnd).toISOString(),
+              summary: el.content,
+            }
+          })
+          data[key] = dt.slice()
+        }
       })
-      return data 
+      return data
     },
-
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface EventStore extends Instance<typeof EventStoreModel> {}

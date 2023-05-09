@@ -68,6 +68,7 @@ const vi = {
   boqua: "Bỏ qua",
   sua: "Sửa",
   tao: "Tạo",
+  ketqua: "Kết quả",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

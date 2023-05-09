@@ -36,7 +36,7 @@ const LIST_SOUND = [
     nameSound: "",
   },
   {
-    nameDisplay: "Clock Alarm",
+    nameDisplay: "Clock alarm",
     source: require("../../assets/sounds/clockalarm.wav"),
     nameSound: "clockalarm.wav",
   },

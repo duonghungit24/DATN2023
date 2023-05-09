@@ -78,7 +78,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       const result = listImages.map((el) => {
         return {
           id: uuid.v4(),
-          uri: el.sourceURL,
+          uri: el.path,
         }
       })
       setImages([...images, ...result])

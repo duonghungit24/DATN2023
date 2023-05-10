@@ -4,9 +4,9 @@ import { Animated, Easing, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps, navigate } from "../navigators"
 import { Screen, Text } from "../components"
-import LottieView from 'lottie-react-native';
+import LottieView from "lottie-react-native"
 import { useStores } from "../models"
-import * as LocalAuthentication from 'expo-local-authentication';
+import * as LocalAuthentication from "expo-local-authentication"
 import { View } from "react-native-animatable"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
@@ -20,66 +20,61 @@ import { View } from "react-native-animatable"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscreen">> = observer(function SplashscreenScreen({navigation}) {
-  // Pull in one of our MST stores
-  const { authStore } = useStores()
-  const animationProgress = useRef(new Animated.Value(0))
+export const SplashScreen: FC<StackScreenProps<AppStackScreenProps, "Splashscreen">> = observer(
+  function SplashscreenScreen({ navigation }) {
+    // Pull in one of our MST stores
+    const { authStore } = useStores()
+    const animationProgress = useRef(new Animated.Value(0))
 
-  useEffect(() => {
-    if(authStore.isIntro)
-    {
-      setTimeout(() => {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "chooseLanguageScreen" }],
-        })
-      }, 3000);
-    }
-    else
-    {
-      if(authStore.biometric)
-      {
+    useEffect(() => {
+      if (authStore.isIntro) {
         setTimeout(() => {
           navigation.reset({
             index: 0,
-            routes: [{ name: "securityScreen" }],
+            routes: [{ name: "chooseLanguageScreen" }],
           })
-        }, 3000);
+        }, 3000)
+      } else {
+        if (authStore.biometric) {
+          setTimeout(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "securityScreen" }],
+            })
+          }, 3000)
+        } else {
+          setTimeout(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "bottomTab" }],
+            })
+          }, 3000)
+        }
       }
-      else
-      {  
-        setTimeout(() => {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "bottomTab" }],
-          })
-        }, 3000);
-      }
-    }
-   
-  }, [])
+    }, [])
 
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
-  return (
-    <Screen style={$root} preset="fixed">
-      <View style={$container}>
-       <LottieView
-        source={require('../../assets/images/task.json')}
-        style={$styleLotte}
-        autoPlay
-        loop
-      />
+    // Pull in navigation via hook
+    // const navigation = useNavigation()
+    return (
+      <Screen style={$root} preset="fixed">
+        <View style={$container}>
+          <LottieView
+            source={require("../../assets/images/task.json")}
+            style={$styleLotte}
+            autoPlay
+            loop
+          />
         </View>
-    </Screen>
-  )
-})
+      </Screen>
+    )
+  },
+)
 
 const $root: ViewStyle = {
   flex: 1,
 }
-const $container : ViewStyle = {flex:1, justifyContent:'center', alignItems: 'center'}
-const $styleLotte : ViewStyle = {
+const $container: ViewStyle = { flex: 1, justifyContent: "center", alignItems: "center" }
+const $styleLotte: ViewStyle = {
   width: "60%",
   aspectRatio: 1,
 }

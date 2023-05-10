@@ -18,6 +18,7 @@ import groupBy from "lodash/groupBy"
 import { configs } from "../../utils/configs"
 import { useStores } from "../../models"
 import { utils } from "../../utils"
+import { onSnapshot } from "mobx-state-tree"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -31,8 +32,9 @@ import { utils } from "../../utils"
 export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = observer(
   function EventScreen() {
     // Pull in one of our MST stores
-    const { eventStore } = useStores()
+    const { eventStore, languageStore } = useStores()
     const [listEvents, setListEvents] = useState({})
+    const [refresh, setRefresh] = useState(false)
 
     const INITIAL_TIME = { hour: 9, minutes: 0 }
     const EVENT_COLOR = "#e6add8"
@@ -40,6 +42,12 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
       CalendarUtils.getCalendarDateString(new Date().setDate(new Date().getDate() + offset))
     console.log("date", getDate(1))
     console.log("new date", new Date().toISOString())
+
+    // useEffect(() => {
+    //   onSnapshot(languageStore, (snap) => {
+    //     setRefresh(!refresh)
+    //   })
+    // }, [languageStore.language])
 
     useEffect(() => {
       console.log("listeve", eventStore.getListEvents())
@@ -138,6 +146,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
           theme={{ agendaKnobColor: "red" }}
         >
           <ExpandableCalendar
+            key={languageStore.language}
             firstDay={1}
             // leftArrowImageSource={require('../img/previous.png')}
             // rightArrowImageSource={require('../img/next.png')}

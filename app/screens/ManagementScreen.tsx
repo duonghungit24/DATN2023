@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react"
+import React, { FC, useEffect, useMemo, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Animated, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -11,6 +11,7 @@ import { MemoScreen } from "./MemoScreen/MemoScreen"
 import { EventScreen } from "./EventScreen/EventScreen"
 import { DiaryScreen } from "./DiaryScreen/DiaryScreen"
 import { useStores } from "../models"
+import { onSnapshot } from "mobx-state-tree"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -89,11 +90,10 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
               <Text
                 preset="medium"
                 style={{
-                  color: active === 0 ? colors.neutral000: colors.primary500,
+                  color: active === 0 ? colors.neutral000 : colors.primary500,
                 }}
                 tx="event"
               />
-                
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -115,11 +115,10 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
               <Text
                 preset="medium"
                 style={{
-                  color: active === 1 ? colors.neutral000: colors.primary500,
+                  color: active === 1 ? colors.neutral000 : colors.primary500,
                 }}
                 tx="note"
               />
-               
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -141,11 +140,10 @@ export const ManagementScreen: FC<StackScreenProps<AppStackScreenProps, "Managem
                 preset="medium"
                 style={{
                   fontSize: 14,
-                  color: active === 2 ? colors.neutral000: colors.primary500,
+                  color: active === 2 ? colors.neutral000 : colors.primary500,
                 }}
                 tx="diary"
               />
-               
             </TouchableOpacity>
           </View>
         </View>
@@ -159,7 +157,7 @@ const $root: ViewStyle = {
   flex: 1,
 }
 const $viewTab: ViewStyle = {
-  backgroundColor :colors.neutral000
+  backgroundColor: colors.neutral000,
 }
 const $viewTabChild: ViewStyle = {
   width: "90%",

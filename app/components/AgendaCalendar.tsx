@@ -9,7 +9,6 @@ import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
 import { utils } from "../utils"
 import { ListEmpty } from "./ListEmty"
-import { color } from "react-native-reanimated"
 
 export interface AgendaCalendarProps {
   /**

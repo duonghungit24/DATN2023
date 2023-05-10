@@ -9,6 +9,7 @@ import {
   Image,
   TextStyle,
   FlatList,
+  Platform,
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, colorsDefault, typography } from "../theme"
@@ -76,9 +77,10 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       multiple: true,
     }).then((listImages) => {
       const result = listImages.map((el) => {
+        console.log("el", el)
         return {
           id: uuid.v4(),
-          uri: el.sourceURL,
+          uri: Platform.OS == "ios" ? el.sourceURL : el.path,
         }
       })
       setImages([...images, ...result])

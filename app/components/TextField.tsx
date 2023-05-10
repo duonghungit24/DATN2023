@@ -177,7 +177,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     >
       {!!(label || labelTx) && (
         <Text
-          preset="formLabel"
+          preset="medium"
           text={label}
           tx={labelTx}
           txOptions={labelTxOptions}
@@ -232,7 +232,9 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 })
 
 const $labelStyle: TextStyle = {
-  marginBottom: spacing.extraSmall,
+  marginBottom: 12,
+  color: colors.neutral700,
+  fontSize:14
 }
 
 const $inputWrapperStyle: ViewStyle = {

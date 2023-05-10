@@ -10,17 +10,17 @@ import {
   TextStyle,
 } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../navigators"
-import { Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../components"
-import { colorRandomItem, colors } from "../theme"
+import { AppStackScreenProps, navigate } from "../../navigators"
+import { Header, ModalConfirmDelete, Screen, Text, VectorsIcon } from "../../components"
+import { colorRandomItem, colors } from "../../theme"
 import * as Animatable from "react-native-animatable"
-import { configs } from "../utils/configs"
+import { configs } from "../../utils/configs"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 import * as Notifications from "expo-notifications"
-import { useStores } from "../models"
-import { utils } from "../utils"
-import { ListEmpty } from "../components/ListEmty"
+import { useStores } from "../../models"
+import { utils } from "../../utils"
+import { ListEmpty } from "../../components/ListEmty"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
@@ -45,24 +45,18 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
     }, [memoStore.isRefreshMemo])
 
     console.log("list", listMemo)
-    // useEffect(() => {
-    //   getPermission()
-    //   requestPermissionsAsync()
-    // }, []);
 
     const renderItem = ({ item, index }) => (
       <ListItem
         item={item}
         index={index}
-        navigation={navigation}
+        onPressDetail={() => navigate("detailMemoScreen", {itemDetail: item}) }
         onDelete={() => {
           setMemoItemId(item.id)
           setIsVisible(true)
         }}
       />
     )
-    // // Pull in navigation via hook
-    // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
         <ModalConfirmDelete
@@ -86,11 +80,11 @@ export const MemoScreen: FC<StackScreenProps<AppStackScreenProps, "Memoscreen">>
   },
 )
 
-const ListItem = ({ item, index, animation, navigation, onDelete }: any) => {
+const ListItem = ({ item, index, animation, onPressDetail, onDelete }: any) => {
   // const bgColor = (i) => colorRandomItem[i % colorRandomItem.length]
   return (
     // <Animatable.View animation={animation} duration={1000} delay={index * 300}>
-    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Screen")}>
+    <TouchableOpacity activeOpacity={0.7} onPress={onPressDetail}>
       <View style={$viewItem}>
         <View style={{ flexDirection: "row", flex: 1 }}>
           <View style={{ flex: 1 }}>

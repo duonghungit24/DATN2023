@@ -36,13 +36,13 @@ const LIST_SOUND = [
     nameSound: "",
   },
   {
-    nameDisplay: "Clock Alarm",
-    source: require("../../assets/sounds/clockAlarm.wav"),
+    nameDisplay: "Clock alarm",
+    source: require("../../assets/sounds/clockalarm.wav"),
     nameSound: "clockalarm.wav",
   },
   {
     nameDisplay: "Quân đội",
-    source: require("../../assets/sounds/quanDoi.wav"),
+    source: require("../../assets/sounds/quandoi.wav"),
     nameSound: "quandoi.wav",
   },
   {

@@ -103,7 +103,7 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                   backgroundGradientFrom: "#fb8c00",
                   backgroundGradientTo: "#ffa726",
                   decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `rgba(54,64,81, ${opacity})`,
+                  color: (opacity = 1) => `red`,
                 }}
                 center={[0, 0]}
                 accessor={"population"}

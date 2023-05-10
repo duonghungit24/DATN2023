@@ -40,9 +40,10 @@ export const TodoStoreModel = types
         if (value.length > 0) {
           const dateNow = moment(new Date())
           value.map((el) => {
+            console.log("time", dateNow.diff(moment(el.time)))
             if (el.isDone) {
               statusDone += 1
-            } else if (!el.isDone && dateNow.diff(moment(el.time))) {
+            } else if (!el.isDone && dateNow.diff(moment(el.time)) < 0) {
               statusDoing += 1
             } else {
               statusExpired += 1

@@ -231,25 +231,8 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
   const onCreate = async () => {
     if (type == "work") {
-      const idNotification = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: title,
-          body: content,
-          sound: authStore.sound.nameSound || "",
-        },
-        trigger: {
-          // lấy time trước 5 phút
-          // date: new Date(date.getTime() - 5 * 60 * 1000),
-          date: new Date(date.getTime() - 0),
-          hour: new Date(date.getTime() - 5 * 60 * 1000).getHours(),
-          minute: new Date(date.getTime() - 5 * 60 * 1000).getMinutes(),
-          //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
-          //  repeats: true,,
-        },
-      })
       const params = {
         id: uuid.v4(),
-        idNotification: idNotification,
         title: title,
         content: content,
         time: date.toString(),
@@ -259,13 +242,45 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         listTaskChild: listTaskChild,
         isDone: false,
       }
-      todoStore.addTodo(utils.displayDateCalendar(date), params)
-    } else if (type == "event") {
       const idNotification = await Notifications.scheduleNotificationAsync({
         content: {
           title: title,
           body: content,
           sound: authStore.sound.nameSound || "",
+          data: { ...params, type: "todo" },
+        },
+        trigger: {
+          // lấy time trước 5 phút
+          // date: new Date(date.getTime() - 5 * 60 * 1000),
+          date: new Date(date.getTime() - 0),
+          //  hour: new Date(date.getTime() + 5 * 60 * 1000).getHours(),
+          //  minute: new Date(date.getTime() + 5 * 60 * 1000).getMinutes(),
+          // seconds: new Date(date.getTime() + 2 * 60 * 1000).getSeconds(),
+          // repeats: true,
+        },
+      })
+
+      todoStore.addTodo(utils.displayDateCalendar(date), {
+        ...params,
+        idNotification,
+      })
+    } else if (type == "event") {
+      const params = {
+        id: uuid.v4(),
+        title: title,
+        content: content,
+        timeStart: dateStart.toString(),
+        timeEnd: dateEnd.toString(),
+        color: color,
+        location: location,
+        url: url,
+      }
+      const idNotification = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: title,
+          body: content,
+          sound: authStore.sound.nameSound || "",
+          data: { ...params, type: "event" },
         },
         trigger: {
           // lấy time trước 5 phút
@@ -277,18 +292,10 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           //  repeats: true,
         },
       })
-      const params = {
-        id: uuid.v4(),
-        idNotification: idNotification,
-        title: title,
-        content: content,
-        timeStart: dateStart.toString(),
-        timeEnd: dateEnd.toString(),
-        color: color,
-        location: location,
-        url: url,
-      }
-      eventStore.addEvent(utils.displayDateCalendar(dateStart), params)
+      eventStore.addEvent(utils.displayDateCalendar(dateStart), {
+        ...params,
+        idNotification,
+      })
     }
     // utils.showToast({
     //   type: "success",

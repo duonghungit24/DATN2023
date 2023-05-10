@@ -3,6 +3,7 @@ import Toast from "react-native-toast-message"
 import { configs } from "./configs"
 import { ToastProps } from "./toastConfigs"
 import { TextStyle } from "react-native"
+import { navigate } from "../navigators"
 
 export const utils = {
   showToast(params: ToastProps) {
@@ -16,12 +17,12 @@ export const utils = {
     return date ? moment(date).format(configs.formatDateDisplay) : ""
   },
   displayDateHour: (date) => {
-      let dateFormat = ""
-      if (date) {
-        dateFormat = moment(date).format("DD/MM/YYYY HH:mm")
-        return dateFormat
-      }
+    let dateFormat = ""
+    if (date) {
+      dateFormat = moment(date).format("DD/MM/YYYY HH:mm")
       return dateFormat
+    }
+    return dateFormat
   },
   displayDateCalendar: (date) => {
     let dateFormat = ""
@@ -38,11 +39,17 @@ export const utils = {
     return `${utils.zeroPad(new Date().getHours(), 2)}:${utils.zeroPad(new Date().getMinutes(), 2)}`
   },
   hoursAndMinutes: (date) => {
-    const now = new Date(date);
-    return  utils.zeroPad(now.getHours(),2) + ':' + utils.zeroPad(now.getMinutes(),2);
+    const now = new Date(date)
+    return utils.zeroPad(now.getHours(), 2) + ":" + utils.zeroPad(now.getMinutes(), 2)
   },
   convertDigitInDate: (str) => {
     if (!str || str == null) return ""
     return str.split("-").reverse().join("/")
+  },
+  navigateTodo: (itemTodo) => {
+    navigate("detailTodoScreen", { itemTodo })
+  },
+  navigateEvent: (itemEvent) => {
+    navigate("detailEventScreen", { itemEvent })
   },
 }

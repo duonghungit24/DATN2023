@@ -22,6 +22,7 @@ import { toastConfig } from "./utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { getPermission, requestPermissionsAsync } from "./notifications"
 import * as Notifications from "expo-notifications"
+import { utils } from "./utils"
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -58,6 +59,7 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
   // const animationProgress = useRef(new Animated.Value(0))
+  const responseListener = useRef(null)
   const { rehydrated } = useInitialRootStore(() => {
     // This runs after the root store has been initialized and rehydrated.
 
@@ -68,18 +70,22 @@ function App(props: AppProps) {
     setTimeout(() => {
       RNBootSplash.hide()
     }, 100)
-    requestPermissionsAsync()
   })
 
-  const responseListener = useRef(null)
   useEffect(() => {
     getPermission()
     requestPermissionsAsync()
+
     // nhấn vào sẽ gọi khi kill app
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       console.log("remove", response)
+      const data = response.notification.request.content.data || {}
+      if (data.type == "todo") {
+        utils.navigateTodo({ ...data, idNotification: response.notification.request.identifier })
+      } else {
+        utils.navigateEvent({ ...data, idNotification: response.notification.request.identifier })
+      }
     })
-
     return () => {
       Notifications.removeNotificationSubscription(responseListener.current)
     }

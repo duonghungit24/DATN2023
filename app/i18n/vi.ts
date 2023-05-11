@@ -70,6 +70,8 @@ const vi = {
   tao: "Tạo",
   ketqua: "Kết quả",
   noidungtieude: "Nội dung",
+  themnhiemvunho: "Thêm nhiệm vụ nhỏ",
+  khongdetrongdulieu: "Không được trống trường bắt buộc",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

@@ -14,7 +14,7 @@ export const requestPermissionsAsync = async () => {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      sound: "bipbip.wav",
+      // sound: "bipbip.wav",
       lightColor: "#FF231F7C",
       lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
       bypassDnd: true,
@@ -40,4 +40,12 @@ export async function getPermission() {
 }
 export async function removeNotificationById(idNotification) {
   await Notifications.cancelScheduledNotificationAsync(idNotification)
+}
+
+export const setScheduleNotificationAsync = async (content, trigger) => {
+  const idNotification = await Notifications.scheduleNotificationAsync({
+    content: content,
+    trigger: trigger,
+  })
+  return idNotification
 }

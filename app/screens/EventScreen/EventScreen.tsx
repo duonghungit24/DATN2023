@@ -146,7 +146,6 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
           theme={{ agendaKnobColor: "red" }}
         >
           <ExpandableCalendar
-            key={languageStore.language}
             firstDay={1}
             // leftArrowImageSource={require('../img/previous.png')}
             // rightArrowImageSource={require('../img/next.png')}

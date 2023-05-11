@@ -1,15 +1,26 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import { ScrollView, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps, goBack } from "../../navigators"
-import { Button, Header, ModalConfirmDelete, Screen, Text, TextField, VectorsIcon } from "../../components"
+import {
+  Button,
+  Header,
+  ModalConfirmDelete,
+  Screen,
+  Text,
+  TextField,
+  VectorsIcon,
+} from "../../components"
 import { colors, typography } from "../../theme"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
 import { configs } from "../../utils/configs"
 import { useStores } from "../../models"
 import { utils } from "../../utils"
-import { removeNotificationById } from "../../notifications"
+import { removeNotificationById, setScheduleNotificationAsync } from "../../notifications"
+import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { translate } from "../../i18n"
+import * as Notifications from "expo-notifications"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -31,10 +42,12 @@ export const options = [
 export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailTodo">> = observer(
   function DetailTodoScreen({ route }) {
     // Pull in one of our MST stores
-    const { todoStore } = useStores()
+    const { todoStore, languageStore, authStore } = useStores()
     const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
+
     const [isVisible, setIsvisible] = useState(false)
+    const [isVisibleDate, setIsvisibleDate] = useState(false)
     const [edit, setEdit] = useState(false)
 
     useEffect(() => {
@@ -59,6 +72,41 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
       goBack()
     }
 
+    const onConfirmDate = (value) => {
+      setItemDetail({
+        ...itemDetail,
+        time: value,
+      })
+      setIsvisibleDate(false)
+    }
+
+    const onUpdate = async () => {
+      if (!itemDetail.title || !itemDetail.content) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("khongdetrongdulieu"),
+        })
+        return
+      }
+      const content = {
+        title: itemDetail.title,
+        body: itemDetail.content,
+        sound: authStore.sound.nameSound || "",
+        data: { ...itemDetail, type: "todo" },
+      }
+      const trigger = {
+        date: new Date(new Date(itemDetail.time).getTime() - 0),
+      }
+      const idNotification = await Notifications.scheduleNotificationAsync({
+        content: content,
+        trigger: {
+          date: new Date(new Date(itemDetail.time).getTime() - 0),
+        },
+      })
+      //  const idNotification = await setScheduleNotificationAsync(content, trigger)
+      console.log("id", idNotification)
+    }
+
     return (
       <Screen style={$root} preset="fixed">
         <Header
@@ -70,6 +118,16 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
           titleTx="thongtinchitiet"
           onRightPress={() => refAction.current.show()}
         />
+        <DateTimePickerModal
+          date={new Date(itemDetail.time)}
+          locale={languageStore.language}
+          isVisible={isVisibleDate}
+          mode="datetime"
+          onConfirm={onConfirmDate}
+          onCancel={() => setIsvisibleDate(false)}
+          cancelTextIOS={translate("huy")}
+          confirmTextIOS={translate("xacnhan")}
+        />
         <ModalConfirmDelete
           isVisible={isVisible}
           onBackDropPress={() => setIsvisible(false)}
@@ -80,31 +138,78 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
           options={options}
           cancelButtonIndex={0}
           onPress={onPressAction}
+          theme="ios"
+          styles={configs.actionStyle}
         />
-        <View style={$container}>
-        <TextField
-          labelTx="tieude"
-          editable={edit}
-        />
-         <TextField
-          labelTx="noidungtieude"
-          editable={edit}
-          containerStyle={$viewInput}
-        /> 
-          <TextField
-          labelTx="vitri"
-          editable={edit}
-          containerStyle={$viewInput}
-        /> 
-          <TextField
-          label="URL"
-          editable={edit}
-          containerStyle={$viewInput}
-        /> 
-        </View>
+        <ScrollView>
+          <View style={$container}>
+            <TextField
+              require
+              value={itemDetail.title}
+              labelTx="tieude"
+              editable={edit}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  title: text,
+                })
+              }
+            />
+            <TextField
+              require
+              value={itemDetail.content}
+              labelTx="noidungtieude"
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  content: text,
+                })
+              }
+              editable={edit}
+              containerStyle={$viewInput}
+            />
+            <TextField
+              value={utils.displayDateHour(itemDetail.time)}
+              labelTx="thoigian"
+              editable={edit}
+              containerStyle={$viewInput}
+              RightAccessory={RighAcessory}
+              inputWrapperStyle={{ alignItems: "center" }}
+              onPressIn={() => {
+                if (edit) {
+                  setIsvisibleDate(true)
+                }
+              }}
+            />
+            <TextField
+              value={itemDetail.location}
+              labelTx="vitri"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  location: text,
+                })
+              }
+            />
+            <TextField
+              value={itemDetail.url}
+              label="URL"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  url: text,
+                })
+              }
+            />
+          </View>
+        </ScrollView>
         {edit ? (
           <View style={$viewButton}>
-            <Button tx="luu" textStyle={$textButton} onPress={() => {}} />
+            <Button tx="luu" textStyle={$textButton} onPress={onUpdate} />
           </View>
         ) : null}
       </Screen>
@@ -112,9 +217,21 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
   },
 )
 
+const RighAcessory = () => {
+  return (
+    <VectorsIcon
+      type="Feather"
+      name="chevron-down"
+      color={colors.neutral400}
+      size={20}
+      style={{ marginRight: 12 }}
+    />
+  )
+}
+
 const $root: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background
+  backgroundColor: colors.neutral000,
 }
 const $viewButton: ViewStyle = {
   position: "absolute",
@@ -125,9 +242,9 @@ const $viewButton: ViewStyle = {
   ...configs.shadow,
 }
 const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }
-const $container : ViewStyle = {
-  padding: 16
+const $container: ViewStyle = {
+  padding: 16,
 }
-const $viewInput : ViewStyle = {
-  marginTop: 12
+const $viewInput: ViewStyle = {
+  marginTop: 12,
 }

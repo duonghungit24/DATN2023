@@ -77,7 +77,7 @@ export const TodoStoreModel = types
     },
     removeTodo: (key, item) => {
       if (self.todoMap.has(key)) {
-        //  self.todoMap.get(key).splice(self.todoMap.get(key).indexOf(item), 1)
+        // self.todoMap.get(key).splice(self.todoMap.get(key).indexOf(item), 1)
         destroy(item)
         self.setRefreshTodo()
       }

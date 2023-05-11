@@ -1,4 +1,4 @@
-import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from "react"
+import React, { ComponentType, forwardRef, Ref, useImperativeHandle, useRef, useState } from "react"
 import {
   StyleProp,
   TextInput,
@@ -95,6 +95,8 @@ export interface TextFieldProps extends Omit<TextInputProps, "ref"> {
    * Note: It is a good idea to memoize this.
    */
   LeftAccessory?: ComponentType<TextFieldAccessoryProps>
+
+  require?: boolean
 }
 
 /**
@@ -121,10 +123,11 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     style: $inputStyleOverride,
     containerStyle: $containerStyleOverride,
     inputWrapperStyle: $inputWrapperStyleOverride,
+    require,
     ...TextInputProps
   } = props
   const input = useRef<TextInput>()
-
+  const [isFocus, setFocus] = useState(false)
   const disabled = TextInputProps.editable === false || status === "disabled"
 
   const placeholderContent = placeholderTx
@@ -137,6 +140,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 
   const $inputWrapperStyles = [
     $inputWrapperStyle,
+    isFocus && { borderColor: colors.primary500 },
     status === "error" && { borderColor: colors.error },
     TextInputProps.multiline && { minHeight: 112 },
     LeftAccessory && { paddingStart: 0 },
@@ -158,11 +162,12 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     HelperTextProps?.style,
   ]
 
-  function focusInput() {
-    if (disabled) return
+  // function focusInput() {
+  //   if (disabled) return
 
-    input.current?.focus()
-  }
+  //   input.current?.focus()
+  //   setFocus(true)
+  // }
 
   useImperativeHandle(ref, () => input.current)
 
@@ -170,20 +175,23 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     <TouchableOpacity
       activeOpacity={1}
       style={$containerStyles}
-     // onPress={focusInput}
-       onPress={TextInputProps.editable ? focusInput : TextInputProps.onPressIn}
+      // onPress={focusInput}
+      onPress={!TextInputProps.editable ? TextInputProps.onPressIn : null}
       accessibilityState={{ disabled }}
       disabled={TextInputProps.editable}
     >
       {!!(label || labelTx) && (
-        <Text
-          preset="medium"
-          text={label}
-          tx={labelTx}
-          txOptions={labelTxOptions}
-          {...LabelTextProps}
-          style={$labelStyles}
-        />
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            preset="medium"
+            text={label}
+            tx={labelTx}
+            txOptions={labelTxOptions}
+            {...LabelTextProps}
+            style={$labelStyles}
+          />
+          {!!require ? <Text style={{ color: colors.error }}>*</Text> : null}
+        </View>
       )}
 
       <View style={$inputWrapperStyles}>
@@ -204,6 +212,13 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
           placeholderTextColor={colors.neutral500}
           {...TextInputProps}
           editable={!disabled}
+          onFocus={() => {
+            setFocus(true)
+          }}
+          onBlur={() => {
+            setFocus(false)
+            input.current = null
+          }}
           style={$inputStyles}
         />
 
@@ -234,7 +249,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
 const $labelStyle: TextStyle = {
   marginBottom: 12,
   color: colors.neutral700,
-  fontSize:14
+  fontSize: 14,
 }
 
 const $inputWrapperStyle: ViewStyle = {
@@ -250,7 +265,7 @@ const $inputWrapperStyle: ViewStyle = {
 const $inputStyle: TextStyle = {
   flex: 1,
   alignSelf: "stretch",
-  ... typography.textRegular,
+  ...typography.textRegular,
   color: colors.neutral700,
   fontSize: 14,
   height: 24,

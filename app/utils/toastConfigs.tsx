@@ -33,8 +33,16 @@ export const toastConfig = {
     <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={$btnToast}>
       <VectorsIcon type="MaterialIcons" name="check-circle" size={25} color={colors.success} />
       <View style={$content}>
-        {text1 ? <Text preset="bold" style={$text1}>{text1}</Text> : null}
-        {text2 ? <Text preset="regular" style={$text2}>{text2}</Text> : null}
+        {text1 ? (
+          <Text preset="bold" style={$text1}>
+            {text1}
+          </Text>
+        ) : null}
+        {text2 ? (
+          <Text preset="regular" style={$text2}>
+            {text2}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   ),
@@ -42,8 +50,16 @@ export const toastConfig = {
     <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={$btnToast}>
       <VectorsIcon type="MaterialIcons" name="error" size={25} color={colors.error} />
       <View style={$content}>
-        {text1 ? <Text preset="bold" style={$text1}>{text1}</Text> : null}
-        {text2 ? <Text preset="regular" style={$text2}>{text2}</Text> : null}
+        {text1 ? (
+          <Text preset="bold" style={$text1}>
+            {text1}
+          </Text>
+        ) : null}
+        {text2 ? (
+          <Text preset="regular" style={$text2}>
+            {text2}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   ),
@@ -51,8 +67,16 @@ export const toastConfig = {
     <TouchableOpacity activeOpacity={0.2} onPress={onPress} style={$btnToast}>
       <VectorsIcon type="MaterialIcons" name="warning" size={25} color={colors.accent500} />
       <View style={$content}>
-        {text1 ? <Text preset="bold" style={$text1}>{text1}</Text> : null}
-        {text2 ? <Text preset="regular" style={$text2}>{text2}</Text> : null}
+        {text1 ? (
+          <Text preset="bold" style={$text1}>
+            {text1}
+          </Text>
+        ) : null}
+        {text2 ? (
+          <Text preset="regular" style={$text2}>
+            {text2}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   ),
@@ -68,10 +92,10 @@ const $btnToast: ViewStyle = {
   padding: 6,
   flexDirection: "row",
   ...configs.shadow,
-  zIndex: 10
+  zIndex: 10,
 }
 const $text1: TextStyle = {
-  fontSize: 18,
+  fontSize: 14,
   color: "#71192F",
 }
 const $text2: TextStyle = {

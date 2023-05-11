@@ -1,6 +1,10 @@
 import { LocaleConfig } from "react-native-calendars"
 export const hourPickerLocales = {
   vi: {
+    // today: "Hôm nay",
+    amDesignator: "AM",
+    dayNames: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"],
+    dayNamesShort: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
     monthNames: [
       "Tháng 1",
       "Tháng 2",
@@ -29,9 +33,7 @@ export const hourPickerLocales = {
       "T.11",
       "T.12",
     ],
-    dayNames: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"],
-    dayNamesShort: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
-    today: "Hôm nay",
+    pmDesignator: "PM",
   },
   en: {
     amDesignator: "AM",

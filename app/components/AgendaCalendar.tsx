@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import { Pressable, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
@@ -103,10 +103,12 @@ LocaleConfig.locales["ja"] = hourPickerLocales["ja"]
 LocaleConfig.locales["ko"] = hourPickerLocales["ko"]
 export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCalendarProps) {
   const { style, onPressDate } = props
-  const { languageStore, todoStore } = useStores()
   const $styles = [$container, style]
-  LocaleConfig.defaultLocale = languageStore.language
+
+  const { languageStore, todoStore } = useStores()
   const [listTask, setListTask] = useState({})
+
+  LocaleConfig.defaultLocale = languageStore.language
 
   useEffect(() => {
     setListTask(todoStore.getListTodo())

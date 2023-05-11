@@ -82,7 +82,7 @@ export const configs = {
     NOTE: "note",
     DIARY: "diary",
   },
-  THEME : {
+  THEME: {
     agendaDayTextColor: colors.secondary400,
     agendaDayNumColor: colors.secondary500,
     // agendaTodayColor: "red",
@@ -90,6 +90,11 @@ export const configs = {
     agendaKnobColor: colors.primary500,
     selectedDayBackgroundColor: colors.primary500,
     dotColor: colors.primary500,
-    arrowColor:  colors.primary500,
+    arrowColor: colors.primary500,
+  },
+  actionStyle: {
+    buttonBox: {
+      backgroundColor: "#fff",
+    },
   },
 }

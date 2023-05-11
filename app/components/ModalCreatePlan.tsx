@@ -217,9 +217,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           )
         })}
         <TouchableOpacity style={$viewBtn} onPress={onCreateTask}>
-          <Text preset="regular" style={$textBtn}>
-            Thêm nhiệm vụ nhỏ
-          </Text>
+          <Text preset="regular" style={$textBtn} tx="themnhiemvunho" />
         </TouchableOpacity>
       </View>
     )
@@ -255,7 +253,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           date: new Date(date.getTime() - 0),
           //  hour: new Date(date.getTime() + 5 * 60 * 1000).getHours(),
           //  minute: new Date(date.getTime() + 5 * 60 * 1000).getMinutes(),
-          // seconds: new Date(date.getTime() + 2 * 60 * 1000).getSeconds(),
+          // seconds: new Date(date.getTime() + 2 * 60).getSeconds(),
           // repeats: true,
         },
       })
@@ -327,7 +325,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           cancelTextIOS={translate("huy")}
           confirmTextIOS={translate("xacnhan")}
         />
-        <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={() => {}} />
+        <HeaderCreate typeName={type} onPressBack={onBackDropPress} onPressAdd={onCreate} />
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ zIndex: 1 }}>
           <TitleAndContent
             title={title}

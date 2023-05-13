@@ -29,7 +29,7 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
     return (
       <Screen style={$root} preset="fixed">
         <Header backgroundColor={colors.neutral000} title={dateSelect} titleStyle={$titleStyle} />
-        <AgendaCalendar onPressDate={(date) => setDateSelect(date)} />
+        <AgendaCalendar onPressDate={setDateSelect} />
       </Screen>
     )
   },
@@ -38,8 +38,8 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
 const $root: ViewStyle = {
   flex: 1,
 }
-const $titleStyle : TextStyle = {
+const $titleStyle: TextStyle = {
   fontSize: 16,
   ...typography.textBold,
-  color: colors.primary500
+  color: colors.primary500,
 }

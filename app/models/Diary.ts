@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, destroy, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListDiaryStoreModel } from "./ListDiaryStore"
 import moment from "moment"
@@ -10,41 +10,59 @@ import _ from "lodash"
 export const DiaryModel = types
   .model("Diary")
   .props({
-    diaryMap: types.map(types.optional(ListDiaryStoreModel, {})),
-    isRefreshDiary: types.optional(types.number, 0)
+    diaryMap: types.map(types.array(ListDiaryStoreModel)),
+    isRefreshDiary: types.optional(types.number, 0),
   })
   .actions(withSetPropAction)
   .actions((self) => ({
     setRefreshDiary: () => {
       self.isRefreshDiary += 1
-    }
+    },
   }))
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     addDiray: (key, data) => {
       if (self.diaryMap.has(key)) {
-        self.diaryMap.get(key).listDiary.push(data)
+        self.diaryMap.get(key).push(data)
       } else {
         const dt = []
         dt.push(data)
-        self.diaryMap.set(key, { listDiary: dt })
+        self.diaryMap.set(key, dt)
       }
       self.setRefreshDiary()
+    },
+    removeDiary: (key, item) => {
+      if (self.diaryMap.has(key)) {
+        // self.todoMap.get(key).splice(self.todoMap.get(key).indexOf(item), 1)
+        destroy(item)
+        self.setRefreshDiary()
+      }
+    },
+    updateDiary: (key, item) => {
+      if (self.diaryMap.has(key)) {
+        const index = self.diaryMap.get(key).findIndex((el) => el.id == item.id)
+        if (index > -1) {
+          self.diaryMap.get(key)[index] = item
+          self.setRefreshDiary()
+        }
+      }
     },
     getListDiary: () => {
       const data = []
       self.diaryMap.forEach((value, key) => {
-        const sortData = value.listDiary.sort((a, b) => {
-          const momena = moment(a.time)
-          const momentb = moment(b.time)
-          return momena.diff(momentb)
-        })
-        data.push({
-          title: key,
-          data: sortData.slice()
-        })
+        if (value.length > 0) {
+          const sortData = value.sort((a, b) => {
+            const momena = moment(a.time)
+            const momentb = moment(b.time)
+            return momena.diff(momentb)
+          })
+          data.push({
+            title: key,
+            data: sortData.slice(),
+          })
+        }
       })
-      data.sort((a, b) => new Date(a.title).getTime() -  new Date(b.title).getTime())
+      data.sort((a, b) => new Date(a.title).getTime() - new Date(b.title).getTime())
       return data
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

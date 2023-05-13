@@ -15,6 +15,7 @@ export const requestPermissionsAsync = async () => {
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       // sound: "bipbip.wav",
+      sound: "bipbip.wav",
       lightColor: "#FF231F7C",
       lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
       bypassDnd: true,

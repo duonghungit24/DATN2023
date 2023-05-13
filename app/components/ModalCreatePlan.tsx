@@ -255,6 +255,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           //  minute: new Date(date.getTime() + 5 * 60 * 1000).getMinutes(),
           // seconds: new Date(date.getTime() + 2 * 60).getSeconds(),
           // repeats: true,
+          channelId: "default",
         },
       })
 

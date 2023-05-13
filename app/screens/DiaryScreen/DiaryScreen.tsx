@@ -91,11 +91,13 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
     }, [diaryStore.isRefreshDiary])
     // const navigation = useNavigation()
 
-    console.log("setlist", listDiary[2]?.data)
-    console.log("Date", dateNow)
-
     const renderItem = useCallback(({ item }: any) => {
-      return <ItemDiary item={item} onPressDetail={() => navigate("detailDiaryScreen", {itemDetail: item})}/>
+      return (
+        <ItemDiary
+          item={item}
+          onPressDetail={() => navigate("detailDiaryScreen", { itemDetail: item })}
+        />
+      )
     }, [])
 
     return (
@@ -150,7 +152,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
   },
 )
 
-const ItemDiary = ({ item , onPressDetail}) => {
+const ItemDiary = ({ item, onPressDetail }) => {
   const [indexImg, setIndexImg] = useState(0)
   const [isVisible, setIsvisible] = useState(false)
 
@@ -165,7 +167,7 @@ const ItemDiary = ({ item , onPressDetail}) => {
         images={item.images}
         imageIndex={indexImg}
         visible={isVisible}
-        onRequestClose={onPressDetail}
+        onRequestClose={() => setIsvisible(false)}
       />
       <TouchableWithoutFeedback onPress={onPressDetail}>
         <View style={$viewRow}>
@@ -199,9 +201,7 @@ const ItemDiary = ({ item , onPressDetail}) => {
                 style={{ flexDirection: "row" }}
               />
             </View>
-            {
-              item.emoji ?  <Image source={item.emoji} style={$emoji} /> : null
-            }
+            {item.emoji ? <Image source={item.emoji} style={$emoji} /> : null}
           </View>
         </View>
       </TouchableWithoutFeedback>

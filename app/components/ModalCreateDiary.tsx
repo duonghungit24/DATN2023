@@ -31,7 +31,7 @@ import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { Button } from "./Button"
 import { CustomColor } from "./CustomColor"
-import { listEmoji } from "../theme/image"
+import { ImageConstant, listEmoji } from "../theme/image"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -94,6 +94,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         onPressAdd={pickImage}
         onPressView={(index) => viewImage(index)}
         onPressRemove={(value) => onPressRemoveImg(value)}
+        edit
       />
     )
   }, [images.length])
@@ -124,7 +125,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               colorIcon={colors.primary500}
             />
           )}
-          value={utils.displayDate(date)}
+          value={utils.displayDateHour(date)}
           inputWrapperStyle={$wrapInput}
           clearButtonMode="while-editing"
           editable={false}
@@ -226,7 +227,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         title: title,
         content: content,
         time: date.toString(),
-        emoji: "",
         isPin: togglePin,
         color: color,
         location: location,
@@ -310,18 +310,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
               />
             </View>
             {toggleDate && showToggleDate}
-            {/* <View style={$viewToggle}>
-              <TextField
-                LeftAccessory={() => (
-                  <LeftAccesstory typeIcon="Entypo" nameIcon="pin" colorIcon={colors.primary500} />
-                )}
-                placeholderTx="ghim"
-                inputWrapperStyle={$wrapInput}
-                containerStyle={{ flex: 1 }}
-                editable={false}
-              />
-              <Toggle variant="switch" value={togglePin} onPress={() => setTogglePin(!togglePin)} />
-            </View> */}
             <CustomColor
               color={color}
               listColor={listColor}
@@ -372,16 +360,26 @@ export const LeftAccesstory = ({ typeIcon, nameIcon, colorIcon }: any) => {
   return <VectorsIcon type={typeIcon} name={nameIcon} color={colorIcon} size={20} />
 }
 
-const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }: any) => {
+export const SelectImage = ({
+  onPressAdd,
+  onPressRemove,
+  dataImages = [],
+  onPressView,
+  hideIcon,
+  edit,
+}: any) => {
   return (
     <View style={$viewRowImg}>
-      <VectorsIcon
-        type="Feather"
-        name="image"
-        color={colors.primary500}
-        size={20}
-        style={{ marginRight: 12 }}
-      />
+      {hideIcon ? (
+        <VectorsIcon
+          type="Feather"
+          name="image"
+          color={colors.primary500}
+          size={20}
+          style={{ marginRight: 12 }}
+        />
+      ) : null}
+
       {dataImages.length > 0
         ? dataImages.map((el, index) => {
             return (
@@ -391,9 +389,11 @@ const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }
                 activeOpacity={0.8}
                 onPress={() => onPressView(index)}
               >
-                <TouchableOpacity style={$btnClose} onPress={() => onPressRemove(el)}>
-                  <VectorsIcon type="Ionicons" name="md-close-outline" color="white" size={20} />
-                </TouchableOpacity>
+                {edit ? (
+                  <TouchableOpacity style={$btnClose} onPress={() => onPressRemove(el)}>
+                    <VectorsIcon type="Ionicons" name="md-close-outline" color="white" size={20} />
+                  </TouchableOpacity>
+                ) : null}
                 <Image
                   source={{
                     uri: el.uri,
@@ -404,9 +404,11 @@ const SelectImage = ({ onPressAdd, onPressRemove, dataImages = [], onPressView }
             )
           })
         : null}
-      <TouchableOpacity style={[$viewBtnImg, $viewAddImg]} onPress={onPressAdd}>
-        <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
-      </TouchableOpacity>
+      {edit ? (
+        <TouchableOpacity style={[$viewBtnImg, $viewAddImg]} onPress={onPressAdd}>
+          <VectorsIcon type="AntDesign" name="plus" color="red" size={20} />
+        </TouchableOpacity>
+      ) : null}
     </View>
   )
 }

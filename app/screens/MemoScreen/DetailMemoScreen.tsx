@@ -1,14 +1,28 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, View, ViewStyle } from "react-native"
+import { Platform, ScrollView, TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../../navigators"
-import { Button, Header, ModalConfirmDelete, Screen, Text } from "../../components"
+import { AppStackScreenProps, goBack } from "../../navigators"
+import {
+  Button,
+  Header,
+  ModalConfirmDelete,
+  Screen,
+  SelectImage,
+  Text,
+  TextField,
+} from "../../components"
 import { colors, typography } from "../../theme"
 import { useStores } from "../../models"
-import { options } from "../TodoScreen/DetailTodoScreen"
+import { RighAcessory, options } from "../TodoScreen/DetailTodoScreen"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
 import { configs } from "../../utils/configs"
+import { utils } from "../../utils"
+import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { translate } from "../../i18n"
+import uuid from "react-native-uuid"
+import ImageView from "react-native-image-viewing"
+import ImagePicker from "react-native-image-crop-picker"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -21,16 +35,24 @@ import { configs } from "../../utils/configs"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailMemo">> = observer(function DetailMemoScreen() {
-  // Pull in one of our MST stores
-  const { memoStore } = useStores()
+export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailMemo">> = observer(
+  function DetailMemoScreen({ route }) {
+    // Pull in one of our MST stores
+    const { memoStore, languageStore } = useStores()
     const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
+
     const [isVisible, setIsvisible] = useState(false)
     const [edit, setEdit] = useState(false)
+    const [isVisibleDate, setIsvisibleDate] = useState(false)
+
+    const [listImages, setListImage] = useState([])
+    const [isVisibleImg, setIsvisibleImg] = useState(false)
+    const [indexImg, setIndexImg] = useState(0)
 
     useEffect(() => {
-     // setItemDetail(route.params.itemTodo)
+      setItemDetail(route.params.itemDetail)
+      setListImage(route.params.itemDetail?.listImg)
     }, [])
 
     const onPressAction = (index) => {
@@ -44,9 +66,68 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
           break
       }
     }
-  return (
-    <Screen style={$root} preset="fixed">
-      <Header
+
+    const pickImage = () => {
+      ImagePicker.openPicker({
+        multiple: true,
+      }).then((listImgs) => {
+        const result = listImgs.map((el) => {
+          return {
+            id: uuid.v4(),
+            uri: Platform.OS == "ios" ? el.sourceURL : el.path,
+          }
+        })
+        setListImage([...listImages, ...result])
+      })
+    }
+
+    const viewImage = (index) => {
+      setIsvisibleImg(true)
+      setIndexImg(index)
+    }
+
+    const onPressRemoveImg = (value) => {
+      const dt = listImages.filter((el) => el.id != value.id)
+      setListImage(dt)
+    }
+
+    const DisplayImage = useMemo(() => {
+      return (
+        <SelectImage
+          dataImages={listImages}
+          onPressAdd={pickImage}
+          onPressView={(index) => viewImage(index)}
+          onPressRemove={(value) => onPressRemoveImg(value)}
+          edit={edit}
+        />
+      )
+    }, [listImages, edit])
+
+    const onConfirmDate = (value) => {
+      setItemDetail({
+        ...itemDetail,
+        time: value,
+      })
+      setIsvisibleDate(false)
+    }
+
+    const onPressRemove = () => {
+      memoStore.deleteMemo(itemDetail.id)
+      goBack()
+    }
+
+    const onUpdateMemo = () => {
+      const params = {
+        ...itemDetail,
+        listImg: listImages,
+        time: itemDetail.time.toString(),
+      }
+      memoStore.editMemo(itemDetail.id, params)
+      goBack()
+    }
+    return (
+      <Screen style={$root} preset="fixed">
+        <Header
           typeIconLeft="AntDesign"
           leftIcon="arrowleft"
           typeIconRight="Entypo"
@@ -55,29 +136,118 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
           titleTx="thongtinchitiet"
           onRightPress={() => refAction.current.show()}
         />
+        <ImageView
+          images={listImages}
+          imageIndex={indexImg}
+          visible={isVisibleImg}
+          onRequestClose={() => setIsvisibleImg(false)}
+        />
+        <DateTimePickerModal
+          date={new Date(itemDetail.time)}
+          locale={languageStore.language}
+          isVisible={isVisibleDate}
+          mode="datetime"
+          onConfirm={onConfirmDate}
+          onCancel={() => setIsvisibleDate(false)}
+          cancelTextIOS={translate("huy")}
+          confirmTextIOS={translate("xacnhan")}
+        />
         <ModalConfirmDelete
           isVisible={isVisible}
           onBackDropPress={() => setIsvisible(false)}
-          onPressRemove={() => {}}
+          onPressRemove={onPressRemove}
         />
-          <ActionSheet
+        <ActionSheet
           ref={refAction}
           options={options}
           cancelButtonIndex={0}
           onPress={onPressAction}
+          theme="ios"
+          styles={configs.actionStyle}
         />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={$container}>
+            <TextField
+              require
+              value={itemDetail.title}
+              labelTx="tieude"
+              editable={edit}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  title: text,
+                })
+              }
+            />
+            <TextField
+              require
+              value={itemDetail.content}
+              labelTx="noidungtieude"
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  content: text,
+                })
+              }
+              editable={edit}
+              containerStyle={$viewInput}
+              multiline
+            />
+            <TextField
+              value={utils.displayDateHour(itemDetail.time)}
+              labelTx="thoigian"
+              editable={edit}
+              containerStyle={$viewInput}
+              RightAccessory={RighAcessory}
+              inputWrapperStyle={{ alignItems: "center" }}
+              onPressIn={() => {
+                if (edit) {
+                  setIsvisibleDate(true)
+                }
+              }}
+            />
+            <Text preset="medium" tx="hinhanh" style={$textHead} />
+            {DisplayImage}
+            <TextField
+              value={itemDetail.location}
+              labelTx="vitri"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  location: text,
+                })
+              }
+            />
+            <TextField
+              value={itemDetail.url}
+              label="URL"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  url: text,
+                })
+              }
+            />
+            <View style={{ height: 80 }} />
+          </View>
+        </ScrollView>
         {edit ? (
           <View style={$viewButton}>
-            <Button tx="luu" textStyle={$textButton} onPress={() => {}} />
+            <Button tx="luu" textStyle={$textButton} onPress={onUpdateMemo} />
           </View>
         ) : null}
-    </Screen>
-  )
-})
+      </Screen>
+    )
+  },
+)
 
 const $root: ViewStyle = {
   flex: 1,
-  backgroundColor:colors.background
+  backgroundColor: colors.neutral100,
 }
 const $viewButton: ViewStyle = {
   position: "absolute",
@@ -88,3 +258,15 @@ const $viewButton: ViewStyle = {
   ...configs.shadow,
 }
 const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }
+const $container: ViewStyle = {
+  flex: 1,
+  padding: 16,
+}
+const $viewInput: ViewStyle = {
+  marginTop: 12,
+}
+const $textHead: TextStyle = {
+  paddingVertical: 12,
+  color: colors.neutral700,
+  fontSize: 14,
+}

@@ -9,39 +9,39 @@ const MemoItemModel = types.model({
   title: types.maybeNull(types.string),
   content: types.maybeNull(types.string),
   time: types.maybeNull(types.string),
-  emoji: types.maybeNull(types.string),
   isPin: types.maybeNull(types.boolean),
   color: types.maybeNull(types.string),
   location: types.maybeNull(types.string),
   url: types.maybeNull(types.string),
-  listImg: types.maybeNull(types.optional(types.frozen(), []))
+  listImg: types.maybeNull(types.optional(types.frozen(), [])),
 })
 export const MemoModel = types
   .model("Memo")
   .props({
-    listMemo : types.optional(types.array(MemoItemModel), []),
-    isRefreshMemo: types.optional(types.number, 0)
+    listMemo: types.optional(types.array(MemoItemModel), []),
+    isRefreshMemo: types.optional(types.number, 0),
   })
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    addMemo : (item) => {
+    addMemo: (item) => {
       const arr = [item, ...self.listMemo]
-       self.listMemo = cast(arr)
-       self.isRefreshMemo += 1
+      self.listMemo = cast(arr)
+      self.isRefreshMemo += 1
     },
-    editMemo: (item) => {
-
-    },
-    deleteMemo:(id: string) => {
+    editMemo: (id, item) => {
       const index = self.listMemo.findIndex((el) => el.id == id)
-      if(index > -1)
-      {
-        detach(self.listMemo[index])
-        self.isRefreshMemo +=1
+      if (index > -1) {
+        self.listMemo[index] = item
       }
-      
-    }
+    },
+    deleteMemo: (id: string) => {
+      const index = self.listMemo.findIndex((el) => el.id == id)
+      if (index > -1) {
+        detach(self.listMemo[index])
+        self.isRefreshMemo += 1
+      }
+    },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface Memo extends Instance<typeof MemoModel> {}

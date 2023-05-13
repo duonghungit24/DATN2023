@@ -3,6 +3,7 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListTodoStoreModel } from "./ListTodoStore"
 import moment from "moment"
 import { utils } from "../utils"
+import { values } from "mobx"
 
 /**
  * Model description here for TypeScript hints.
@@ -81,6 +82,12 @@ export const TodoStoreModel = types
         destroy(item)
         self.setRefreshTodo()
       }
+    },
+    editTodo: () => {},
+    getTodoDone: () => {
+      return values(self.todoMap)
+        .filter((todo) => todo)
+        .filter((el) => !el.isDone)
     },
     getListTodo: () => {
       const data = {}

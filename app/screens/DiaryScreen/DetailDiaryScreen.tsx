@@ -1,14 +1,39 @@
-import React, { FC, useRef, useState } from "react"
+import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, View, ViewStyle } from "react-native"
+import {
+  FlatList,
+  ImageStyle,
+  Platform,
+  ScrollView,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  Image,
+} from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackScreenProps } from "../../navigators"
-import { Button, Header, ModalConfirmDelete, Screen, Text } from "../../components"
+import { AppStackScreenProps, goBack } from "../../navigators"
+import {
+  Button,
+  Header,
+  ModalConfirmDelete,
+  Screen,
+  SelectImage,
+  Text,
+  TextField,
+} from "../../components"
 import { colors, typography } from "../../theme"
 import { configs } from "../../utils/configs"
 import { useStores } from "../../models"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
-import { options } from "../TodoScreen/DetailTodoScreen"
+import { RighAcessory, options } from "../TodoScreen/DetailTodoScreen"
+import uuid from "react-native-uuid"
+import ImageView from "react-native-image-viewing"
+import ImagePicker from "react-native-image-crop-picker"
+import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { translate } from "../../i18n"
+import { utils } from "../../utils"
+import { ImageConstant, listEmoji } from "../../theme/image"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -21,27 +46,99 @@ import { options } from "../TodoScreen/DetailTodoScreen"
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "DetailDiary">> = observer(function DetailDiaryScreen() {
-  // Pull in one of our MST stores
-  const { memoStore } = useStores()
-  const [itemDetail, setItemDetail] = useState<any>({})
-  const refAction = useRef(null)
-  const [isVisible, setIsvisible] = useState(false)
-  const [edit, setEdit] = useState(false)
-  const onPressAction = (index) => {
-    switch (index) {
-      case 1:
-        setEdit(true)
-        break
-      case 2:
-        setIsvisible(true)
-      default:
-        break
+export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "DetailDiary">> = observer(
+  function DetailDiaryScreen({ route }) {
+    // Pull in one of our MST stores
+    const { diaryStore, languageStore } = useStores()
+
+    const refAction = useRef(null)
+    const [itemDetail, setItemDetail] = useState<any>({})
+    const [listImages, setListImage] = useState([])
+    const [indexImg, setIndexImg] = useState(0)
+
+    const [isVisible, setIsvisible] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [isVisibleDate, setIsvisibleDate] = useState(false)
+    const [isVisibleImg, setIsvisibleImg] = useState(false)
+
+    useEffect(() => {
+      setItemDetail(route.params.itemDetail)
+      setListImage(route.params.itemDetail?.images)
+    }, [])
+
+    const onPressAction = (index) => {
+      switch (index) {
+        case 1:
+          setEdit(true)
+          break
+        case 2:
+          setIsvisible(true)
+        default:
+          break
+      }
     }
-  }
-  return (
-    <Screen style={$root} preset="fixed">
-     <Header
+
+    const pickImage = () => {
+      ImagePicker.openPicker({
+        multiple: true,
+      }).then((listImgs) => {
+        const result = listImgs.map((el) => {
+          return {
+            id: uuid.v4(),
+            uri: Platform.OS == "ios" ? el.sourceURL : el.path,
+          }
+        })
+        setListImage([...listImages, ...result])
+      })
+    }
+
+    const viewImage = (index) => {
+      setIsvisibleImg(true)
+      setIndexImg(index)
+    }
+
+    const onPressRemoveImg = (value) => {
+      const dt = listImages.filter((el) => el.id != value.id)
+      setListImage(dt)
+    }
+
+    const DisplayImage = useMemo(() => {
+      return (
+        <SelectImage
+          dataImages={listImages}
+          onPressAdd={pickImage}
+          onPressView={(index) => viewImage(index)}
+          onPressRemove={(value) => onPressRemoveImg(value)}
+          edit={edit}
+        />
+      )
+    }, [listImages, edit])
+
+    const onConfirmDate = (value) => {
+      setItemDetail({
+        ...itemDetail,
+        time: value,
+      })
+      setIsvisibleDate(false)
+    }
+
+    const onUpdate = () => {
+      const params = {
+        ...itemDetail,
+        images: listImages,
+      }
+      diaryStore.updateDiary(utils.displayDateCalendar(itemDetail.time), params)
+      goBack()
+    }
+
+    const onPressRemoveItem = () => {
+      diaryStore.removeDiary(utils.displayDateCalendar(itemDetail.time), itemDetail)
+      goBack()
+    }
+
+    return (
+      <Screen style={$root} preset="fixed">
+        <Header
           typeIconLeft="AntDesign"
           leftIcon="arrowleft"
           typeIconRight="Entypo"
@@ -53,26 +150,153 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
         <ModalConfirmDelete
           isVisible={isVisible}
           onBackDropPress={() => setIsvisible(false)}
-          onPressRemove={() => {}}
+          onPressRemove={onPressRemoveItem}
         />
-          <ActionSheet
+        <ActionSheet
           ref={refAction}
           options={options}
           cancelButtonIndex={0}
           onPress={onPressAction}
+          theme="ios"
+          styles={configs.actionStyle}
         />
+        <ImageView
+          images={listImages}
+          imageIndex={indexImg}
+          visible={isVisibleImg}
+          onRequestClose={() => setIsvisibleImg(false)}
+        />
+        <DateTimePickerModal
+          date={new Date(itemDetail.time)}
+          locale={languageStore.language}
+          isVisible={isVisibleDate}
+          mode="datetime"
+          onConfirm={onConfirmDate}
+          onCancel={() => setIsvisibleDate(false)}
+          cancelTextIOS={translate("huy")}
+          confirmTextIOS={translate("xacnhan")}
+        />
+        <ModalConfirmDelete
+          isVisible={isVisible}
+          onBackDropPress={() => setIsvisible(false)}
+          onPressRemove={onPressRemoveItem}
+        />
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={$container}>
+            <TextField
+              require
+              value={itemDetail.content}
+              labelTx="trangthai"
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  content: text,
+                })
+              }
+              editable={edit}
+              containerStyle={$viewInput}
+              multiline
+            />
+            <TextField
+              value={utils.displayDateHour(itemDetail.time)}
+              labelTx="thoigian"
+              editable={edit}
+              containerStyle={$viewInput}
+              RightAccessory={RighAcessory}
+              inputWrapperStyle={{ alignItems: "center" }}
+              onPressIn={() => {
+                if (edit) {
+                  setIsvisibleDate(true)
+                }
+              }}
+            />
+            <Text preset="medium" tx="bieutuongcamxuc" style={$textHead} />
+            <FlatList
+              data={listEmoji}
+              keyExtractor={(_, index) => `${index}`}
+              scrollEventThrottle={16}
+              renderItem={({ item, index }) => {
+                return (
+                  <View
+                    onStartShouldSetResponder={() => true}
+                    style={{ paddingHorizontal: 16, alignItems: "center" }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (edit) {
+                          setItemDetail({
+                            ...itemDetail,
+                            emoji: item.emoji.toString(),
+                          })
+                        }
+                      }}
+                    >
+                      <Image key={index} source={item.emoji} style={$imgEmoji} />
+                    </TouchableOpacity>
+                    {item.emoji == itemDetail.emoji ? (
+                      <View
+                        style={{
+                          backgroundColor: colors.primary500,
+                          width: 10,
+                          height: 10,
+                          borderRadius: 5,
+                        }}
+                      />
+                    ) : null}
+                  </View>
+                )
+              }}
+              horizontal
+              //  style={{ flexDirection: "row" }}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ backgroundColor: colors.neutral000, padding: 6 }}
+            />
+            <Text preset="medium" tx="hinhanh" style={$textHead} />
+            {DisplayImage}
+            {!edit && listImages.length <= 0 ? (
+              <Image source={ImageConstant.imageEmty} style={$image} />
+            ) : null}
+            <TextField
+              value={itemDetail.location}
+              labelTx="vitri"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  location: text,
+                })
+              }
+            />
+            <TextField
+              value={itemDetail.url}
+              label="URL"
+              editable={edit}
+              containerStyle={$viewInput}
+              onChangeText={(text) =>
+                setItemDetail({
+                  ...itemDetail,
+                  url: text,
+                })
+              }
+            />
+            <View style={{ height: 80 }} />
+          </View>
+        </ScrollView>
         {edit ? (
           <View style={$viewButton}>
-            <Button tx="luu" textStyle={$textButton} onPress={() => {}} />
+            <Button tx="luu" textStyle={$textButton} onPress={onUpdate} />
           </View>
         ) : null}
-    </Screen>
-  )
-})
+      </Screen>
+    )
+  },
+)
 
 const $root: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background
+  backgroundColor: colors.background,
 }
 const $viewButton: ViewStyle = {
   position: "absolute",
@@ -83,3 +307,26 @@ const $viewButton: ViewStyle = {
   ...configs.shadow,
 }
 const $textButton: TextStyle = { ...typography.textBold, fontSize: 14, color: colors.neutral000 }
+const $container: ViewStyle = {
+  flex: 1,
+  padding: 16,
+}
+const $viewInput: ViewStyle = {
+  marginTop: 12,
+}
+const $textHead: TextStyle = {
+  paddingVertical: 12,
+  color: colors.neutral700,
+  fontSize: 14,
+}
+const $imgEmoji: ImageStyle = {
+  width: 60,
+  height: 60,
+  resizeMode: "contain",
+}
+const $image: ImageStyle = {
+  height: 130,
+  width: 200,
+  resizeMode: "contain",
+  alignSelf: "center",
+}

@@ -72,6 +72,8 @@ const vi = {
   noidungtieude: "Nội dung",
   themnhiemvunho: "Thêm nhiệm vụ nhỏ",
   khongdetrongdulieu: "Không được trống trường bắt buộc",
+  trangthai: "Trạng thái",
+  hinhanh: "Hình ảnh",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

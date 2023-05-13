@@ -35,64 +35,6 @@ const data = {
       content: "okk",
     },
   ],
-  // "2023-03-20": [
-  //   {
-  //     id: "2",
-  //     name: "Workshop: Build any mobile application with React Native",
-  //     height: 50,
-  //     day: "2022-11-25",
-  //     content: "okk",
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Q&A session",
-  //     height: 50,
-  //     day: "2022-11-25",
-  //   },
-  //   {
-  //     id: "5",
-  //     name: "Q&A session",
-  //     height: 50,
-  //     day: "2022-11-26",
-  //   },
-  // ],
-  // "2023-03-24": [
-  //   {
-  //     id: "4",
-  //     name: "Workshop: Build a Chat application in hours using Stream",
-  //     height: 50,
-  //     day: "2022-11-26",
-  //   },
-  //   {
-  //     id: "5",
-  //     name: "Q&A session",
-  //     height: 50,
-  //     day: "2022-11-26",
-  //   },
-  // ],
-  // "2023-04-22": [
-  //   {
-  //     id: "6",
-  //     name: "Workshop: Build Full-Stack applications with Nhost",
-  //     height: 50,
-  //     day: "2022-11-27",
-  //   },
-  //   {
-  //     id: "7",
-  //     name: "Q&A session",
-  //     content: "okk",
-  //     height: 50,
-  //     day: "2022-11-27",
-  //   },
-  // ],
-  // "2023-03-23": [
-  //   {
-  //     id: "8",
-  //     name: "Demo Day",
-  //     height: 50,
-  //     day: "2022-11-28",
-  //   },
-  // ],
 }
 /**
  * Describe your component here
@@ -111,19 +53,21 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
   LocaleConfig.defaultLocale = languageStore.language
 
   useEffect(() => {
+    console.log("list", todoStore.getTodoDone())
     setListTask(todoStore.getListTodo())
   }, [todoStore.isRefreshTodo])
 
-  console.log("lít", todoStore.todoMap)
+  // const getList = async () => {
+  //   const reuslt = await todoStore.getListTodo()
+  //   console.log("result", reuslt)
+  // }
+  // console.log("lít", todoStore.todoMap)
 
   const renderItem = (reservation: any, isFirst: boolean) => {
     return (
       <Pressable
         style={[$viewItem, { borderLeftColor: reservation.color }]}
-        onPress={() => {
-          console.log("item", reservation)
-          navigate("detailTodoScreen", { itemTodo: reservation })
-        }}
+        onPress={() => navigate("detailTodoScreen", { itemTodo: reservation })}
       >
         <Text preset="medium" style={$textTime}>
           {utils.hoursAndMinutes(reservation.time)}
@@ -157,9 +101,9 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         onDayPress={(day) => {
           onPressDate(utils.convertDigitInDate(day.dateString))
         }}
-        onDayChange={(day) => {
-          onPressDate(utils.convertDigitInDate(day.dateString))
-        }}
+        // onDayChange={(day) => {
+        //   onPressDate(utils.convertDigitInDate(day.dateString))
+        // }}
         // // Callback that gets called when day changes while scrolling agenda list
         // onDayChange={(day) => {
         //   console.log("day changed")

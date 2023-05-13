@@ -97,15 +97,26 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
       const trigger = {
         date: new Date(new Date(itemDetail.time).getTime() - 0),
       }
+      console.log("oki", new Date(new Date(itemDetail.time).getTime() - 0))
+      console.log("content", content)
+      const data = { ...itemDetail, type: "todo" }
       const idNotification = await Notifications.scheduleNotificationAsync({
-        content: content,
+        content: {
+          title: itemDetail.title,
+          body: itemDetail.content,
+          sound: authStore.sound.nameSound || "",
+          // data: { ...itemDetail, type: "todo" },
+          //  data: content,
+        },
         trigger: {
           date: new Date(new Date(itemDetail.time).getTime() - 0),
         },
       })
-      //  const idNotification = await setScheduleNotificationAsync(content, trigger)
+      // //  const idNotification = await setScheduleNotificationAsync(content, trigger)
       console.log("id", idNotification)
     }
+
+    console.log("item", itemDetail)
 
     return (
       <Screen style={$root} preset="fixed">
@@ -141,7 +152,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
           theme="ios"
           styles={configs.actionStyle}
         />
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={$container}>
             <TextField
               require
@@ -167,6 +178,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
               }
               editable={edit}
               containerStyle={$viewInput}
+              multiline
             />
             <TextField
               value={utils.displayDateHour(itemDetail.time)}
@@ -206,6 +218,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
               }
             />
           </View>
+          <View style={{ height: 80 }} />
         </ScrollView>
         {edit ? (
           <View style={$viewButton}>
@@ -217,7 +230,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
   },
 )
 
-const RighAcessory = () => {
+export const RighAcessory = () => {
   return (
     <VectorsIcon
       type="Feather"

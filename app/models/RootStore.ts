@@ -17,11 +17,11 @@ export const RootStoreModel = types.model("RootStore").props({
   listTodoStore: types.optional(ListTodoStoreModel, {} as any),
   todoStore: types.optional(TodoStoreModel, {} as any),
   eventStore: types.optional(EventStoreModel, {} as any),
-    diaryStore: types.optional(DiaryModel, {} as any),
-    authStore: types.optional(AuthStoreModel, {} as any),
-    languageStore:  types.optional(LanguagestoreModel, {} as any),
-    AuthStore : types.optional(AuthStoreModel, {} as any),
-    memoStore: types.optional(MemoModel, {} as any)
+  diaryStore: types.optional(DiaryModel, {} as any),
+  authStore: types.optional(AuthStoreModel, {} as any),
+  languageStore: types.optional(LanguagestoreModel, {} as any),
+  AuthStore: types.optional(AuthStoreModel, {} as any),
+  memoStore: types.optional(MemoModel, {} as any),
 })
 
 /**

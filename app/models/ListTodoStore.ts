@@ -27,6 +27,17 @@ export const ListTodoStoreModel = types
   .actions(withSetPropAction)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
+    updateTodo: (todo) => {
+      self.id = todo.id
+      self.idNotification = todo.idNotification
+      self.content = todo.content
+      self.time = todo.time
+      self.location = todo.location
+      self.url = todo.url
+    },
+    toggleStatus: () => {
+      self.isDone = !self.isDone
+    },
     remove: () => {
       getParent(self, 2).remove(self)
     },

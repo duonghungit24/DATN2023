@@ -31,9 +31,14 @@ export const EventStoreModel = types
     },
     removeEvent: (key, item) => {
       if (self.eventsMap.has(key)) {
-        console.log("ok")
         self.eventsMap.get(key).splice(self.eventsMap.get(key).indexOf(item), 1)
-        // destroy(item)
+        self.setRefreshEvent()
+      }
+    },
+    updateEvent: (key, item) => {
+      if (self.eventsMap.has(key)) {
+        const index = self.eventsMap.get(key).findIndex((el) => el.id == item.id)
+        self.eventsMap.get(key)[index] = item
         self.setRefreshEvent()
       }
     },

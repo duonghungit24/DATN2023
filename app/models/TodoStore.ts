@@ -78,16 +78,18 @@ export const TodoStoreModel = types
     },
     removeTodo: (key, item) => {
       if (self.todoMap.has(key)) {
-        // self.todoMap.get(key).splice(self.todoMap.get(key).indexOf(item), 1)
-        destroy(item)
+        self.todoMap.get(key).splice(self.todoMap.get(key).indexOf(item), 1)
         self.setRefreshTodo()
       }
     },
-    editTodo: () => {},
-    getTodoDone: () => {
-      return values(self.todoMap)
-        .filter((todo) => todo)
-        .filter((el) => !el.isDone)
+    editTodo: (key, item) => {
+      if (self.todoMap.has(key)) {
+        const index = self.todoMap.get(key).findIndex((el) => el.id == item.id)
+        if (index > -1) {
+          self.todoMap.get(key)[index] = item
+          self.setRefreshTodo()
+        }
+      }
     },
     getListTodo: () => {
       const data = {}

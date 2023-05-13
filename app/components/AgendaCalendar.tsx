@@ -9,6 +9,7 @@ import { hourPickerLocales } from "../utils/localeDate"
 import { navigate } from "../navigators"
 import { utils } from "../utils"
 import { ListEmpty } from "./ListEmty"
+import { toJS } from "mobx"
 
 export interface AgendaCalendarProps {
   /**
@@ -52,22 +53,15 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
 
   LocaleConfig.defaultLocale = languageStore.language
 
-  useEffect(() => {
-    console.log("list", todoStore.getTodoDone())
+  useLayoutEffect(() => {
     setListTask(todoStore.getListTodo())
   }, [todoStore.isRefreshTodo])
-
-  // const getList = async () => {
-  //   const reuslt = await todoStore.getListTodo()
-  //   console.log("result", reuslt)
-  // }
-  // console.log("lít", todoStore.todoMap)
 
   const renderItem = (reservation: any, isFirst: boolean) => {
     return (
       <Pressable
         style={[$viewItem, { borderLeftColor: reservation.color }]}
-        onPress={() => navigate("detailTodoScreen", { itemTodo: reservation })}
+        onPress={() => navigate("detailTodoScreen", { itemTodo: toJS(reservation) })}
       >
         <Text preset="medium" style={$textTime}>
           {utils.hoursAndMinutes(reservation.time)}
@@ -75,9 +69,11 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         <Text preset="semibold" style={$title}>
           {reservation.title}
         </Text>
-        <Text preset="regular" style={$text}>
-          {reservation.content}
-        </Text>
+        {reservation.content ? (
+          <Text preset="regular" style={$text}>
+            {reservation.content}
+          </Text>
+        ) : null}
       </Pressable>
     )
   }
@@ -86,9 +82,15 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
       <Agenda
         key={languageStore.language}
         items={listTask}
+        keyExtractor={(_, index) => `${index}`}
         renderItem={renderItem}
         date={new Date().toISOString()}
         selected={utils.displayDateCalendar(new Date())}
+        showOnlySelectedDayItems={true}
+        reservationsKeyExtractor={(item, index) => {
+          return `${item?.reservation?.time}${index}`
+        }}
+        refreshing={true}
         // Callback that gets called when items for a certain month should be loaded (month became visible)
         // loadItemsForMonth={(month) => {
         //   console.log("trigger items loading")
@@ -143,10 +145,10 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         // // Specify what should be rendered instead of ActivityIndicator
         renderEmptyData={() => <ListEmpty />}
         // // Specify your item comparison function for increased performance
-        // rowHasChanged={(r1, r2) => {
-        //   console.log(console.log("r1", r1))
-        //    return r1.name !== r2.name
-        // }}
+        rowHasChanged={(r1, r2) => {
+          console.log(console.log("r1", r1))
+          return true
+        }}
         // // Hide knob button. Default = false
         // hideKnob={true}
         // // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
@@ -162,7 +164,7 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         // // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
         // onRefresh={() => console.log("refreshing...")}
         // // Set this true while waiting for new data from a refresh
-        // refreshing={false}
+        // refreshing={true}
         // // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView
         // refreshControl={null}
         // // Agenda theme

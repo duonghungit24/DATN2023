@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useState } from "react"
+import React, { useCallback, useMemo, useReducer, useState } from "react"
 import { ScrollView, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, colorsDefault, typography } from "../theme"
@@ -59,17 +59,33 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   const [isVisibleDate, setIsvisibleDate] = useState({ type: "", show: false })
 
   const onConfirmDate = (value) => {
-    console.log("value", value)
-    if (isVisibleDate.type) {
-      if (isVisibleDate.type == "start") {
+    switch (isVisibleDate.type) {
+      case "start":
         setDateStart(value)
-      } else if (isVisibleDate.type == "end") {
+        break
+      case "end":
         setDateEnd(value)
-      }
-    } else {
-      setDate(value)
+        break
+      case "date":
+        setDate(value)
+        break
+      default:
+        break
     }
     setIsvisibleDate({ type: "", show: false })
+  }
+
+  const dateSelect = () => {
+    switch (isVisibleDate.type) {
+      case "start":
+        return dateStart
+      case "end":
+        return dateEnd
+      case "date":
+        return date
+      default:
+        return null
+    }
   }
 
   console.log("dateend", dateEnd)
@@ -91,7 +107,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
             inputWrapperStyle={$wrapInput}
             clearButtonMode="while-editing"
             editable={false}
-            onPressIn={() => setIsvisibleDate({ type: "", show: true })}
+            onPressIn={() => setIsvisibleDate({ type: "date", show: true })}
           />
         ) : (
           <>
@@ -296,10 +312,6 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         idNotification,
       })
     }
-    // utils.showToast({
-    //   type: "success",
-    //   text1: translate("taonhatky"),
-    // })
     onBackDone()
   }
 
@@ -317,7 +329,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     >
       <View style={$viewContainer}>
         <DateTimePickerModal
-          date={date}
+          date={dateSelect()}
           locale={languageStore.language}
           isVisible={isVisibleDate.show}
           mode="datetime"

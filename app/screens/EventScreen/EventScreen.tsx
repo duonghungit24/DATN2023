@@ -43,14 +43,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     console.log("date", getDate(1))
     console.log("new date", new Date().toISOString())
 
-    // useEffect(() => {
-    //   onSnapshot(languageStore, (snap) => {
-    //     setRefresh(!refresh)
-    //   })
-    // }, [languageStore.language])
-
     useEffect(() => {
-      console.log("listeve", eventStore.getListEvents())
       setListEvents(eventStore.getListEvents())
     }, [eventStore.refreshEvent])
 
@@ -108,7 +101,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
         location: value.location,
         url: value.url,
       }
-      navigate("detailEventScreen", { itemEvent: params })
+      navigate("detailEventScreen", { itemDetail: params })
     }
 
     const timelineProps: Partial<TimelineProps> = {
@@ -161,6 +154,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
             markingType="multi-dot"
             theme={configs.THEME}
             hideKnob={false}
+            key={languageStore.language}
           />
           <TimelineList
             events={listEvents}

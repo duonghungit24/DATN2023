@@ -82,7 +82,7 @@ const agendaItems = [
 export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = observer(
   function DiaryScreen() {
     // Pull in one of our MST stores
-    const { diaryStore } = useStores()
+    const { diaryStore, languageStore } = useStores()
     const [listDiary, setListDiray] = useState([])
     const [dateNow, setDateNow] = useState(new Date().toISOString())
     // Pull in navigation via hook
@@ -111,6 +111,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
           // todayBottomMargin={16}
         >
           <ExpandableCalendar
+            key={languageStore.language}
             // horizontal={false}
             // hideArrows
             // disablePan

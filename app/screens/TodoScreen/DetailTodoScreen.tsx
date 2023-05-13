@@ -75,48 +75,37 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
     const onConfirmDate = (value) => {
       setItemDetail({
         ...itemDetail,
-        time: value,
+        time: value.toString(),
       })
       setIsvisibleDate(false)
     }
 
     const onUpdate = async () => {
-      if (!itemDetail.title || !itemDetail.content) {
+      if (!itemDetail.title) {
         utils.showToast({
           type: "warning",
           text1: translate("khongdetrongdulieu"),
         })
         return
       }
-      const content = {
-        title: itemDetail.title,
-        body: itemDetail.content,
-        sound: authStore.sound.nameSound || "",
-        data: { ...itemDetail, type: "todo" },
-      }
-      const trigger = {
-        date: new Date(new Date(itemDetail.time).getTime() - 0),
-      }
-      console.log("oki", new Date(new Date(itemDetail.time).getTime() - 0))
-      console.log("content", content)
-      const data = { ...itemDetail, type: "todo" }
       const idNotification = await Notifications.scheduleNotificationAsync({
         content: {
           title: itemDetail.title,
           body: itemDetail.content,
           sound: authStore.sound.nameSound || "",
-          // data: { ...itemDetail, type: "todo" },
-          //  data: content,
+          data: { ...itemDetail, type: "todo" },
         },
         trigger: {
           date: new Date(new Date(itemDetail.time).getTime() - 0),
         },
       })
-      // //  const idNotification = await setScheduleNotificationAsync(content, trigger)
-      console.log("id", idNotification)
+      removeNotificationById(itemDetail.idNotification)
+      todoStore.editTodo(utils.displayDateCalendar(itemDetail.time), {
+        ...itemDetail,
+        idNotification,
+      })
+      goBack()
     }
-
-    console.log("item", itemDetail)
 
     return (
       <Screen style={$root} preset="fixed">
@@ -167,7 +156,6 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
               }
             />
             <TextField
-              require
               value={itemDetail.content}
               labelTx="noidungtieude"
               onChangeText={(text) =>

@@ -49,7 +49,7 @@ export const utils = {
   navigateTodo: (itemTodo) => {
     navigate("detailTodoScreen", { itemTodo })
   },
-  navigateEvent: (itemEvent) => {
-    navigate("detailEventScreen", { itemEvent })
+  navigateEvent: (itemDetail) => {
+    navigate("detailEventScreen", { itemDetail })
   },
 }

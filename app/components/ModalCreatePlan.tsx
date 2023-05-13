@@ -20,6 +20,7 @@ import { Button } from "./Button"
 import * as Notifications from "expo-notifications"
 import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
+import { setNotificationChannel } from "../notifications"
 
 export interface ModalCreatePlanProps {
   /**
@@ -84,7 +85,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       case "date":
         return date
       default:
-        return null
+        return new Date()
     }
   }
 
@@ -244,6 +245,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   console.log("hour", new Date(date.getTime() - 5 * 60 * 1000).getHours())
   console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
   const onCreate = async () => {
+    await setNotificationChannel(authStore.sound.nameSound)
     if (type == "work") {
       const params = {
         id: uuid.v4(),
@@ -305,6 +307,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
           minute: new Date(dateStart.getTime() - 5 * 60 * 1000).getMinutes(),
           //  seconds: new Date(date.getTime() - 5 * 60 * 1000).getSeconds(),
           //  repeats: true,
+          channelId: "default",
         },
       })
       eventStore.addEvent(utils.displayDateCalendar(dateStart), {

@@ -131,6 +131,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     return (
       <Screen style={$root} preset="fixed">
         <CalendarProvider
+          key={languageStore.language}
           date={getDate()}
           // onDateChanged={this.onDateChanged}
           // onMonthChange={this.onMonthChange}

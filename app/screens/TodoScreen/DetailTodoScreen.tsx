@@ -171,7 +171,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
             <TextField
               value={utils.displayDateHour(itemDetail.time)}
               labelTx="thoigian"
-              editable={edit}
+              editable={false}
               containerStyle={$viewInput}
               RightAccessory={RighAcessory}
               inputWrapperStyle={{ alignItems: "center" }}

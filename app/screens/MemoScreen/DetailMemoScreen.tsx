@@ -196,7 +196,7 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
             <TextField
               value={utils.displayDateHour(itemDetail.time)}
               labelTx="thoigian"
-              editable={edit}
+              editable={false}
               containerStyle={$viewInput}
               RightAccessory={RighAcessory}
               inputWrapperStyle={{ alignItems: "center" }}

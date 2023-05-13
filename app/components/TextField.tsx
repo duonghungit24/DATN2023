@@ -176,7 +176,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       activeOpacity={1}
       style={$containerStyles}
       // onPress={focusInput}
-      onPress={!TextInputProps.editable ? TextInputProps.onPressIn : null}
+      onPress={TextInputProps.onPressIn}
       accessibilityState={{ disabled }}
       disabled={TextInputProps.editable}
     >

@@ -8,9 +8,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
-    "notification":{
-      "icon":"./assets/images/splash-logo-all.png"
-   },
+    "notification": {
+      "icon": "./assets/images/splash-logo-all.png"
+    },
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
       "resizeMode": "contain",
@@ -58,7 +58,18 @@
         "expo-notifications",
         {
           "icon": "./assets/images/app-icon-all.png",
-          "sounds": ["./assets/sounds/bipbip.wav"]
+          "sounds": [
+            "./assets/sounds/bipbip.wav",
+            "./assets/sounds/alarmreo.wav",
+            "./assets/sounds/chiuchiu.wav",
+            "./assets/sounds/clockalarm.wav",
+            "./assets/sounds/endhour.wav",
+            "./assets/sounds/error.wav",
+            "./assets/sounds/quandoi.wav",
+            "./assets/sounds/ringtone.wav",
+            "./assets/sounds/tiktik.wav",
+            "./assets/sounds/wave.wav"
+          ]
         }
       ]
     ]

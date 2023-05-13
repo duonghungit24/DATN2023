@@ -104,6 +104,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
       <Screen style={$root} preset="fixed">
         <CalendarProvider
           date={dateNow}
+          key={languageStore.language}
           // onDateChanged={(date) => console.log("date", date)}
           // onMonthChange={onMonthChange}
           // disabledOpacity={0.6}

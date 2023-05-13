@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications"
 import { Platform } from "react-native"
+import { getsRootStore } from "../models"
 
 export const requestPermissionsAsync = async () => {
   await Notifications.setNotificationHandler({
@@ -49,4 +50,19 @@ export const setScheduleNotificationAsync = async (content, trigger) => {
     trigger: trigger,
   })
   return idNotification
+}
+
+export const setNotificationChannel = async (nameSound) => {
+  console.log("aut", nameSound)
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      sound: nameSound || "",
+      lightColor: "#FF231F7C",
+      lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+      bypassDnd: true,
+    })
+  }
 }

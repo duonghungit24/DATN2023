@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, ViewStyle } from "react-native"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../../navigators"
 import { AgendaCalendar, Header, Screen, Text } from "../../components"
@@ -29,7 +29,9 @@ export const TodoScreen: FC<StackScreenProps<AppStackScreenProps, "Todo">> = obs
     return (
       <Screen style={$root} preset="fixed">
         <Header backgroundColor={colors.neutral000} title={dateSelect} titleStyle={$titleStyle} />
-        <AgendaCalendar onPressDate={setDateSelect} />
+        <View style={{ flex: 1 }}>
+          <AgendaCalendar onPressDate={setDateSelect} />
+        </View>
       </Screen>
     )
   },

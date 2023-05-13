@@ -1,4 +1,4 @@
-import  React, {useState} from "react"
+import React, { useState } from "react"
 import { StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { observer } from "mobx-react-lite"
 import { colors, typography } from "../theme"
@@ -13,7 +13,7 @@ export interface CustomColorProps {
   style?: StyleProp<ViewStyle>
   onPressCustom: () => void
   onPressColor: (value) => void
-  listColor:  any
+  listColor: any
   color: string
 }
 
@@ -21,13 +21,17 @@ export interface CustomColorProps {
  * Describe your component here
  */
 export const CustomColor = observer(function CustomColor(props: CustomColorProps) {
-  const { style, onPressCustom, onPressColor , listColor = [], color} = props
+  const { style, onPressCustom, onPressColor, listColor = [], color } = props
   const $styles = [$container, style]
   return (
     <View style={$styles}>
       <TextField
         LeftAccessory={() => (
-          <LeftAccesstory typeIcon="MaterialIcons" nameIcon="color-lens" colorIcon={colors.primary500} />
+          <LeftAccesstory
+            typeIcon="MaterialIcons"
+            nameIcon="color-lens"
+            colorIcon={colors.primary500}
+          />
         )}
         placeholderTx="tuychon"
         inputWrapperStyle={$wrapInput}
@@ -36,13 +40,13 @@ export const CustomColor = observer(function CustomColor(props: CustomColorProps
         placeholderTextColor={colors.neutral900}
         editable={false}
         onPressIn={onPressCustom}
-        RightAccessory={() => (
-          <LeftAccesstory
-            typeIcon="Feather"
-            nameIcon="chevron-right"
-            colorIcon={colors.neutral500}
-          />
-        )}
+        // RightAccessory={() => (
+        //   <LeftAccesstory
+        //     typeIcon="Feather"
+        //     nameIcon="chevron-right"
+        //     colorIcon={colors.neutral500}
+        //   />
+        // )}
       />
       <View style={$viewRowColor}>
         {listColor.map((el, index) => {
@@ -68,9 +72,7 @@ export const CustomColor = observer(function CustomColor(props: CustomColorProps
   )
 })
 
-const $container: ViewStyle = {
-
-}
+const $container: ViewStyle = {}
 
 const $wrapInput: ViewStyle = {
   borderWidth: 0,

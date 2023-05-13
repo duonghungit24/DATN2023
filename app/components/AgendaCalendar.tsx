@@ -146,7 +146,6 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
         renderEmptyData={() => <ListEmpty />}
         // // Specify your item comparison function for increased performance
         rowHasChanged={(r1, r2) => {
-          console.log(console.log("r1", r1))
           return true
         }}
         // // Hide knob button. Default = false

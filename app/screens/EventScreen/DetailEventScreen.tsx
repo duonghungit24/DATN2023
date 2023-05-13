@@ -43,12 +43,12 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
     }, [])
 
     const dateSelect = () => {
-      if (isVisibleDate.type == "start") {
+      if (isVisibleDate.type == "start" && itemDetail.timeStart) {
         return new Date(itemDetail.timeStart)
-      } else if (isVisibleDate.type == "end") {
+      } else if (isVisibleDate.type == "end" && itemDetail.timeEnd) {
         return new Date(itemDetail.timeEnd)
       }
-      return null
+      return new Date()
     }
 
     const onConfirmDate = (value) => {
@@ -174,7 +174,7 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
             <TextField
               value={utils.displayDateHour(itemDetail.timeStart)}
               labelTx="batdau"
-              editable={edit}
+              editable={false}
               containerStyle={$viewInput}
               RightAccessory={RighAcessory}
               inputWrapperStyle={{ alignItems: "center" }}
@@ -187,7 +187,7 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
             <TextField
               value={utils.displayDateHour(itemDetail.timeEnd)}
               labelTx="ketthuc"
-              editable={edit}
+              editable={false}
               containerStyle={$viewInput}
               RightAccessory={RighAcessory}
               inputWrapperStyle={{ alignItems: "center" }}

@@ -3,7 +3,7 @@ import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListTodoStoreModel } from "./ListTodoStore"
 import moment from "moment"
 import { utils } from "../utils"
-import { values } from "mobx"
+import { toJS, values } from "mobx"
 
 /**
  * Model description here for TypeScript hints.
@@ -58,7 +58,63 @@ export const TodoStoreModel = types
         statusExpired,
       }
     },
-    getListStatusTask: (type: string) => {},
+    getListStatusTask: (type: string) => {
+      let data = []
+      switch (type) {
+        case "all":
+          self.todoMap.forEach((value, _) => {
+            if (value.length > 0) {
+              value.map((el) => {
+                data.push(el)
+              })
+            }
+          })
+          break
+        case "now":
+          if (self.todoMap.has(utils.displayDateCalendar(new Date()))) {
+            data = self.todoMap.get(utils.displayDateCalendar(new Date()))
+          }
+          break
+        case "done":
+          self.todoMap.forEach((value, _) => {
+            if (value.length > 0) {
+              value.map((el) => {
+                if (el.isDone) {
+                  data.push(el)
+                }
+              })
+            }
+          })
+          break
+        case "doing":
+          self.todoMap.forEach((value, _) => {
+            if (value.length > 0) {
+              const dateNow = moment(new Date())
+              value.map((el) => {
+                if (!el.isDone && dateNow.diff(moment(el.time)) < 0) {
+                  data.push(el)
+                }
+              })
+            }
+          })
+          break
+        case "expired":
+          self.todoMap.forEach((value, _) => {
+            if (value.length > 0) {
+              const dateNow = moment(new Date())
+              value.map((el) => {
+                if (!el.isDone && dateNow.diff(moment(el.time)) > 0) {
+                  data.push(el)
+                }
+              })
+            }
+          })
+          break
+        default:
+          break
+      }
+      return data.slice()
+    },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     setRefreshTodo: () => {

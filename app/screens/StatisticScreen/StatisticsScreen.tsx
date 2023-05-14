@@ -131,6 +131,7 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 numTx="soluongnv"
                 num={countTask.numberTaskNow}
                 colorView={colorsDefault[0]}
+                onPressDetail={() => navigation.navigate("resultStatusTodoScreen", { type: "now" })}
               />
             </View>
             <View>
@@ -140,6 +141,9 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 labelTx="dahoanthanh"
                 num={countStatus.statusDone}
                 colorView={colorsDefault[4]}
+                onPressDetail={() =>
+                  navigation.navigate("resultStatusTodoScreen", { type: "done" })
+                }
               />
               <ItemStatistic
                 typeIcon="AntDesign"
@@ -147,6 +151,9 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 labelTx="trongquatrinh"
                 num={countStatus.statusDoing}
                 colorView={colorsDefault[5]}
+                onPressDetail={() =>
+                  navigation.navigate("resultStatusTodoScreen", { type: "doing" })
+                }
               />
               <ItemStatistic
                 typeIcon="Entypo"
@@ -154,6 +161,9 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 labelTx="chuabatdau"
                 num={countStatus.statusExpired}
                 colorView={colorsDefault[2]}
+                onPressDetail={() =>
+                  navigation.navigate("resultStatusTodoScreen", { type: "expired" })
+                }
               />
             </View>
           </View>
@@ -192,9 +202,9 @@ const ItemOverview = ({
   )
 }
 
-const ItemStatistic = ({ labelTx, typeIcon, nameIcon, num, colorView }: any) => {
+const ItemStatistic = ({ labelTx, typeIcon, nameIcon, num, colorView, onPressDetail }: any) => {
   return (
-    <TouchableOpacity style={[$viewRow, $viewBtn]}>
+    <TouchableOpacity style={[$viewRow, $viewBtn]} onPress={onPressDetail}>
       <View style={[$viewIcon, { backgroundColor: colorView }]}>
         <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.neutral000} />
       </View>

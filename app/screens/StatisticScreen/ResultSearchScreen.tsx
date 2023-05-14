@@ -86,7 +86,7 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
     )
   })
 
-const ItemResult = ({ item = {}, onPressDetail }: any) => {
+export const ItemResult = ({ item = {}, onPressDetail }: any) => {
   console.log("item", item)
   return (
     <TouchableOpacity style={[$viewItem]} onPress={onPressDetail}>

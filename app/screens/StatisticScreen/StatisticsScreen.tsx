@@ -102,8 +102,9 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                   backgroundColor: "#e26a00",
                   backgroundGradientFrom: "#fb8c00",
                   backgroundGradientTo: "#ffa726",
+                  backgroundGradientToOpacity: 0.5,
                   decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `red`,
+                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 }}
                 center={[0, 0]}
                 accessor={"population"}

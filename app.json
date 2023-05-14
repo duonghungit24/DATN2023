@@ -57,7 +57,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/app-icon-all.png",
+          "icon": "./assets/images/ic_launcher.png",
+          "color": "#ffffff",
           "sounds": [
             "./assets/sounds/bipbip.wav",
             "./assets/sounds/alarmreo.wav",

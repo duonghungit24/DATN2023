@@ -75,6 +75,11 @@ const ja = {
   thietbikhonghotro: "デバイスはFace ID/指紋認証をサポートしていません",
   chontuthuvien: "ライブラリから選ぶ",
   chupanh: "写真を撮る",
+
+  thongbaothoigian: "選択時間は現在よりも大きくなければなりません",
+  thoigiandaucuoi: "開始時間は終了時間よりも短くする必要があります",
+  thoigianbatdau: "開始時間は現在よりも後でなければなりません",
+  quahan: "時代遅れ",
 }
 
 export default ja

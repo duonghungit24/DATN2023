@@ -76,6 +76,11 @@ const ko = {
   thietbikhonghotro: " 장치가 Face ID / 지문을 지원하지 않습니다",
   chontuthuvien: "라이브러리에서 선택",
   chupanh: "사진을 찍다",
+
+  thongbaothoigian: "선택 시간은 현재보다 커야 합니다",
+  thoigiandaucuoi: "시작 시간은 종료 시간보다 이전이어야 합니다",
+  thoigianbatdau: "시작 시간은 현재보다 커야 합니다",
+  quahan: "구식",
 }
 
 export default ko

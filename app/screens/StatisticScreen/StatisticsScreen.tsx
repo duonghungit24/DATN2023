@@ -175,6 +175,7 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
               />
             </View>
           </View>
+          <View style={{ height: 40 }} />
         </ScrollView>
       </Screen>
     )

@@ -75,6 +75,11 @@ const en = {
   chontuthuvien: "Choose from the library",
   chupanh: "Take a photo",
   soluongnv: "%{num} task",
+
+  thongbaothoigian: "Select time must be greater than current",
+  thoigiandaucuoi: "Start time must be less than end time",
+  thoigianbatdau: "The start time must be better than The end time",
+  quahan: "Expired",
 }
 
 export default en

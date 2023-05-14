@@ -81,6 +81,7 @@ const vi = {
   thongbaothoigian: "Thời gian chọn phải lớn hơn hiện tại",
   thoigiandaucuoi: "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc",
   thoigianbatdau: "Thời gian bắt đầu phải lớn hơn hiện tại",
+  quahan: "Quá hạn",
 }
 
 export default vi

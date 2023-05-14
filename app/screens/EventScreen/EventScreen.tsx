@@ -33,6 +33,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
     const [refresh, setRefresh] = useState(false)
 
     const INITIAL_TIME = { hour: 9, minutes: 0 }
+    const [date, setDate] = useState(new Date().toISOString())
     const getDate = (offset = 0) =>
       CalendarUtils.getCalendarDateString(new Date().setDate(new Date().getDate() + offset))
 
@@ -82,12 +83,16 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
       },
     }
 
+    const onDateChanged = (date: string) => {
+      setDate(date)
+    }
+
     return (
       <Screen style={$root} preset="fixed">
         <CalendarProvider
           key={languageStore.language}
-          date={getDate()}
-          // onDateChanged={this.onDateChanged}
+          date={date}
+          onDateChanged={onDateChanged}
           // onMonthChange={this.onMonthChange}
           //  disabledOpacity={0.6}
           // numberOfDays={3}

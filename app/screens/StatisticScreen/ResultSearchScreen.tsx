@@ -9,6 +9,7 @@ import { utils } from "../../utils"
 import { ListEmpty } from "../../components/ListEmty"
 import { useStores } from "../../models"
 import { toJS } from "mobx"
+import moment from "moment"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -86,19 +87,35 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
     )
   })
 
-export const ItemResult = ({ item = {}, onPressDetail }: any) => {
+export const ItemResult = ({ item = {}, onPressDetail, onPressStatus }: any) => {
   console.log("item", item)
   return (
     <TouchableOpacity style={[$viewItem]} onPress={onPressDetail}>
-      <Text preset="medium" style={$textTime}>
-        {utils.displayDateHour(item.time)}
-      </Text>
-      <Text preset="semibold" style={$title}>
-        {item.title}
-      </Text>
-      <Text preset="regular" style={$text}>
-        {item.content}
-      </Text>
+      <View style={{ flex: 1 }}>
+        <Text preset="medium" style={$textTime}>
+          {utils.displayDateHour(item.time)}
+        </Text>
+        <Text preset="semibold" style={$title}>
+          {item.title}
+        </Text>
+        <Text preset="regular" style={$text}>
+          {item.content}
+        </Text>
+      </View>
+      {!item.isDone && moment(new Date()).diff(moment(item.time)) < 0 ? (
+        <TouchableOpacity onPress={onPressStatus}>
+          <VectorsIcon
+            type="MaterialCommunityIcons"
+            name="tooltip-check"
+            size={30}
+            color={item.isDone ? "#60c5a8" : colors.neutral400}
+          />
+        </TouchableOpacity>
+      ) : (
+        <View style={$viewExpired}>
+          <Text preset="medium" style={{ fontSize: 13, color: colors.neutral000 }} tx="quahan" />
+        </View>
+      )}
     </TouchableOpacity>
   )
 }
@@ -110,11 +127,20 @@ const $root: ViewStyle = {
 const $viewItem: ViewStyle = {
   backgroundColor: colors.neutral000,
   borderRadius: 5,
-  padding: 16,
+  padding: 12,
   // marginHorizontal: 16,
   paddingHorizontal: 16,
+  flexDirection: "row",
 }
 const $title: TextStyle = { fontSize: 14, color: colors.neutral900, marginTop: 4 }
 const $text: TextStyle = { fontSize: 14, color: colors.neutral700, marginTop: 4 }
 const $textTime: TextStyle = { color: colors.neutral600, fontSize: 14 }
 const $line: ViewStyle = { height: 12 }
+const $viewExpired: ViewStyle = {
+  backgroundColor: "#ff5454",
+  height: 25,
+  alignItems: "center",
+  justifyContent: "center",
+  paddingHorizontal: 12,
+  borderRadius: 4,
+}

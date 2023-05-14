@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import {
   ImageStyle,
   ScrollView,
@@ -32,6 +32,7 @@ import Toast from "react-native-toast-message"
 import { Button } from "./Button"
 import { CustomColor } from "./CustomColor"
 import { ImageConstant, listEmoji } from "../theme/image"
+import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
 
 export interface ModalCreateDiaryProps {
   /**
@@ -51,6 +52,13 @@ interface TypeTime {
 /**
  * Describe your component here
  */
+const $colorText: TextStyle = { color: "#35ABFF", fontSize: 16 }
+export const options = [
+  <Text preset="semibold" style={$colorText} tx="boqua" />,
+  <Text preset="regular" style={$colorText} tx="chontuthuvien" />,
+  <Text preset="regular" style={$colorText} tx="chupanh" />,
+]
+
 export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalCreateDiaryProps) {
   const { style, isVisible, onBackDropPress, type, onBackDone } = props
   const { languageStore, memoStore, diaryStore } = useStores()
@@ -72,26 +80,46 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
   const [isVisibleImg, setIsvisibleImg] = useState(false)
   const [indexImg, setIndexImg] = useState(-1)
 
-  const pickImage = () => {
-    ImagePicker.openPicker({
-      multiple: true,
-    }).then((listImages) => {
-      const result = listImages.map((el) => {
-        console.log("el", el)
-        return {
-          id: uuid.v4(),
-          uri: Platform.OS == "ios" ? el.sourceURL : el.path,
-        }
-      })
-      setImages([...images, ...result])
-    })
+  const refAction = useRef(null)
+
+  const onPressAction = (index) => {
+    if (index == 1) {
+      setTimeout(() => {
+        ImagePicker.openPicker({
+          multiple: true,
+        }).then((listImages) => {
+          const result = listImages.map((el) => {
+            console.log("el", el)
+            return {
+              id: uuid.v4(),
+              uri: Platform.OS == "ios" ? el.sourceURL : el.path,
+            }
+          })
+          setImages([...images, ...result])
+        })
+      }, 300)
+    } else if (index == 2) {
+      setTimeout(() => {
+        ImagePicker.openCamera({
+          mediaType: "photo",
+        }).then((image) => {
+          const obj = {
+            id: uuid.v4(),
+            uri: Platform.OS == "ios" ? image.sourceURL : image.path,
+          }
+          const dt = []
+          dt.push(obj)
+          setImages([...images, ...dt])
+        })
+      }, 300)
+    }
   }
 
   const DisplayImage = useMemo(() => {
     return (
       <SelectImage
         dataImages={images}
-        onPressAdd={pickImage}
+        onPressAdd={() => refAction.current.show()}
         onPressView={(index) => viewImage(index)}
         onPressRemove={(value) => onPressRemoveImg(value)}
         edit
@@ -257,6 +285,14 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       // useNativeDriver={true}
     >
       <View style={$viewContainer}>
+        <ActionSheet
+          ref={refAction}
+          options={options}
+          cancelButtonIndex={0}
+          onPress={onPressAction}
+          theme="ios"
+          styles={configs.actionStyle}
+        />
         <ImageView
           images={images}
           imageIndex={indexImg}

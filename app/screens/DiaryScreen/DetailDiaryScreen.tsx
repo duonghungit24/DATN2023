@@ -43,7 +43,12 @@ import { ImageConstant, listEmoji } from "../../theme/image"
 // - Import your screen, and add it to the stack:
 //     `<Stack.Screen name="DetailDiary" component={DetailDiaryScreen} />`
 // Hint: Look for the 🔥!
-
+const $colorText: TextStyle = { color: "#35ABFF", fontSize: 16 }
+export const optionsImg = [
+  <Text preset="semibold" style={$colorText} tx="boqua" />,
+  <Text preset="regular" style={$colorText} tx="chontuthuvien" />,
+  <Text preset="regular" style={$colorText} tx="chupanh" />,
+]
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "DetailDiary">> = observer(
@@ -53,6 +58,7 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
     const key = route.params?.key
 
     const refAction = useRef(null)
+    const refImg = useRef(null)
     const [itemDetail, setItemDetail] = useState<any>({})
     const [listImages, setListImage] = useState([])
     const [indexImg, setIndexImg] = useState(0)
@@ -79,18 +85,37 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
       }
     }
 
-    const pickImage = () => {
-      ImagePicker.openPicker({
-        multiple: true,
-      }).then((listImgs) => {
-        const result = listImgs.map((el) => {
-          return {
-            id: uuid.v4(),
-            uri: Platform.OS == "ios" ? el.sourceURL : el.path,
-          }
-        })
-        setListImage([...listImages, ...result])
-      })
+    const onPressActionImg = (index) => {
+      if (index == 1) {
+        setTimeout(() => {
+          ImagePicker.openPicker({
+            multiple: true,
+          }).then((images) => {
+            const result = images.map((el) => {
+              console.log("el", el)
+              return {
+                id: uuid.v4(),
+                uri: Platform.OS == "ios" ? el.sourceURL : el.path,
+              }
+            })
+            setListImage([...listImages, ...result])
+          })
+        }, 300)
+      } else if (index == 2) {
+        setTimeout(() => {
+          ImagePicker.openCamera({
+            mediaType: "photo",
+          }).then((image) => {
+            const obj = {
+              id: uuid.v4(),
+              uri: Platform.OS == "ios" ? image.sourceURL : image.path,
+            }
+            const dt = []
+            dt.push(obj)
+            setListImage([...listImages, ...dt])
+          })
+        }, 300)
+      }
     }
 
     const viewImage = (index) => {
@@ -107,7 +132,7 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
       return (
         <SelectImage
           dataImages={listImages}
-          onPressAdd={pickImage}
+          onPressAdd={() => refImg.current.show()}
           onPressView={(index) => viewImage(index)}
           onPressRemove={(value) => onPressRemoveImg(value)}
           edit={edit}
@@ -158,6 +183,14 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
           options={options}
           cancelButtonIndex={0}
           onPress={onPressAction}
+          theme="ios"
+          styles={configs.actionStyle}
+        />
+        <ActionSheet
+          ref={refImg}
+          options={optionsImg}
+          cancelButtonIndex={0}
+          onPress={onPressActionImg}
           theme="ios"
           styles={configs.actionStyle}
         />

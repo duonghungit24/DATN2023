@@ -23,6 +23,7 @@ import { translate } from "../../i18n"
 import uuid from "react-native-uuid"
 import ImageView from "react-native-image-viewing"
 import ImagePicker from "react-native-image-crop-picker"
+import { optionsImg } from "../DiaryScreen/DetailDiaryScreen"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -41,6 +42,7 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
     const { memoStore, languageStore } = useStores()
     const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
+    const refImg = useRef(null)
 
     const [isVisible, setIsvisible] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -67,18 +69,37 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
       }
     }
 
-    const pickImage = () => {
-      ImagePicker.openPicker({
-        multiple: true,
-      }).then((listImgs) => {
-        const result = listImgs.map((el) => {
-          return {
-            id: uuid.v4(),
-            uri: Platform.OS == "ios" ? el.sourceURL : el.path,
-          }
-        })
-        setListImage([...listImages, ...result])
-      })
+    const onPressActionImg = (index) => {
+      if (index == 1) {
+        setTimeout(() => {
+          ImagePicker.openPicker({
+            multiple: true,
+          }).then((images) => {
+            const result = images.map((el) => {
+              console.log("el", el)
+              return {
+                id: uuid.v4(),
+                uri: Platform.OS == "ios" ? el.sourceURL : el.path,
+              }
+            })
+            setListImage([...listImages, ...result])
+          })
+        }, 300)
+      } else if (index == 2) {
+        setTimeout(() => {
+          ImagePicker.openCamera({
+            mediaType: "photo",
+          }).then((image) => {
+            const obj = {
+              id: uuid.v4(),
+              uri: Platform.OS == "ios" ? image.sourceURL : image.path,
+            }
+            const dt = []
+            dt.push(obj)
+            setListImage([...listImages, ...dt])
+          })
+        }, 300)
+      }
     }
 
     const viewImage = (index) => {
@@ -95,7 +116,7 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
       return (
         <SelectImage
           dataImages={listImages}
-          onPressAdd={pickImage}
+          onPressAdd={() => refImg.current.show()}
           onPressView={(index) => viewImage(index)}
           onPressRemove={(value) => onPressRemoveImg(value)}
           edit={edit}
@@ -156,6 +177,14 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
           isVisible={isVisible}
           onBackDropPress={() => setIsvisible(false)}
           onPressRemove={onPressRemove}
+        />
+        <ActionSheet
+          ref={refImg}
+          options={optionsImg}
+          cancelButtonIndex={0}
+          onPress={onPressActionImg}
+          theme="ios"
+          styles={configs.actionStyle}
         />
         <ActionSheet
           ref={refAction}

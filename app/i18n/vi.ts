@@ -75,6 +75,8 @@ const vi = {
   trangthai: "Trạng thái",
   hinhanh: "Hình ảnh",
   thietbikhonghotro: "Thiết bị không hỗ trợ FaceID / Vân tay",
+  chontuthuvien: "Chọn từ thư viện",
+  chupanh: "Chụp ảnh",
   common: {
     ok: "dung rui",
     cancel: "bo qua",

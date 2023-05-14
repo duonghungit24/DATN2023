@@ -12,6 +12,7 @@ import { EventScreen } from "./EventScreen/EventScreen"
 import { DiaryScreen } from "./DiaryScreen/DiaryScreen"
 import { useStores } from "../models"
 import { onSnapshot } from "mobx-state-tree"
+import { configs } from "../utils/configs"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -158,6 +159,7 @@ const $root: ViewStyle = {
 }
 const $viewTab: ViewStyle = {
   backgroundColor: colors.neutral000,
+  ...configs.shadow,
 }
 const $viewTabChild: ViewStyle = {
   width: "90%",

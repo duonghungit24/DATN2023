@@ -32,7 +32,8 @@
         "image": "./assets/images/splash-logo-android-universal.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
-      }
+      },
+      "useNextNotificationsApi": true
     },
     "ios": {
       "icon": "./assets/images/app-icon-ios.png",

@@ -40,7 +40,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
     const [isSupportBiometric, setSupportBiometric] = useState(true)
     const [statusBiometric, setStatusBiometric] = useState(false)
     const [refresh, setRefresh] = useState(false)
-    const [isVisibleSound, setVisilbeSound] = useState(false) 
+    const [isVisibleSound, setVisilbeSound] = useState(false)
     const [sound, setSound] = useState<any>({})
 
     useEffect(() => {
@@ -65,7 +65,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
         if (reusltSupport.length == 0) {
           utils.showToast({
             type: "warning",
-            text1: "Thiết bị không hỗ trợ FaceID / Vân tay"
+            text1: "Thiết bị không hỗ trợ FaceID / Vân tay",
           })
           return
         } else {
@@ -74,7 +74,7 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
           if (!result) {
             utils.showToast({
               type: "warning",
-              text1: translate("batvantay")
+              text1: translate("batvantay"),
             })
             return
           } else {
@@ -91,19 +91,19 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
       }
     }
     const colorScheme = useColorScheme()
-    console.log("color",colorScheme)
+    console.log("color", colorScheme)
     console.log("item", new Date(Date.now()))
     // Pull in navigation via hook
     // const navigation = useNavigation()
     return (
       <Screen style={$root} preset="fixed">
-        <ModalChooseSound 
-        soundValue={sound}
+        <ModalChooseSound
+          soundValue={sound}
           isVisible={isVisibleSound}
-          onBackDropPress={() => setVisilbeSound(false) }
+          onBackDropPress={() => setVisilbeSound(false)}
         />
         <Header titleTx="caidat" backgroundColor={colors.neutral100} />
-        <ScrollView contentContainerStyle={{ paddingBottom: configs.windowHeight / 10}}>
+        <ScrollView contentContainerStyle={{ paddingBottom: configs.windowHeight / 10 }}>
           <View style={$viewContent}>
             <ItemSetting
               typeIcon="FontAwesome"
@@ -120,8 +120,8 @@ export const SettingScreen: FC<StackScreenProps<AppStackScreenProps, "Setting">>
               onChangeToggle={setBiometric}
               bgColor={colorRandomItem[3]}
             />
-             <View style={$line} />
-             <ItemSetting
+            <View style={$line} />
+            <ItemSetting
               typeIcon="AntDesign"
               nameIcon="sound"
               bgColor={colorRandomItem[1]}
@@ -176,10 +176,12 @@ const ItemSetting = ({ onPress, titleTx, typeIcon, nameIcon, bgColor, textRight 
         <VectorsIcon type={typeIcon} name={nameIcon} color={colors.neutral000} size={20} />
       </View>
       <Text preset="bold" tx={titleTx} style={$textItem} />
-      {
-        textRight ? <Text preset="medium" style={$textRight} >{textRight}</Text> : null
-      }
-      
+      {textRight ? (
+        <Text preset="medium" style={$textRight}>
+          {textRight}
+        </Text>
+      ) : null}
+
       <VectorsIcon type="Feather" name="chevron-right" size={25} color={colors.neutral500} />
     </TouchableOpacity>
   )
@@ -227,6 +229,6 @@ const $viewContent: ViewStyle = {
   backgroundColor: colors.neutral000,
   borderRadius: 12,
 }
-const $textRight : TextStyle = {
-    color: colors.neutral700
+const $textRight: TextStyle = {
+  color: colors.neutral700,
 }

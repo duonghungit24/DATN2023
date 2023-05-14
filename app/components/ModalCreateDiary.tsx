@@ -281,6 +281,7 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       onSwipeComplete={onBackDropPress}
       swipeDirection={"down"}
       propagateSwipe={true}
+      useNativeDriver={true}
       avoidKeyboard
       // useNativeDriver={true}
     >

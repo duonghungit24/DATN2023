@@ -46,9 +46,10 @@ export const ModalChoosePlan = observer(function ModalChoosePlan(props: ModalCho
     <Modal
       isVisible={isVisible}
       style={$styles}
-      animationInTiming={600}
-      animationOutTiming={500}
+      animationInTiming={400}
+      animationOutTiming={400}
       hideModalContentWhileAnimating={true}
+      useNativeDriver={true}
     >
       <ModalCreatePlan
         type={isVisibleEventWork.type}

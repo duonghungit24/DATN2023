@@ -9,6 +9,7 @@ import { BarChart, PieChart } from "react-native-chart-kit"
 import { configs } from "../../utils/configs"
 import { translate } from "../../i18n"
 import { useStores } from "../../models"
+import { onSnapshot } from "mobx-state-tree"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -24,7 +25,7 @@ import { useStores } from "../../models"
 export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statistics">> = observer(
   function StatisticsScreen({ navigation }) {
     // Pull in one of our MST stores
-    const { todoStore } = useStores()
+    const { todoStore, languageStore } = useStores()
     const [countTask, setCountTask] = useState<any>({})
     const [countStatus, setCountStatus] = useState<any>({
       statusDone: 0,
@@ -32,11 +33,18 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
       statusExpired: 0,
     })
     const [textSearch, setTextSearch] = useState("")
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
       setCountTask(todoStore.getCountTaskNow())
       setCountStatus(todoStore.getNumberStatusTask())
     }, [todoStore.isRefreshTodo])
+
+    useEffect(() => {
+      onSnapshot(languageStore, (lang) => {
+        setRefresh(!refresh)
+      })
+    }, [languageStore.language])
 
     return (
       <Screen style={$root} preset="fixed">

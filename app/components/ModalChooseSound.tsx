@@ -18,6 +18,7 @@ import { VectorsIcon } from "./Vectoricon"
 import { ItemSerapator } from "./ItemSerapator"
 import Sound from "react-native-sound"
 import { useStores } from "../models"
+import { setNotificationChannel } from "../notifications"
 
 export interface ModalChooseSoundProps {
   /**
@@ -127,6 +128,7 @@ export const ModalChooseSound = observer(function ModalChooseSound(props: ModalC
 
   const onPressSound = () => {
     soundCurrent.current?.stop()
+    setNotificationChannel(sound.nameSound)
     authStore.setSound(sound)
     onBackDropPress()
   }

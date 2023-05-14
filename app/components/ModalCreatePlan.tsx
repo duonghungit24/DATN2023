@@ -89,8 +89,6 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     }
   }
 
-  console.log("dateend", dateEnd)
-
   const showStartEndDate = useMemo(() => {
     return (
       <View style={$viewChild}>
@@ -240,12 +238,12 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
     )
   }, [toggleTask, listTaskChild])
 
-  console.log("list", listTaskChild)
-  console.log("time", new Date(date.getTime() - 5 * 60 * 1000).getMinutes())
-  console.log("hour", new Date(date.getTime() - 5 * 60 * 1000).getHours())
-  console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
+  // console.log("list", listTaskChild)
+  // console.log("time", new Date(date.getTime() - 5 * 60 * 1000).getMinutes())
+  // console.log("hour", new Date(date.getTime() - 5 * 60 * 1000).getHours())
+  // console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
   const onCreate = async () => {
-    await setNotificationChannel(authStore.sound.nameSound)
+    //  await setNotificationChannel(authStore.sound.nameSound)
     if (type == "work") {
       const params = {
         id: uuid.v4(),
@@ -328,6 +326,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
       onSwipeComplete={onBackDropPress}
       swipeDirection={"down"}
       propagateSwipe={true}
+      useNativeDriver={true}
       avoidKeyboard
     >
       <View style={$viewContainer}>

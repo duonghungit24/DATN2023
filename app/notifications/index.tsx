@@ -15,8 +15,7 @@ export const requestPermissionsAsync = async () => {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      // sound: "bipbip.wav",
-      sound: "bipbip.wav",
+      sound: "clockalarm.wav",
       lightColor: "#FF231F7C",
       lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
       bypassDnd: true,
@@ -55,11 +54,12 @@ export const setScheduleNotificationAsync = async (content, trigger) => {
 export const setNotificationChannel = async (nameSound) => {
   console.log("aut", nameSound)
   if (Platform.OS === "android") {
+    await Notifications.deleteNotificationChannelAsync("default")
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      sound: nameSound || "",
+      sound: "bipbip.wav",
       lightColor: "#FF231F7C",
       lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
       bypassDnd: true,

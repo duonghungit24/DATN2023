@@ -74,7 +74,7 @@ function App(props: AppProps) {
 
   useEffect(() => {
     getPermission()
-    // requestPermissionsAsync()
+    requestPermissionsAsync()
 
     // nhấn vào sẽ gọi khi kill app
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {

@@ -29,6 +29,8 @@ import * as Notifications from "expo-notifications"
 export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "DetailEvent">> = observer(
   function DetailEventScreen({ route }) {
     // Pull in one of our MST stores
+    const key = route.params?.key
+
     const { eventStore, languageStore, authStore } = useStores()
     const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
@@ -91,14 +93,14 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
           title: itemDetail.title,
           body: itemDetail.content,
           sound: authStore.sound.nameSound || "",
-          //  data: { ...itemDetail, type: "event" },
+          data: { ...itemDetail, type: "event" },
         },
         trigger: {
           date: new Date(new Date(itemDetail.timeStart).getTime() - 0),
         },
       })
       removeNotificationById(itemDetail.idNotification)
-      eventStore.updateEvent(utils.displayDateCalendar(itemDetail.timeStart), {
+      eventStore.updateEvent(utils.displayDateCalendar(key), {
         ...itemDetail,
         idNotification,
       })

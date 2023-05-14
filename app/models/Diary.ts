@@ -1,8 +1,10 @@
-import { Instance, SnapshotIn, SnapshotOut, destroy, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, destroy, detach, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListDiaryStoreModel } from "./ListDiaryStore"
 import moment from "moment"
 import _ from "lodash"
+import { utils } from "../utils"
+import { getsRootStore } from "./helpers/setupRootStore"
 /**
  * Model description here for TypeScript hints.
  */
@@ -41,10 +43,21 @@ export const DiaryModel = types
     updateDiary: (key, item) => {
       if (self.diaryMap.has(key)) {
         const index = self.diaryMap.get(key).findIndex((el) => el.id == item.id)
-        if (index > -1) {
-          self.diaryMap.get(key)[index] = item
-          self.setRefreshDiary()
+        if (key == utils.displayDateCalendar(item.time)) {
+          if (index > -1) {
+            self.diaryMap.get(key)[index] = item
+          }
+        } else {
+          detach(self.diaryMap.get(key)[index])
+          if (self.diaryMap.has(utils.displayDateCalendar(item.time))) {
+            self.diaryMap.get(utils.displayDateCalendar(item.time)).push(item)
+          } else {
+            const dt = []
+            dt.push(item)
+            self.diaryMap.set(utils.displayDateCalendar(item.time), dt)
+          }
         }
+        self.setRefreshDiary()
       }
     },
     getListDiary: () => {

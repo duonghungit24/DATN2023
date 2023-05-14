@@ -61,7 +61,9 @@ export const AgendaCalendar = observer(function AgendaCalendar(props: AgendaCale
     return (
       <Pressable
         style={[$viewItem, { borderLeftColor: reservation.color }]}
-        onPress={() => navigate("detailTodoScreen", { itemTodo: toJS(reservation) })}
+        onPress={() =>
+          navigate("detailTodoScreen", { itemTodo: toJS(reservation), key: reservation.time })
+        }
       >
         <Text preset="medium" style={$textTime}>
           {utils.hoursAndMinutes(reservation.time)}

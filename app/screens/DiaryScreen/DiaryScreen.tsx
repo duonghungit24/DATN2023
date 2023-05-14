@@ -95,7 +95,7 @@ export const DiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Diary">> = o
       return (
         <ItemDiary
           item={item}
-          onPressDetail={() => navigate("detailDiaryScreen", { itemDetail: item })}
+          onPressDetail={() => navigate("detailDiaryScreen", { itemDetail: item, key: item.time })}
         />
       )
     }, [])

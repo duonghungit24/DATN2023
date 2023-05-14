@@ -1,4 +1,4 @@
-import { Instance, SnapshotIn, SnapshotOut, destroy, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, destroy, detach, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListTodoStoreModel } from "./ListTodoStore"
 import moment from "moment"
@@ -85,10 +85,21 @@ export const TodoStoreModel = types
     editTodo: (key, item) => {
       if (self.todoMap.has(key)) {
         const index = self.todoMap.get(key).findIndex((el) => el.id == item.id)
-        if (index > -1) {
-          self.todoMap.get(key)[index] = item
-          self.setRefreshTodo()
+        if (key == utils.displayDateCalendar(item.time)) {
+          if (index > -1) {
+            self.todoMap.get(key)[index] = item
+          }
+        } else {
+          detach(self.todoMap.get(key)[index])
+          if (self.todoMap.has(utils.displayDateCalendar(item.time))) {
+            self.todoMap.get(utils.displayDateCalendar(item.time)).push(item)
+          } else {
+            const dt = []
+            dt.push(item)
+            self.todoMap.set(utils.displayDateCalendar(item.time), dt)
+          }
         }
+        self.setRefreshTodo()
       }
     },
     getListTodo: () => {

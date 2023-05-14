@@ -42,6 +42,7 @@ export const options = [
 export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailTodo">> = observer(
   function DetailTodoScreen({ route }) {
     // Pull in one of our MST stores
+    const key = route.params?.key
     const { todoStore, languageStore, authStore } = useStores()
     const [itemDetail, setItemDetail] = useState<any>({})
     const refAction = useRef(null)
@@ -100,7 +101,7 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
         },
       })
       removeNotificationById(itemDetail.idNotification)
-      todoStore.editTodo(utils.displayDateCalendar(itemDetail.time), {
+      todoStore.editTodo(utils.displayDateCalendar(key), {
         ...itemDetail,
         idNotification,
       })

@@ -50,6 +50,7 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
   function DetailDiaryScreen({ route }) {
     // Pull in one of our MST stores
     const { diaryStore, languageStore } = useStores()
+    const key = route.params?.key
 
     const refAction = useRef(null)
     const [itemDetail, setItemDetail] = useState<any>({})
@@ -117,7 +118,7 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
     const onConfirmDate = (value) => {
       setItemDetail({
         ...itemDetail,
-        time: value,
+        time: value.toString(),
       })
       setIsvisibleDate(false)
     }
@@ -127,7 +128,7 @@ export const DetailDiaryScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
         ...itemDetail,
         images: listImages,
       }
-      diaryStore.updateDiary(utils.displayDateCalendar(itemDetail.time), params)
+      diaryStore.updateDiary(utils.displayDateCalendar(key), params)
       goBack()
     }
 

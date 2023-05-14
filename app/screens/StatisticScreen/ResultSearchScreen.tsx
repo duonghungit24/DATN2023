@@ -8,6 +8,7 @@ import { colors } from "../../theme"
 import { utils } from "../../utils"
 import { ListEmpty } from "../../components/ListEmty"
 import { useStores } from "../../models"
+import { toJS } from "mobx"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -34,13 +35,16 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
 
     useEffect(() => {
       setListTodo(todoStore.findTodoBySearch(route.params.textSearch))
-    }, [textSearch, todoStore.isRefreshTodo])
+      console.log("call")
+    }, [todoStore.isRefreshTodo])
 
     const renderItem = ({ item, index }) => {
       return (
         <ItemResult
           item={item}
-          onPressDetail={() => navigation.navigate("detailTodoScreen", { itemTodo: item })}
+          onPressDetail={() =>
+            navigation.navigate("detailTodoScreen", { itemTodo: toJS(item), key: item.time })
+          }
         />
       )
     }

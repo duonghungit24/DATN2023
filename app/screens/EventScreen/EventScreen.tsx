@@ -101,7 +101,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
         location: value.location,
         url: value.url,
       }
-      navigate("detailEventScreen", { itemDetail: params })
+      navigate("detailEventScreen", { itemDetail: params, key: value.timeStart })
     }
 
     const timelineProps: Partial<TimelineProps> = {
@@ -143,15 +143,7 @@ export const EventScreen: FC<StackScreenProps<AppStackScreenProps, "Event">> = o
             firstDay={1}
             // leftArrowImageSource={require('../img/previous.png')}
             // rightArrowImageSource={require('../img/next.png')}
-            markedDates={{
-              "2023-04-17": {
-                dots: [
-                  { key: "1", color: "blue" },
-                  { key: "2", color: "red" },
-                  { key: "4", color: "red" },
-                ],
-              },
-            }}
+            //  markedDates={listEvents}
             markingType="multi-dot"
             theme={configs.THEME}
             hideKnob={false}

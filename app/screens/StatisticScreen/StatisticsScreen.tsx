@@ -121,6 +121,7 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
                 numTx="soluongnv"
                 num={countTask.numberTaskAll}
                 colorView={colorsDefault[3]}
+                onPressDetail={() => navigation.navigate("resultStatusTodoScreen", { type: "all" })}
               />
               <View style={{ width: 16 }} />
               <ItemOverview
@@ -162,9 +163,17 @@ export const StatisticsScreen: FC<StackScreenProps<AppStackScreenProps, "Statist
   },
 )
 
-const ItemOverview = ({ labelTx, numTx, num, typeIcon, nameIcon, colorView }: any) => {
+const ItemOverview = ({
+  labelTx,
+  numTx,
+  num,
+  typeIcon,
+  nameIcon,
+  colorView,
+  onPressDetail,
+}: any) => {
   return (
-    <TouchableOpacity style={$viewItemOverview}>
+    <TouchableOpacity style={$viewItemOverview} onPress={onPressDetail}>
       <View style={[$viewIcon, { backgroundColor: colorView }]}>
         <VectorsIcon type={typeIcon} name={nameIcon} size={25} color={colors.neutral000} />
       </View>

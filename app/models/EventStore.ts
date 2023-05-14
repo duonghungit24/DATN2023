@@ -1,6 +1,7 @@
-import { Instance, SnapshotIn, SnapshotOut, destroy, types } from "mobx-state-tree"
+import { Instance, SnapshotIn, SnapshotOut, destroy, detach, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { ListEventsStoreModel } from "./ListEventsStore"
+import { utils } from "../utils"
 
 /**
  * Model description here for TypeScript hints.
@@ -38,7 +39,18 @@ export const EventStoreModel = types
     updateEvent: (key, item) => {
       if (self.eventsMap.has(key)) {
         const index = self.eventsMap.get(key).findIndex((el) => el.id == item.id)
-        self.eventsMap.get(key)[index] = item
+        if (key == utils.displayDateCalendar(item.timeStart)) {
+          self.eventsMap.get(key)[index] = item
+        } else {
+          detach(self.eventsMap.get(key)[index])
+          if (self.eventsMap.has(utils.displayDateCalendar(item.timeStart))) {
+            self.eventsMap.get(utils.displayDateCalendar(item.timeStart)).push(item)
+          } else {
+            const dt = []
+            dt.push(item)
+            self.eventsMap.set(utils.displayDateCalendar(item.timeStart), dt)
+          }
+        }
         self.setRefreshEvent()
       }
     },

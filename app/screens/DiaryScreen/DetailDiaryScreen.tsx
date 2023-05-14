@@ -359,8 +359,8 @@ const $imgEmoji: ImageStyle = {
   resizeMode: "contain",
 }
 const $image: ImageStyle = {
-  height: 130,
-  width: 200,
+  height: 150,
+  width: 150,
   resizeMode: "contain",
   alignSelf: "center",
 }

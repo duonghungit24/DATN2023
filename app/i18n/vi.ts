@@ -77,11 +77,10 @@ const vi = {
   thietbikhonghotro: "Thiết bị không hỗ trợ FaceID / Vân tay",
   chontuthuvien: "Chọn từ thư viện",
   chupanh: "Chụp ảnh",
-  common: {
-    ok: "dung rui",
-    cancel: "bo qua",
-    back: "thoat",
-  },
+
+  thongbaothoigian: "Thời gian chọn phải lớn hơn hiện tại",
+  thoigiandaucuoi: "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc",
+  thoigianbatdau: "Thời gian bắt đầu phải lớn hơn hiện tại",
 }
 
 export default vi

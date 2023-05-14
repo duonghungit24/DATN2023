@@ -21,6 +21,7 @@ import * as Notifications from "expo-notifications"
 import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { setNotificationChannel } from "../notifications"
+import moment from "moment"
 
 export interface ModalCreatePlanProps {
   /**
@@ -244,7 +245,15 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
   // console.log("date", new Date(date.getTime() - 5 * 60 * 1000))
   const onCreate = async () => {
     //  await setNotificationChannel(authStore.sound.nameSound)
+    const dateNow = moment(new Date())
     if (type == "work") {
+      if (dateNow.diff(moment(date)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thongbaothoigian"),
+        })
+        return
+      }
       const params = {
         id: uuid.v4(),
         title: title,
@@ -280,6 +289,20 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
         idNotification,
       })
     } else if (type == "event") {
+      if (dateNow.diff(moment(dateStart)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thoigianbatdau"),
+        })
+        return
+      }
+      if (moment(dateStart).diff(moment(dateEnd)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thoigiandaucuoi"),
+        })
+        return
+      }
       const params = {
         id: uuid.v4(),
         title: title,
@@ -357,21 +380,21 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
               onChangeToggle={() => setToggleTime(!toggleTime)}
             />
             {toggleTime && showStartEndDate}
-            <HeaderSwitch
+            {/* <HeaderSwitch
               titleTx="nhacnho"
               typeIcon="AntDesign"
               nameIcon="calendar"
               activeToggle={toggleReminder}
               onChangeToggle={() => setToggleReminder(!toggleReminder)}
             />
-            {toggleReminder && showReminder}
+            {toggleReminder && showReminder} */}
             <CustomColor
               color={color}
               listColor={listColor}
               onPressColor={setColor}
               onPressCustom={() => {}}
             />
-            {type == "work" ? (
+            {/* {type == "work" ? (
               <>
                 <HeaderSwitch
                   titleTx="nhiemvunho"
@@ -382,7 +405,7 @@ export const ModalCreatePlan = observer(function ModalCreatePlan(props: ModalCre
                 />
                 {toggleTask && showTaskChild}
               </>
-            ) : null}
+            ) : null} */}
             <TextField
               value={location}
               LeftAccessory={() => (

@@ -14,6 +14,7 @@ import { configs } from "../../utils/configs"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { translate } from "../../i18n"
 import * as Notifications from "expo-notifications"
+import moment from "moment"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -40,7 +41,6 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
     const [edit, setEdit] = useState(false)
 
     useEffect(() => {
-      console.log("item", route.params.itemDetail)
       setItemDetail(route.params.itemDetail)
     }, [])
 
@@ -85,6 +85,21 @@ export const DetailEventScreen: FC<StackScreenProps<AppStackScreenProps, "Detail
         utils.showToast({
           type: "warning",
           text1: translate("khongdetrongdulieu"),
+        })
+        return
+      }
+      const dateNow = moment(new Date())
+      if (dateNow.diff(moment(itemDetail.timeStart)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thoigianbatdau"),
+        })
+        return
+      }
+      if (moment(itemDetail.timeStart).diff(moment(itemDetail.timeEnd)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thoigiandaucuoi"),
         })
         return
       }

@@ -21,6 +21,7 @@ import { removeNotificationById, setScheduleNotificationAsync } from "../../noti
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { translate } from "../../i18n"
 import * as Notifications from "expo-notifications"
+import moment from "moment"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -86,6 +87,14 @@ export const DetailTodoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailT
         utils.showToast({
           type: "warning",
           text1: translate("khongdetrongdulieu"),
+        })
+        return
+      }
+      const dateNow = moment(new Date())
+      if (dateNow.diff(moment(itemDetail.time)) > 0) {
+        utils.showToast({
+          type: "warning",
+          text1: translate("thongbaothoigian"),
         })
         return
       }

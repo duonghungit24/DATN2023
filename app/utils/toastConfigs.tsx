@@ -87,7 +87,7 @@ const $btnToast: ViewStyle = {
   width: "90%",
   paddingHorizontal: 12,
   alignItems: "center",
-  backgroundColor: "#FCE8DB",
+  backgroundColor: "#2D3748",
   borderRadius: 4,
   padding: 6,
   flexDirection: "row",
@@ -96,14 +96,14 @@ const $btnToast: ViewStyle = {
 }
 const $text1: TextStyle = {
   fontSize: 14,
-  color: "#71192F",
+  color: colors.neutral000,
 }
 const $text2: TextStyle = {
   fontSize: 14,
-  color: "#71192F",
+  color: colors.neutral000,
 }
 const $content: ViewStyle = {
   flex: 1,
   justifyContent: "center",
-  alignItems: "center",
+  paddingLeft: 10,
 }

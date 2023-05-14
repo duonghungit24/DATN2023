@@ -13,7 +13,7 @@ export const onboarding = {
 
 export const ImageConstant = {
   emty: require("./image/emty.png"),
-  imageEmty: require("./image/imageEmty.jpg"),
+  imageEmty: require("./image/imageEmty.png"),
 }
 
 export const listEmoji = [

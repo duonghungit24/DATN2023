@@ -18,25 +18,6 @@ export interface AgendaCalendarProps {
   style?: StyleProp<ViewStyle>
   onPressDate: (value) => void
 }
-const data = {
-  "2023-04-24": [
-    {
-      id: "1",
-      title: "Live: notJust.Hack Kickstart",
-      time: "2023-04-24",
-      content: "okk",
-    },
-  ],
-  "2023-03-19": [
-    {
-      id: "1",
-      name: "Live: notJust.Hack Kickstart",
-      height: 50,
-      day: "2022-11-24",
-      content: "okk",
-    },
-  ],
-}
 /**
  * Describe your component here
  */

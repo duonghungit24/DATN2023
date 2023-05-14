@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Platform, ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { Platform, ScrollView, TextStyle, View, ViewStyle, Image, ImageStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps, goBack } from "../../navigators"
 import {
@@ -24,6 +24,7 @@ import uuid from "react-native-uuid"
 import ImageView from "react-native-image-viewing"
 import ImagePicker from "react-native-image-crop-picker"
 import { optionsImg } from "../DiaryScreen/DetailDiaryScreen"
+import { ImageConstant } from "../../theme/image"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../models"
 
@@ -237,6 +238,9 @@ export const DetailMemoScreen: FC<StackScreenProps<AppStackScreenProps, "DetailM
             />
             <Text preset="medium" tx="hinhanh" style={$textHead} />
             {DisplayImage}
+            {!edit && listImages.length <= 0 ? (
+              <Image source={ImageConstant.imageEmty} style={$image} />
+            ) : null}
             <TextField
               value={itemDetail.location}
               labelTx="vitri"
@@ -298,4 +302,10 @@ const $textHead: TextStyle = {
   paddingVertical: 12,
   color: colors.neutral700,
   fontSize: 14,
+}
+const $image: ImageStyle = {
+  height: 150,
+  width: 150,
+  resizeMode: "contain",
+  alignSelf: "center",
 }

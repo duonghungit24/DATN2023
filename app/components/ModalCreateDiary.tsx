@@ -31,7 +31,7 @@ import { toastConfig } from "../utils/toastConfigs"
 import Toast from "react-native-toast-message"
 import { Button } from "./Button"
 import { CustomColor } from "./CustomColor"
-import { ImageConstant, listEmoji } from "../theme/image"
+import { listEmoji } from "../theme/image"
 import { ActionSheetCustom as ActionSheet } from "@alessiocancian/react-native-actionsheet"
 
 export interface ModalCreateDiaryProps {
@@ -89,7 +89,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
           multiple: true,
         }).then((listImages) => {
           const result = listImages.map((el) => {
-            console.log("el", el)
             return {
               id: uuid.v4(),
               uri: Platform.OS == "ios" ? el.sourceURL : el.path,
@@ -162,8 +161,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       </>
     )
   }, [toggleDate, date])
-
-  console.log("date", new Date(date).getHours())
 
   const showHeaderCreate = useMemo(() => {
     return (
@@ -261,7 +258,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
         url: url,
         listImg: images,
       }
-      console.log("item", item)
       memoStore.addMemo(item)
       Toast.show({
         type: "success",
@@ -283,7 +279,6 @@ export const ModalCreateDiary = observer(function ModalCreateDiary(props: ModalC
       propagateSwipe={true}
       useNativeDriver={true}
       avoidKeyboard
-      // useNativeDriver={true}
     >
       <View style={$viewContainer}>
         <ActionSheet

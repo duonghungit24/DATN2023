@@ -1,6 +1,14 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { FlatList, Pressable, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  FlatList,
+  Insets,
+  Pressable,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { AppStackScreenProps } from "../../navigators"
 import { Header, Screen, Text, TextField, VectorsIcon } from "../../components"
@@ -36,7 +44,6 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
 
     useEffect(() => {
       setListTodo(todoStore.findTodoBySearch(route.params.textSearch))
-      console.log("call")
     }, [todoStore.isRefreshTodo])
 
     const renderItem = ({ item, index }) => {
@@ -46,6 +53,7 @@ export const ResultSearchScreen: FC<StackScreenProps<AppStackScreenProps, "Resul
           onPressDetail={() =>
             navigation.navigate("detailTodoScreen", { itemTodo: toJS(item), key: item.time })
           }
+          onPressStatus={() => todoStore.toggleStatus(item)}
         />
       )
     }
@@ -102,20 +110,21 @@ export const ItemResult = ({ item = {}, onPressDetail, onPressStatus }: any) => 
           {item.content}
         </Text>
       </View>
-      {!item.isDone && moment(new Date()).diff(moment(item.time)) < 0 ? (
-        <TouchableOpacity onPress={onPressStatus}>
-          <VectorsIcon
-            type="MaterialCommunityIcons"
-            name="tooltip-check"
-            size={30}
-            color={item.isDone ? "#60c5a8" : colors.neutral400}
-          />
-        </TouchableOpacity>
-      ) : (
-        <View style={$viewExpired}>
-          <Text preset="medium" style={{ fontSize: 13, color: colors.neutral000 }} tx="quahan" />
-        </View>
-      )}
+      {/* && moment(new Date()).diff(moment(item.time)) < 0 */}
+      <TouchableOpacity onPress={onPressStatus} hitSlop={$hitSlop}>
+        <VectorsIcon
+          type="MaterialCommunityIcons"
+          name="tooltip-check"
+          size={30}
+          color={item.isDone ? "#60c5a8" : colors.neutral400}
+        />
+      </TouchableOpacity>
+      {/*       
+      // (
+      //   <View style={$viewExpired}>
+      //     <Text preset="medium" style={{ fontSize: 13, color: colors.neutral000 }} tx="quahan" />
+      //   </View>
+      // )} */}
     </TouchableOpacity>
   )
 }
@@ -143,4 +152,10 @@ const $viewExpired: ViewStyle = {
   justifyContent: "center",
   paddingHorizontal: 12,
   borderRadius: 4,
+}
+const $hitSlop: Insets = {
+  top: 10,
+  right: 10,
+  left: 10,
+  bottom: 10,
 }

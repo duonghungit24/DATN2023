@@ -186,6 +186,20 @@ export const TodoStoreModel = types
         numberTaskNow: countNow,
       }
     },
+    toggleStatus: (item) => {
+      if (self.todoMap.has(utils.displayDateCalendar(item.time))) {
+        const index = self.todoMap
+          .get(utils.displayDateCalendar(item.time))
+          .findIndex((el) => el.id == item.id)
+        console.log("index", item)
+        if (index > -1) {
+          self.todoMap.get(utils.displayDateCalendar(item.time))[index].isDone = !self.todoMap.get(
+            utils.displayDateCalendar(item.time),
+          )[index].isDone
+          self.setRefreshTodo()
+        }
+      }
+    },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export interface TodoStore extends Instance<typeof TodoStoreModel> {}

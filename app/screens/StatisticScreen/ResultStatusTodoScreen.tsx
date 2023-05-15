@@ -31,7 +31,6 @@ export const ResultStatusTodoScreen: FC<StackScreenProps<AppStackScreenProps, "R
 
     useEffect(() => {
       setListTodo(todoStore.getListStatusTask(type))
-      console.log("item", todoStore.getListStatusTask(type))
     }, [todoStore.isRefreshTodo])
 
     const renderItem = ({ item, index }) => {
@@ -41,6 +40,10 @@ export const ResultStatusTodoScreen: FC<StackScreenProps<AppStackScreenProps, "R
           onPressDetail={() =>
             navigation.navigate("detailTodoScreen", { itemTodo: toJS(item), key: item.time })
           }
+          onPressStatus={() => {
+            console.log("item", item)
+            todoStore.toggleStatus(item)
+          }}
         />
       )
     }
